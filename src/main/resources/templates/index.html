@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta description="Login Interface de Manufatura Flexível">
+    <title>Login FMS</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link th:href="@{/css/imports.css}" rel="stylesheet" />
+    <!-- Importação Plugin Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/graduation.png	}">
+</head>
+
+<body>
+    <header class="header_login">
+        <button onclick="change_height()" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-th"></i></button>
+        <img id="logo_senai" th:src="@{/images/logo_senai.jpg}" alt="Logo Senai">
+    </header>
+
+    <main class="center_panel">
+
+        <h2>Interface de Manufatura Flexível</h2>
+
+        <div class="login_panel collapse" id="collapseExample">
+            <div class="login_title">
+                <h2>Login</h2>
+                <a href="#" onclick="signin()">Cadastrar?</a>
+            </div>
+            <form id="form_validation" onsubmit="loginValidation()">
+                <div class="form_login">
+                    <label for="cpf_login">CPF</label>
+                    <input type="number" class="form-control" id="cpf_login" aria-describedby="cpfHelp" placeholder="Digite seu CPF com dígito" maxlength="80" oninput="eventFormValidation(this)" required="">
+                </div>
+                <div class="form_login">
+                    <label for="pass_login">Senha</label>
+                    <input type="password" class="form-control" id="pass_login" placeholder="Digite sua Senha" maxlength="25" oninput="eventFormValidation(this)" required="">
+                </div>
+                <button id="submit_login" type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+
+        <section class="center_content">
+
+            <div id="fms_slides" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                    <button type="button" data-bs-target="#fms_slides" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img th:src="@{/images/fmsImage_1.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/images/fmsImage_2.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/images/fmsImage_3.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/images/fmsImage_4.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/images/fmsImage_5.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/images/fmsImage_6.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img th:src="@{/images/fmsImage_7.jpg}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#fms_slides" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#fms_slides" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+</body>
+
+<!-- Importanto Fontawesome -->
+<script src="https://kit.fontawesome.com/14a8192ff1.js" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+<script th:src="@{/js/config.js}"></script>
+<script th:src="@{/js/login.js}"></script>
+
+</html>

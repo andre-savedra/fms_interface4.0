@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Syne";
+  src: url("../fonts/SyneMono-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "RobotoMono";
+  src: url("../fonts/static/RobotoMono-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("../fonts/Nunito-Regular.ttf");
+  font-weight: normal;
+}

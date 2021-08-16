@@ -1,0 +1,40 @@
+<head>
+    <meta charset='utf-8'>
+</head>
+
+<body>
+
+    <div class="dash_turn">
+        <img src="../images/turn.jpg" alt="">
+        <h5><strong>Torno CNC</strong></h5>
+        <div class="turn_ident">
+            <label for="turn_program">Programa</label>
+            <input type="text" id="turn_program" placeholder="Nome do Programa" required="">
+            <label for="turn_no">Qtd.</label>
+            <input type="number" id="turn_no" min="0" max="20" required="">
+        </div>
+        <textarea id="code_turn" cols="30" rows="10" required=""
+            placeholder="Digite ou Cole seu Código G aqui"></textarea>
+        <button id="send_turn" onclick="submitCustom(this)"><i class="far fa-share-square"></i>
+            <span>Enviar</span>
+        </button>
+    </div>
+
+    <div class="dash_mill">
+        <img src="../images/mill.jpg" alt="">
+        <h5><strong>Centro de Usinagem CNC</strong></h5>
+        <div class="mill_ident">
+            <label for="mill_program">Programa</label>
+            <input type="text" id="mill_program" placeholder="Nome do Programa" required="">
+            <label for="mill_no">Qtd.</label>
+            <input type="number" id="mill_no" min="0" max="20" required="">
+        </div>
+        <textarea id="code_mill" cols="30" rows="10" required=""
+            placeholder="Digite ou Cole seu Código G aqui"></textarea>
+        <button id="send_mill" onclick="submitCustom(this)"><i class="far fa-share-square"></i>
+            <span>Enviar</span>
+        </button>
+    </div>
+
+
+</body>

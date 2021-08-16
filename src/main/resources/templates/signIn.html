@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta description="Dashboard Interface FMS">
+    <title>Dashboard FMS</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link th:href="@{/css/imports.css}" rel="stylesheet" />
+    <!-- Importação Plugin Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/graduation.png	}">
+</head>
+
+<body>
+    <main class="login">
+
+        <div class="register_content">
+            <div class="register_title">
+                <div class="title_content">
+                    <h2>Cadastro</h2>
+                    <i class="fas fa-address-card"></i>
+                </div>
+                <div class="title_content">
+                    <button id="btn_back" onclick="index_return()"><i class="fas fa-arrow-circle-left"></i></button>
+                </div>
+                <!-- <a href="../login.html">Login?</a> -->
+            </div>
+            <div class="register_form">
+                <form onsubmit="signInValidation()">
+                    <div class="form_content">
+                        <label for="cpf">CPF</label>
+                        <input type="number" class="register_input" id="cpf" placeholder="Digite seu CPF com dígito" maxlength="11" oninput="eventFormValidation(this)" required="">
+                    </div>
+                    <div class="form_content">
+                        <label for="name">Nome Completo</label>
+                        <input type="text" class="register_input" id="name" placeholder="Digite seu Nome" maxlength="80" oninput="eventFormValidation(this)" required="">
+                    </div>
+                    <div class="form_content">
+                        <label for="birthday">Data de Nascimento</label>
+                        <input type="date" class="register_input" id="birthday" placeholder="Digite seu Nascimento" required="">
+                    </div>
+                    <div class="form_content">
+                        <label for="gender">Sexo</label>
+                        <select id="gender" class="register_input" required="">
+                            <option value="choose" selected>Escolha</option>
+                            <option value="male">Masculino</option>
+                            <option value="female">Feminino</option>
+                        </select>
+                    </div>
+                    <div class="form_content">
+                        <label for="e-mail">Email</label>
+                        <input type="email" class="register_input" id="e-mail" placeholder="Digite seu e-mail" maxlength="80" oninput="eventFormValidation(this)" required="">
+                    </div>
+                    <div class="form_content">
+                        <label for="phone">Nº Celular</label>
+                        <input type="tel" class="register_input" id="phone" placeholder="Digite seu celular com DDD" maxlength="11" oninput="eventFormValidation(this)" required="">
+                    </div>
+                    <div class="form_content">
+                        <label for="pass">Senha</label>
+                        <input type="password" class="register_input" id="pass" placeholder="Digite sua senha" maxlength="25" oninput="eventFormValidation(this)" required="">
+                    </div>
+                    <div class="form_content">
+                        <label for="pass_confirmation">Confirme a Senha</label>
+                        <input type="password" class="register_input" id="pass_confirmation" placeholder="Digite sua senha novamente" maxlength="25" oninput="eventFormValidation(this)" required="">
+                    </div>
+                    <div class="form_button">
+                        <button type="submit" id="register_button">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </main>
+
+</body>
+
+
+<!-- Importanto Fontawesome -->
+<script src="https://kit.fontawesome.com/14a8192ff1.js" crossorigin="anonymous"></script>
+
+<!-- Importando o script do bootstrap -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script th:src="@{/js/config.js}"></script>
+<script th:src="@{/js/signIn.js}"></script>
+<!-- <script th:src="@{/js/backend_jsons.js}"></script>
+<script th:src="@{/js/partsFlex.js}"></script>
+<script th:src="@{/js/submits.js}"></script>
+<script th:src="@{/js/ajax.js}"></script>
+
+<script th:src="@{/js/eventsOnPage.js}"></script>
+<script th:src="@{/js/charts.js}"></script> -->
+
+</html>

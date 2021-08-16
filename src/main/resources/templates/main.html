@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta description="Dashboard Interface FMS">
+    <title>Dashboard FMS</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link th:href="@{/css/imports.css}" rel="stylesheet" />
+    <!-- Importação Plugin Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/graduation.png	}">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+
+<body>
+    <div class="dash_all">
+        <sidebar>
+            <div class="side_logo">
+                <button id="btn_teste" onclick="renew()"><i class="fas fa-th"></i></button>
+            </div>
+            <div class="dash_menu">
+                <ul>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Peças Torno" data-trigger="hover" a-view="ajax-turn" onclick="fetchContent(this)">
+                            <i class="fas fa-database submenu_icon"></i> <span>Peças
+                                Torno</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Peças Centro" data-trigger="hover" a-view="ajax-mill" onclick="fetchContent(this)">
+                            <i class="fas fa-cube submenu_icon"></i> <span>Peças Centro</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Peças Flex" data-trigger="hover" a-view="ajax-flex" onclick="fetchContent(this)">
+                            <i class="fab fa-buffer submenu_icon"></i> <span>Peças Flex</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Peças Customizadas" data-trigger="hover" a-view="ajax-custom" onclick="fetchContent(this)">
+                            <i class="fas fa-clipboard-check submenu_icon"></i> <span>Peças Custom</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="DashBoards" data-trigger="hover" a-view="ajax-dashboards" onclick="fetchContent(this)">
+                            <i class="fas fa-chart-line submenu_icon"></i> <span>DashBoards</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Lista Produção" data-trigger="hover" a-view="ajax-productionList" onclick="fetchContent(this)">
+                            <i class="fas fa-scroll submenu_icon"></i> <span>Lista Produção</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Câmeras" a-view="ajax-camera" onclick="fetchContent(this)" data-trigger="hover">
+                            <i class="fas fa-camera submenu_icon"></i> <span>Câmeras</span>
+                        </button>
+                    </li>
+                    <li class="dash_submenu">
+                        <button class="inner_submenu" data-bs-toggle="tooltip" data-bs-placement="right" title="Usuário" a-view="ajax-user" onclick="fetchContent(this)" data-trigger="hover">
+                            <i class="fas fa-user-friends submenu_icon"></i> <span>Usuário</span>
+                        </button>
+                    </li>
+                </ul>
+
+
+            </div>
+            <!-- end dash_menu -->
+        </sidebar>
+
+        <main class="dash_main">
+            <header>
+                <img id="dash_logo_senai" th:src="@{/images/logo_senai.jpg}" alt="Logo Senai">
+                <h5 id="title_adapter">SERVIDOR FMS - GESTOR DE PRODUÇÃO</h5>
+                <div id="dash_logout">
+                    <button id="btn_logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                    <p>Logout</p>
+                </div>
+            </header>
+            <div class="dash_content">
+
+
+                <div class="dash_turn">
+                    <img th:src="@{/images/turn.jpg}" alt="">
+                    <h5><strong>Torno CNC</strong></h5>
+                    <div class="turn_ident">
+                        <label for="turn_program">Programa</label>
+                        <input type="text" id="turn_program" placeholder="Nome do Programa" required="">
+                        <label for="turn_no">Qtd.</label>
+                        <input type="number" id="turn_no" min="0" max="20" required="">
+                    </div>
+                    <textarea id="code_turn" cols="30" rows="10" required="" placeholder="Digite ou Cole seu Código G aqui"></textarea>
+                    <button id="send_turn" onclick="submitCustom(this)"><i class="far fa-share-square"></i>
+                        <span>Enviar</span>
+                    </button>
+                </div>
+
+                <div class="dash_mill">
+                    <img th:src="@{/images/mill.jpg}" alt="">
+                    <h5><strong>Centro de Usinagem CNC</strong></h5>
+                    <div class="mill_ident">
+                        <label for="mill_program">Programa</label>
+                        <input type="text" id="mill_program" placeholder="Nome do Programa" required="">
+                        <label for="mill_no">Qtd.</label>
+                        <input type="number" id="mill_no" min="0" max="20" required="">
+                    </div>
+                    <textarea id="code_mill" cols="30" rows="10" required="" placeholder="Digite ou Cole seu Código G aqui"></textarea>
+                    <button id="send_mill" onclick="submitCustom(this)"><i class="far fa-share-square"></i>
+                        <span>Enviar</span>
+                    </button>
+                </div>
+
+
+            </div>
+        </main>
+    </div>
+</body>
+
+
+<!-- Importanto Fontawesome -->
+<script src="https://kit.fontawesome.com/14a8192ff1.js" crossorigin="anonymous"></script>
+
+<!-- Importando o script do bootstrap -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:src="@{/js/config.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<!-- <script th:src="@{/js/backend_jsons.js}"></script>
+<script th:src="@{/js/partsFlex.js}"></script>
+<script th:src="@{/js/submits.js}"></script>
+<script th:src="@{/js/ajax.js}"></script>
+
+<script th:src="@{/js/eventsOnPage.js}"></script>
+<script th:src="@{/js/charts.js}"></script> -->
+
+</html>

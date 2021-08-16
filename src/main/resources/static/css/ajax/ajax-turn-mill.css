@@ -1,0 +1,334 @@
+/********************(    MAIN  )***********************/
+
+.millPartMain,
+.turnPartMain,
+.flexPartMain {
+  width: 90%;
+  height: 85%;
+  border: 2px solid #212429;
+  border-radius: 5px;
+  background-color: white;
+  /*rgba(255, 255, 255, 0.5);*/
+}
+
+/********************(  HEADER   )***********************/
+
+.millPartHeader,
+.turnPartHeader,
+.flexPartHeader {
+  width: 100%;
+  height: 10%;
+  max-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #212429;
+  background-color: #212429;
+  color: white;
+}
+
+.millPartHeader h5,
+.turnPartHeader h5,
+.flexPartHeader h5 {
+  margin: 0;
+}
+
+/********************(   CONTENT   )***********************/
+
+.millPartContent,
+.turnPartContent,
+.flexPartContent {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/********************(  CAROUSEL   )***********************/
+
+.carouselMill,
+.carouselTurn,
+.carouselFlex {
+  width: 60%;
+  height: 100%;
+  border-right: 1px solid #212429;
+}
+
+.carouselMill > #carouselMill_,
+.carouselTurn > #carouselTurn_,
+.carouselFlex > #carouselFlex_ {
+  width: 100%;
+  height: 100%;
+}
+
+#carouselMill_ > .carousel-inner,
+#carouselTurn_ > .carousel-inner,
+#carouselFlex_ > .carousel-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+#carouselTurnContent > .carousel-item,
+#carouselMillContent > .carousel-item,
+#carouselFlexContent > .carousel-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#carouselTurnContent > .carousel-item > img,
+#carouselMillContent > .carousel-item > img,
+#carouselFlexContent > .carousel-item > img {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+/********************(   3D MODELS   )***********************/
+
+
+.carousel-item > model-viewer {
+  width: 70%;
+  height: 70%;
+  min-width: 250px;
+  min-height: 250px;
+}
+
+.spotDimension {
+  background: #fff;
+  border-radius: 4px;
+  border: 2px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.8);
+  display: block;
+  font-family: Futura, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  max-width: 128px;
+  overflow-wrap: break-word;
+  padding: 0em 0.8em;
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  transform: translate3d(-80%, -80%, 0);
+  --min-hotspot-opacity: 0;
+}
+
+.spotAppointer {
+  color: black;
+  display: block;
+  font-family: Futura, Helvetica Neue, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  max-width: 1128px;
+  overflow-wrap: break-word;
+  padding: 0.5em 1em;
+  position: absolute;
+  width: max-content;
+  height: max-content;
+  transform: translate3d(-50%, -50%, 0);
+  --min-hotspot-opacity: 0;
+}
+
+/********************(   FORM   )***********************/
+
+.formMillPart,
+.formTurnPart,
+.formFlexPart {
+  height: 100%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.formMillPart #formMillPart_,
+.formTurnPart #formTurnPart_,
+.formFlexPart #formFlexPart_ {
+  height: 100%;
+  min-height: 300px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formMillPart #formMillPart_ div,
+.formTurnPart #formTurnPart_ div,
+.formFlexPart #formFlexPart_ div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#formMillPart_ input,
+#formTurnPart_ input,
+#formFlexPart_ input,
+#formMillPart_ select,
+#formTurnPart_ select,
+#formFlexPart_ select {
+  max-width: 200px;
+  width: 60%;
+  height: 35px;
+  outline: none;
+  border: 1px solid #212429;
+  border-radius: 5px;
+  text-align: left;
+  margin: 10px 0px 10px 15px;
+  padding-right: 15px;
+  /* color: #878a90; */
+}
+
+#formMillPart_ label,
+#formTurnPart_ label,
+#formFlexPart_ label {
+  margin: 0;
+}
+
+#formMillPart_ > div > i,
+#formTurnPart_ > div > i,
+#formFlexPart_ > div > i {
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+#formMillPart_ > div > i:hover,
+#formTurnPart_ > div > i:hover,
+#formFlexPart_ > div > i:hover {
+  font-size: 19px;
+  color: grey;
+}
+
+#formMillPart_ button,
+#formTurnPart_ button,
+#formFlexPart_ button {
+  height: 30px;
+  width: 40%;
+  min-width: 80px;
+  max-width: 200px;
+  outline: none;
+  border: 1px solid #212429;
+  border-radius: 5px;
+  margin: 10px 5px;
+  background-color: #212429;
+  color: white;
+}
+
+#formMillPart_ button .fa-share-square,
+#formTurnPart_ button .fa-share-square,
+#formFlexPart_ button .fa-share-square {
+  margin-right: 7px;
+}
+
+#formMillPart_ button:hover,
+#formTurnPart_ button:hover,
+#formFlexPart_ button:hover {
+  background-color: grey;
+}
+
+/********************(    BAR    )***********************/
+
+.formMillPart::-webkit-scrollbar-track,
+.formTurnPart::-webkit-scrollbar-track,
+.formFlexPart::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  background-color: #cccccc;
+}
+
+.formMillPart::-webkit-scrollbar,
+.formTurnPart::-webkit-scrollbar,
+.formFlexPart::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.formMillPart::-webkit-scrollbar-thumb,
+.formTurnPart::-webkit-scrollbar-thumb,
+.formFlexPart::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #555a61;
+  /*#d62929;*/
+  background-image: -webkit-linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent,
+    transparent
+  );
+}
+
+/********************(    RESPONSIVE   )***********************/
+
+@media screen and (max-width: 850px) {
+  .millPartMain,
+  .turnPartMain,
+  .flexPartMain {
+    width: 90%;
+    height: auto;
+    min-height: 600px;
+    margin: 20px 0px;
+  }
+  .millPartHeader,
+  .turnPartHeader,
+  .flexPartHeader {
+    height: 50px;
+    text-align: center;
+  }
+  .millPartContent,
+  .turnPartContent,
+  .flexPartContent {
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .carouselMill,
+  .carouselTurn,
+  .carouselFlex {
+    width: 100%;
+    height: 55%;
+    border-bottom: 2px solid #212429;
+  }
+  .formMillPart,
+  .formTurnPart,
+  .formFlexPart {
+    height: 45%;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+    .carousel-item > model-viewer {
+        
+        min-width: 150px;
+        min-height: 150px;
+      }
+
+      .spotDimension {      
+        font-size: 10px;
+      }
+      
+    
+}
+

@@ -1,0 +1,97 @@
+/********************(    SIDEBAR   )***********************/
+
+.dash_all sidebar {
+    width: 150px;
+    /* min-width: 80px; */
+    height: 100%;
+    /* min-height: 560px; */
+    background-color: #212429;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.side_logo {
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: yellow; */
+}
+
+.side_logo>#btn_teste>.fa-th {
+    color: white;
+    font-size: clamp(25px, 35px, 50px);
+}
+
+.side_logo>#btn_teste>.fa-th:hover {
+    color: gray;
+    transform: scale(1.15);
+    transition: 0.4s;
+}
+
+#btn_teste {
+    border: none;
+    background-color: #212429;
+    margin: 0;
+    padding: 0;
+}
+
+sidebar>.dash_menu {
+    width: 100%;
+    margin: 0;
+    font-size: 14px;
+    text-align: left;
+}
+
+.dash_menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dash_submenu {
+    width: 100%;
+    padding: 13px 0;
+    border-top: 1px solid white;
+    color: white;
+}
+
+.dash_submenu:last-child {
+    border-bottom: 1px solid white;
+}
+
+.dash_submenu:hover {
+    background-color: gray;
+}
+
+.dash_submenu>.inner_submenu {
+    text-decoration: none;
+    color: white;
+    border: none;
+    background-color: #21242900;
+}
+
+.inner_submenu>.submenu_icon {
+    margin: 0px 10px;
+    font-size: 20px;
+}
+
+
+/********************(    RESPONSIVE   )***********************/
+
+@media screen and (max-width: 760px) {
+    .dash_all sidebar {
+        width: 70px;
+    }
+    .dash_submenu>.submenu_icon {
+        font-size: 32px;
+    }
+    .inner_submenu>span {
+        display: none;
+    }
+    sidebar>.dash_menu {
+        text-align: center;
+    }
+}
