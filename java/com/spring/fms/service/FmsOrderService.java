@@ -11,6 +11,7 @@ public interface FmsOrderService {
 	List<Order> findOrderAll();
 	Order findOrderById(long id);
 	Order saveOrder(Order order);
-	
+	Long count();
+	void deleteAllOrder();
 	
 }

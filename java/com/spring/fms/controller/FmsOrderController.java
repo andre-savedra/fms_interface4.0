@@ -381,6 +381,8 @@ public class FmsOrderController {
 
 	/************************** HTTP REQUEST ************************/
 
+
+	
 	/** ------ SAVE AN ORDER ------- **/
 	@ResponseBody
 	@PostMapping(value = "/ordersave", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -425,6 +427,29 @@ public class FmsOrderController {
 
 		return "feito";
 	}
+	
+	/************* REQUEST TOTAL COUNT   ***********/
+	@ResponseBody
+	@PostMapping(value = "/count_orders", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Long getAllOrderCount() {
+		
+		return orderService.count();
+	}
+	
+	/************* REQUEST DELETE ORDERS   ***********/
+	@ResponseBody
+	@PostMapping(value = "/delete_all_orders", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getDeleteAllOrders() {
+		
+		try {
+			orderService.deleteAllOrder();
+			return "feito";
+		}
+		catch(Exception ex) {
+			return "erro";
+		}
+	}
+	
 
 	/** ------ REQUEST ALL ORDERS ------- **/
 	@ResponseBody

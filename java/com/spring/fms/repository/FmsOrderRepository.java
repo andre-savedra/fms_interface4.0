@@ -9,4 +9,5 @@ import com.spring.fms.model.OrderType;
 
 public interface FmsOrderRepository extends JpaRepository<Order, Long>{
 	List<Order> findAllByType(OrderType type);
+	long count();
 }

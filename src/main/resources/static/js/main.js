@@ -203,6 +203,8 @@ var PartsFlexDatabase = "initial";
 
 //total orders in database
 var OrdersDatabase = "initial";
+var numberOfOrdersDatabase = 0;
+
 
 //actual view selected in screen
 var viewActive = "ajax-custom";
@@ -219,6 +221,7 @@ var oldMillPartsNoFields = 0;
 var flexPartsNoFields = 0;
 var oldFlexPartsNoFields = 0;
 
+
 //initial variables
 var initialLoadDataParts = 0;
 var initialLoadDataTurn = 0;
@@ -226,6 +229,7 @@ var initialLoadDataMill = 0;
 var initialLoadDataFlex = 0;
 var initialLoadHtmlVar = 0;
 var initialLoadOrders = 0;
+
 
 /****************************  (Cookies)  **********************************/
 
@@ -359,12 +363,10 @@ function submitPart(element) {
     //function to change gcode according to chosen customizations
     process_validated = renderGcode(values_validated, process_validated);
 
-    console.log("values validated");
-    console.log(values_validated);
-    // console.log("GCODE RENDERIZADO2:");
-    // console.log(process_validated);
-    console.log("Peça escolhida:");
-    console.log(PartsFlexDatabase[partno]);
+    // console.log("values validated");
+    // console.log(values_validated);    
+    // console.log("Peça escolhida:");
+    // console.log(PartsFlexDatabase[partno]);
 
     let listStep = [];
 
@@ -372,30 +374,29 @@ function submitPart(element) {
         listStep.push(new StepOrder(
             element.name,
             element.gcode,
-            typeM
+            element.machine
         ));
     });
-    console.log("list step");
-    console.log(listStep);
+    // console.log("list step");
+    // console.log(listStep);
+
+    let processOrder = new ProcessOrder(listStep);
+
+    let myOrder = new Order(
+        getActualUser(),
+        processOrder,
+        typeM,
+        dimensionsChosen,
+        values_validated[1],
+        values_validated[0],
+        modelTypeList[values_validated[2]]
+    );
 
 
-    // let processOrder = new ProcessOrder(listStep);
+    console.log("minha ordem:");
+    console.log(myOrder);
 
-    // let myOrder = new Order(
-    //     getActualUser(),
-    //     processOrder,
-    //     typeM,
-    //     dimensionsChosen,
-    //     values_validated[1],
-    //     values_validated[0],
-    //     modelTypeList[values_validated[2]]
-    // );
-
-
-    // console.log("minha ordem:");
-    // console.log(myOrder);
-
-    // orderSave(myOrder);
+    orderSave(myOrder);
 }
 
 //internal function, loaded after part be ordered and fields validated
@@ -676,6 +677,31 @@ function loadAllDataPartsResponse(responseStatus, responseText) {
     }
 }
 
+/*--------- DATA COUNT ALL ORDERS --------*/
+//internal function to load all orders in database
+function countOrdersList() {
+    let url = defaultUrl + "count_orders";
+
+    makePostReturn(url, null, countAllOrdersResponse);
+}
+
+function countAllOrdersResponse(responseStatus, responseText) {
+
+    if (responseStatus === 200) {
+        let dbResponse = responseText;
+
+        if (dbResponse > 0) {
+            numberOfOrdersDatabase = dbResponse;
+
+            console.log("NUMBER ORDERS:");
+            console.log(numberOfOrdersDatabase);
+        }
+
+    } else {
+        window.location.href = "/fail";
+    }
+}
+
 /*--------- DATA LOAD ALL ORDERS --------*/
 //internal function to load all orders in database
 function loadOrdersList() {
@@ -689,13 +715,7 @@ function loadAllOrdersResponse(responseStatus, responseText) {
         let dbResponse = JSON.parse(responseText);
         if (dbResponse.length > 0) {
             OrdersDatabase = dbResponse;
-            //the first time to load orders is just to pre-load, not render
-            //after this, the function is loaded when the page of orders is active
-            if (initialLoadOrders === 1) {
-                renderOrdersList(dbResponse);
-            }
-
-            initialLoadOrders = 1;
+            renderOrdersList(dbResponse);
             console.log("ORDERS DATABASE");
             console.log(OrdersDatabase);
         }
@@ -728,83 +748,98 @@ function dataFormatter(data) {
 //render data in list of orders when is active
 function renderOrdersList(dataOrders) {
     let tableBody = document.querySelector("#body_tb_prodList");
-    let htmlString = "";
-    let color = "#cccccc";
+    if (tableBody != null) {
+        let htmlString = "";
+        let color = "#cccccc";
 
-    let head = document.querySelectorAll("#head_tb_prodList tr th");
-    for (let i = 0; i < head.length; i++) {
-        head[i].style["background-color"] = "#2124298c";
-        head[i].style["border-bottom"] = "2px solid black";
-    }
-
-    for (var i = 0; i < dataOrders.length; i++) {
-        if (color === "#cccccc") {
-            color = "#ebe1e1";
-        } else {
-            color = "#cccccc";
+        let head = document.querySelectorAll("#head_tb_prodList tr th");
+        for (let i = 0; i < head.length; i++) {
+            head[i].style["background-color"] = "#2124298c";
+            head[i].style["border-bottom"] = "2px solid black";
         }
 
-        htmlString +=
-            '<tr style="background-color:' +
-            color +
-            ';">' +
-            '<th class="thId" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["id"] +
-            "</th>" +
-            '<th class = "thName" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["ordername"] +
-            "</th>" +
-            '<th class = "thMach" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["machine"]["name"] +
-            "</th>" +
-            '<th class = "thUser" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["user"]["name"] +
-            "</th>" +
-            '<th class = "thTypeProd" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataFormatter(dataOrders[i]["type"]["type"]) +
-            "</th>" +
-            '<th class = "thToProd" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["units"] +
-            "</th>" +
-            '<th class = "thProd" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["unitsProduced"] +
-            "</th>" +
-            '<th class = "thOk" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataFormatter(dataOrders[i]["produced"]) +
-            "</th>" +
-            '<th class = "thIn" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataOrders[i]["inputDate"] +
-            "</th>" +
-            '<th class = "thOut" style="background-color:' +
-            color +
-            '; border-bottom: 2px solid black;">' +
-            dataFormatter(dataOrders[i]["outputDate"]) +
-            "</th>" +
-            "</tr>";
+        console.log("dataOrders");
+        console.log(dataOrders);
+        for (var i = 0; i < dataOrders.length; i++) {
+            if (color === "#cccccc") {
+                color = "#ebe1e1";
+            } else {
+                color = "#cccccc";
+            }
+
+            let mach = "";
+            if (dataOrders[i]['process']['steps'].length > 1) {
+                mach = dataOrders[i]['process']['steps'][0]['machine']['name'] + ' - ';
+                mach += dataOrders[i]['process']['steps'][1]['machine']['name'];
+            } else {
+                mach = dataOrders[i]['process']['steps'][0]['machine']['name'];
+            }
+
+
+            htmlString +=
+                '<tr style="background-color:' +
+                color +
+                ';">' +
+                '<th class="thId" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataOrders[i]["id"] +
+                "</th>" +
+                '<th class = "thName" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataOrders[i]["ordername"] +
+                "</th>" +
+                '<th class = "thMach" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                mach +
+                "</th>" +
+                '<th class = "thUser" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataOrders[i]["user"]["name"] +
+                "</th>" +
+                '<th class = "thTypeProd" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataFormatter(dataOrders[i]["type"]["type"]) +
+                "</th>" +
+                '<th class = "thToProd" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataOrders[i]["units"] +
+                "</th>" +
+                '<th class = "thProd" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataOrders[i]["unitsProduced"] +
+                "</th>" +
+                '<th class = "thOk" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataFormatter(dataOrders[i]["produced"]) +
+                "</th>" +
+                '<th class = "thIn" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataOrders[i]["inputDate"] +
+                "</th>" +
+                '<th class = "thOut" style="background-color:' +
+                color +
+                '; border-bottom: 2px solid black;">' +
+                dataFormatter(dataOrders[i]["outputDate"]) +
+                "</th>" +
+                "</tr>";
+        }
+
+        console.log("html string");
+        console.log(htmlString);
+
+        if ((htmlString != "") && (htmlString != null)) {
+            tableBody.innerHTML = htmlString;
+        }
     }
-
-    //console.log("html string");
-    //console.log(htmlString);
-
-    tableBody.innerHTML = htmlString;
 }
 
 /*--------- COUNT ALL PARTS --------*/
@@ -882,6 +917,7 @@ function fetchContent(element) {
     //turn on timer to refresh production list
     if (viewActive === "ajax-productionList") {
         onTimerGetOrdersList();
+        numberOfOrdersDatabase = 0;
     } else {
         stopTimerGetOrdersList();
     }
@@ -940,7 +976,8 @@ function fetchLoadHtmlParts(functionResponse) {
 function fetchLoadHtmlPartsResponse() {
     if (initialLoadHtmlVar === 3) {
         renderHtmlViewParts();
-        //loadOrdersList();
+        countOrdersList();
+        loadOrdersList();
     }
 }
 
@@ -1235,6 +1272,7 @@ function refreshChartsDashboards() {
 
 function onTimerChartsDashboards() {
     timerChartsDashboards = setInterval(refreshChartsDashboards, 4000);
+
 }
 
 function stopTimerChartsDashboards() {
@@ -1285,14 +1323,25 @@ function stopTimerGetPartTurnMill() {
 var timerGetOrdersList;
 
 function refreshGetOrdersList() {
-    loadOrdersList();
+    countOrdersList();
+    if (numberOfOrdersDatabase != OrdersDatabase.length) {
+        loadOrdersList();
+    }
 }
 
 function onTimerGetOrdersList() {
-    timerGetOrdersList = setInterval(refreshGetOrdersList, 2500);
+    let timerRef = 5000;
+
+    if (initialLoadOrders == 0) {
+        timerRef = 10;
+    }
+
+    timerGetOrdersList = setInterval(refreshGetOrdersList, timerRef);
+    initialLoadOrders = 1;
 }
 
 function stopTimerGetOrdersList() {
+    initialLoadOrders = 0;
     clearInterval(refreshGetOrdersList);
 }
 
