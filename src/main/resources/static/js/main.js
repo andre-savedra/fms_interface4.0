@@ -747,6 +747,7 @@ function dataFormatter(data) {
 }
 //render data in list of orders when is active
 function renderOrdersList(dataOrders) {
+
     let tableBody = document.querySelector("#body_tb_prodList");
     if (tableBody != null) {
         let htmlString = "";
@@ -758,8 +759,8 @@ function renderOrdersList(dataOrders) {
             head[i].style["border-bottom"] = "2px solid black";
         }
 
-        console.log("dataOrders");
-        console.log(dataOrders);
+        // console.log("dataOrders");
+        // console.log(dataOrders);
         for (var i = 0; i < dataOrders.length; i++) {
             if (color === "#cccccc") {
                 color = "#ebe1e1";
@@ -833,8 +834,8 @@ function renderOrdersList(dataOrders) {
                 "</tr>";
         }
 
-        console.log("html string");
-        console.log(htmlString);
+        // console.log("html string");
+        // console.log(htmlString);
 
         if ((htmlString != "") && (htmlString != null)) {
             tableBody.innerHTML = htmlString;
@@ -1327,17 +1328,17 @@ function refreshGetOrdersList() {
     if (numberOfOrdersDatabase != OrdersDatabase.length) {
         loadOrdersList();
     }
+
+
 }
 
 function onTimerGetOrdersList() {
-    let timerRef = 5000;
 
     if (initialLoadOrders == 0) {
-        timerRef = 10;
+        loadOrdersList();
     }
-
-    timerGetOrdersList = setInterval(refreshGetOrdersList, timerRef);
     initialLoadOrders = 1;
+    timerGetOrdersList = setInterval(refreshGetOrdersList, 5000);
 }
 
 function stopTimerGetOrdersList() {
