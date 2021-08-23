@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.fms</groupId>
 	<artifactId>FmsInterfaceWeb</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>FmsInterfaceWeb</name>
 	<description>Interface FMS</description>
 	<properties>
@@ -69,9 +69,7 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
 		</dependency>
-		
-		
-		
+
 	</dependencies>
 
 	<build>
@@ -92,9 +90,10 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
 		</plugins>
 	</build>
-	
+
 
 
 </project>
