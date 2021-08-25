@@ -39,7 +39,7 @@ import com.spring.fms.service.OpcUaVarsRobotService;
 import com.spring.fms.service.OpcUaVarsTurnService;
 import com.spring.fms.service.SupervisoryDataExchangeService;
 import com.spring.fms.utils.EmailSender;
-
+//andre
 @Controller
 public class FmsOrderController {
 
@@ -295,6 +295,7 @@ public class FmsOrderController {
 	/************************** METHOD REQUESTS ************************/
 	private List<Order> getOrdersMethod() {
 
+		//first configuration
 		if ((started == false) && (InterfaceConfig.interfaceType == InterfaceConfig.LOCAL_TYPE)) {
 			System.out.println("iniciado");
 

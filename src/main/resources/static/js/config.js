@@ -1,7 +1,7 @@
 const CLOUD_TYPE = 0;
 const LOCAL_TYPE = 1;
 
-const interfaceType = CLOUD_TYPE;
+const interfaceType = LOCAL_TYPE;
 const defaultUrl = "";
 
 if (interfaceType == CLOUD_TYPE) {

@@ -63,6 +63,13 @@ public class Order {
 	@OneToOne
 	private Model model;
 	
+	private Integer priority;
+	
+	private boolean approved;
+	
+	private String annotation;
+	
+	private String status;
 	
 	public ProcessOrder getProcess() {
 		return process;
@@ -182,6 +189,38 @@ public class Order {
 
 	public void setModel(Model model) {
 		this.model = model;
+	}
+
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	public String getAnnotation() {
+		return annotation;
+	}
+
+	public void setAnnotation(String annotation) {
+		this.annotation = annotation;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}		
 	
 	
