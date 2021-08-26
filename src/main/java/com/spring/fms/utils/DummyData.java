@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,7 @@ import com.spring.fms.model.ProcessOrder;
 import com.spring.fms.model.ProcessPart;
 import com.spring.fms.model.StepOrder;
 import com.spring.fms.model.StepPart;
+import com.spring.fms.model.TasksAutomation;
 import com.spring.fms.model.User;
 import com.spring.fms.repository.FmsCustomRepository;
 import com.spring.fms.repository.FmsMachineRepository;
@@ -29,6 +32,7 @@ import com.spring.fms.repository.FmsProcessOrderRepository;
 import com.spring.fms.repository.FmsProcessPartRepository;
 import com.spring.fms.repository.FmsStepOrderRepository;
 import com.spring.fms.repository.FmsStepPartRepository;
+import com.spring.fms.repository.FmsTasksAutomationRepository;
 import com.spring.fms.repository.FmsUserRepository;
 
 @Component
@@ -67,8 +71,33 @@ public class DummyData {
 	@Autowired
 	FmsModelRepository modelRepository_;
 
+	@Autowired
+	FmsTasksAutomationRepository taskAutomationRepository_;
+	
 	//@PostConstruct
 	public void loadDummy() {
+		
+		
+		TasksAutomation taskAutomation1 = new TasksAutomation();
+		taskAutomation1.setFinished(false);
+		taskAutomation1.setGcodeLoaded(true);
+		taskAutomation1.setTaskName("Carrega Torno");
+		taskAutomation1.setUserName("andre");
+		taskAutomation1.setLocalName("dois");
+		taskAutomationRepository_.save(taskAutomation1);
+		
+		
+		TasksAutomation taskAutomation2 = new TasksAutomation();
+		taskAutomation2.setFinished(false);
+		taskAutomation2.setGcodeLoaded(true);
+		taskAutomation2.setTaskName("Carrega Centro");
+		taskAutomation2.setUserName("teste");
+		taskAutomation2.setLocalName("um");
+		taskAutomationRepository_.save(taskAutomation2);
+		
+		
+		
+		
 		
 		//MODELS
 		Model model1 = new Model();
