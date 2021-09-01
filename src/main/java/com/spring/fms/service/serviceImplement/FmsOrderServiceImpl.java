@@ -47,6 +47,11 @@ public class FmsOrderServiceImpl implements FmsOrderService {
 		orderRepository.deleteAll();		
 	}
 
+	@Override
+	public List<Order> findOrderAllToProduce() {		
+		return orderRepository.findOrdersToProduce();
+	}
+
 	
 
 }

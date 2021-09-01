@@ -39,6 +39,7 @@ import com.spring.fms.service.OpcUaVarsRobotService;
 import com.spring.fms.service.OpcUaVarsTurnService;
 import com.spring.fms.service.SupervisoryDataExchangeService;
 import com.spring.fms.utils.EmailSender;
+
 //andre
 @Controller
 public class FmsOrderController {
@@ -52,6 +53,8 @@ public class FmsOrderController {
 
 	private static OrderType orderTurn;
 
+	private static List<Order> ordersInProduction;
+	private static List<Order> totalOrders;
 	private static List<Order> ordersTurn;
 	private static List<Order> ordersMill;
 	private static Order currentOrderTurn;
@@ -79,12 +82,11 @@ public class FmsOrderController {
 	EmailSender emailSender;
 
 	private static Integer count = 0;
-	
+
 	private final int SUPERVISORY_TURN = 1;
 	private final int SUPERVISORY_MILL = 2;
 	private final int SUPERVISORY_FLEX_TURN = 3;
 	private final int SUPERVISORY_FLEX_MILL = 4;
-	
 
 	@Autowired
 	FmsOrderService orderService;
@@ -108,6 +110,17 @@ public class FmsOrderController {
 	SupervisoryDataExchangeService supervisoryService;
 
 	/************************** MANAGER PRODUCTION ************************/
+	
+	private byte gcodeSetter(Order orderToGetGcode) {
+		byte status = 0;
+		
+		//for
+		
+		
+		return status;		
+	}
+	
+	
 	private Order findNextOrder(List<Order> orders) {
 		Order nextOrder = new Order();
 
@@ -117,15 +130,14 @@ public class FmsOrderController {
 				break;
 			}
 		}
-		/*
-		 * if (nextOrder.getGcode() == null) { nextOrder.setProduced(true); }- new
-		 */
 
 		return nextOrder;
 	}
 
+	// function to manage production, with threads inside
 	private void managerProduction() {
 
+		// thread to get productions frequently
 		threadGetProduction = new Threads(new Runnable() {
 
 			@Override
@@ -136,10 +148,22 @@ public class FmsOrderController {
 					if (threadGetProduction.isAllDone()) {
 						return;
 					}
-					// System.out.println("thread GET PRODUCTION is running!!!!!!!!!!!!!!!!!");
+					System.out.println("thread GET PRODUCTION is running!!!!!!!!!!!!!!!!!");
 
-					// ordersTurn = getOrdersByMachineMethod(mTurn); -new
-					// ordersMill = getOrdersByMachineMethod(mMill);
+					totalOrders = getOrdersMethod();
+					ordersTurn.clear();
+					ordersMill.clear();
+
+					// get all orders and split then to each list (turn and mill)
+					for (int i = 0; i < totalOrders.size(); i++) {
+						String type = totalOrders.get(i).getType().getType();
+
+						if (type.equals("order-turn") || type.equals("custom-turn") || type.equals("flex")) {
+							ordersTurn.add(totalOrders.get(i));
+						} else {
+							ordersMill.add(totalOrders.get(i));
+						}
+					}
 
 					try {
 						threadGetProduction.sleep(10000);
@@ -150,6 +174,7 @@ public class FmsOrderController {
 			} // public void run()
 		}); // threadProduction
 
+		// thread to manage production factory
 		threadMakeProduction = new Threads(new Runnable() {
 
 			@Override
@@ -160,8 +185,9 @@ public class FmsOrderController {
 					if (threadMakeProduction.isAllDone()) {
 						return;
 					}
-					// System.out.println("thread MAKE PRODUCTION is running!!!!!!!!!!!!!!!!!");
+					System.out.println("thread MAKE PRODUCTION is running!!!!!!!!!!!!!!!!!");
 
+					// refresh status of variables between supervisory and MES
 					uaVarTurn = uaTurnService.findTurnLastVar();
 					uaVarMill = uaMillingService.findMillingLastVar();
 					uaVarRobot = uaRobotService.findRobotLastVar();
@@ -205,30 +231,40 @@ public class FmsOrderController {
 						}
 					}
 
+					// if already initialized and part finished
 					if ((started) && (ordersTurn.size() > 0) && (currentOrderTurn.isProduced())) {
 
-						// ordersTurn = getOrdersByMachineMethod(mTurn); -new
+						// not implemented, standby:
+						// ordersTurn = getOrdersByMachineMethod(mTurn);
 						currentOrderTurn = findNextOrder(ordersTurn);
 
-						/*
-						 * if (currentOrderTurn.getGcode() != null) { if
-						 * (gcodeWriterTurn.createFile(currentOrderTurn.getGcode())) {
-						 * supervisoryDataExchange.setGcodeTurnLoaded(true);
-						 * supervisoryDataExchange.setOrderTurnToManufacture(currentOrderTurn.getId());
-						 * supervisoryService.saveData(supervisoryDataExchange);
-						 * 
-						 * System.out.println("ARQUIVO CRIADO COM SUCESSO DO TORNO!"); } else {
-						 * supervisoryDataExchange.setGcodeTurnLoaded(false);
-						 * supervisoryDataExchange.setOrderTurnToManufacture(1L);
-						 * supervisoryService.saveData(supervisoryDataExchange);
-						 * 
-						 * System.out.println("FALHA CRIACAO TORNO"); }
-						 * 
-						 * System.out.println("------------------------------");
-						 * System.out.println("ORDEM ATUAL CARREGADA E:");
-						 * System.out.println(currentOrderTurn.getOrdername());
-						 * System.out.println("------------------------------"); } -new
-						 */
+						if (currentOrderTurn.getProcess().getSteps()
+							.get(0).getGcode() != null) {
+														
+							if (gcodeWriterTurn.createFile(
+									currentOrderTurn.getProcess().getSteps()
+									.get(0).getGcode()
+								)) {
+																
+								supervisoryDataExchange.setGcodeTurnLoaded(true);
+								supervisoryDataExchange.setOrderTurnToManufacture(currentOrderTurn.getId());
+								supervisoryService.saveData(supervisoryDataExchange);
+
+								System.out.println("ARQUIVO CRIADO COM SUCESSO DO TORNO!");
+							} else {
+								supervisoryDataExchange.setGcodeTurnLoaded(false);
+								supervisoryDataExchange.setOrderTurnToManufacture(1L);
+								supervisoryService.saveData(supervisoryDataExchange);
+
+								System.out.println("FALHA CRIACAO TORNO");
+							}
+
+							System.out.println("------------------------------");
+							System.out.println("ORDEM ATUAL CARREGADA E:");
+							System.out.println(currentOrderTurn.getOrdername());
+							System.out.println("------------------------------");
+						}
+
 						// there is no order to produce, so we can retain variable to false
 						/*
 						 * else if (supervisoryDataExchange.isGcodeTurnLoaded()){
@@ -299,14 +335,26 @@ public class FmsOrderController {
 	}
 
 	/************************** METHOD REQUESTS ************************/
+	
+	private List<Order> getOrdersNotProduced(){
+		try {
+			return orderService.findOrderAllToProduce();
+		} catch (Exception e) {
+			System.out.println("PROBLEMA AO CARREGAR ORDENS NÃO PRODUZIDAS");
+			return null;			
+		}
+	}
+	
 	private List<Order> getOrdersMethod() {
 
-		//first configuration
+		// INITIALIZATION: FIRST CONFIGURATION
 		if ((started == false) && (InterfaceConfig.interfaceType == InterfaceConfig.LOCAL_TYPE)) {
 			System.out.println("iniciado");
 
+			// Initialize the email sender
 			emailSender = new EmailSender();
 
+			// create machines
 			mTurn = new Machine();
 			mTurn.setId(1L);
 			mTurn.setName("torno");
@@ -315,28 +363,38 @@ public class FmsOrderController {
 			mMill.setId(2L);
 			mMill.setName("centro");
 
+			// create current order and set to produced to force find new one
 			currentOrderTurn = new Order();
 			currentOrderTurn.setProduced(true);
 
 			currentOrderMill = new Order();
 			currentOrderMill.setProduced(true);
 
+			// create array of orders
+			
+			totalOrders = new ArrayList<>();
 			ordersTurn = new ArrayList<>();
 			ordersMill = new ArrayList<>();
 
+			// create the gcode writers
 			gcodeWriterTurn = new GcodeWriter(fileNameTurn, pathTurn);
 			gcodeWriterMill = new GcodeWriter(fileNameMill, pathMill);
 
+			// create instance of supervisory
 			supervisoryDataExchange = supervisoryService.findDataById(1L);
 
-			managerProduction();
+			// call manager Production before continue
+		    //managerProduction();
 
+			// get last status of variables
 			uaVarTurn = uaTurnService.findTurnLastVar();
 			uaVarMill = uaMillingService.findMillingLastVar();
 			uaVarRobot = uaRobotService.findRobotLastVar();
 
+			// create array of messages to send
 			arrayMessages = new ArrayList<>();
 
+			// now, we started the initialization
 			started = true;
 		}
 
@@ -367,10 +425,8 @@ public class FmsOrderController {
 				System.out.println(steps.get(i).getGcode());
 
 				System.out.print("--------------\n\n");
-				
-				
 
-				 stepOrderService.saveStepOrder(steps.get(i));
+				stepOrderService.saveStepOrder(steps.get(i));
 			}
 			return true;
 
@@ -388,8 +444,6 @@ public class FmsOrderController {
 
 	/************************** HTTP REQUEST ************************/
 
-
-	
 	/** ------ SAVE AN ORDER ------- **/
 	@ResponseBody
 	@PostMapping(value = "/ordersave", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -434,29 +488,27 @@ public class FmsOrderController {
 
 		return "feito";
 	}
-	
-	/************* REQUEST TOTAL COUNT   ***********/
+
+	/************* REQUEST TOTAL COUNT ***********/
 	@ResponseBody
 	@PostMapping(value = "/count_orders", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long getAllOrderCount() {
-		
+
 		return orderService.count();
 	}
-	
-	/************* REQUEST DELETE ORDERS   ***********/
+
+	/************* REQUEST DELETE ORDERS ***********/
 	@ResponseBody
 	@PostMapping(value = "/delete_all_orders", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getDeleteAllOrders() {
-		
+
 		try {
 			orderService.deleteAllOrder();
 			return "feito";
-		}
-		catch(Exception ex) {
+		} catch (Exception ex) {
 			return "erro";
 		}
 	}
-	
 
 	/** ------ REQUEST ALL ORDERS ------- **/
 	@ResponseBody
@@ -465,6 +517,15 @@ public class FmsOrderController {
 
 		return getOrdersMethod();
 	}
+	
+	/** ------ REQUEST ALL ORDERS NOT PRODUCED ------- **/
+	@ResponseBody
+	@PostMapping(value = "/load_orders_to_produce", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Order> getOrdersProduce() {
+
+		return getOrdersNotProduced();
+	}
+	
 
 	/** ------ REQUEST ORDERS BY MACHINE ------- **/
 	@ResponseBody
