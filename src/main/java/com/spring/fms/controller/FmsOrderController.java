@@ -79,6 +79,12 @@ public class FmsOrderController {
 	EmailSender emailSender;
 
 	private static Integer count = 0;
+	
+	private final int SUPERVISORY_TURN = 1;
+	private final int SUPERVISORY_MILL = 2;
+	private final int SUPERVISORY_FLEX_TURN = 3;
+	private final int SUPERVISORY_FLEX_MILL = 4;
+	
 
 	@Autowired
 	FmsOrderService orderService;
