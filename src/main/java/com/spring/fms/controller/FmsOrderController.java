@@ -342,15 +342,46 @@ public class FmsOrderController {
 											}										
 										}
 									}									
-								}
+								}//end if(ordersInProduction.size() > 0)
+								
 								//orders in production must be set or could not find a job for one machinery
 								if ( (ordersInProduction.size() == 0) || (jobSet == false) )
-								{
-									
-								}							
-								
-								
-							}						
+								{							
+									//for all orders not produced, we compare the status
+									for(Order order : totalOrders)
+									{
+										List<StepOrder> steps = order.getProcess().getSteps();
+										
+										//if job were set, so we can't continue
+										if(jobSet == true)
+										{
+											break;
+										}
+										
+										//for all steps of this order
+										for(int step=0; step < steps.size(); step++)
+										{
+											//if not concluded, and the machine match:
+											if((steps.get(step).isConcluded() == false) && 
+											   (steps.get(step).getMachine().getName().equalsIgnoreCase
+											   (myMachinery.getMachine().getName())
+											   ) )
+											{
+												ordersInProduction.add(order);
+												jobSetter(myMachinery, order, step);
+												jobSet = true;
+											}
+											//if not concluded and not matched, so we can
+											//conclude that cannot continue before finish the first step
+											else if(steps.get(step).isConcluded() == false)
+											{
+												break; //break this order, but continue finding another
+											}										
+										}
+									}								
+								} //end if ( (ordersInProduction.size() == 0) || (jobSet == false) )
+					
+							}//end if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) && (myMachinery.isMachineReady()) ) 			
 							
 						}
 						
