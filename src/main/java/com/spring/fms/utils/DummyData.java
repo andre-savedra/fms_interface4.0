@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.spring.fms.model.Customization;
 import com.spring.fms.model.Machine;
+import com.spring.fms.model.Machinery;
 import com.spring.fms.model.Model;
 import com.spring.fms.model.Order;
 import com.spring.fms.model.OrderType;
@@ -20,10 +21,10 @@ import com.spring.fms.model.ProcessOrder;
 import com.spring.fms.model.ProcessPart;
 import com.spring.fms.model.StepOrder;
 import com.spring.fms.model.StepPart;
-import com.spring.fms.model.TasksAutomation;
 import com.spring.fms.model.User;
 import com.spring.fms.repository.FmsCustomRepository;
 import com.spring.fms.repository.FmsMachineRepository;
+import com.spring.fms.repository.FmsMachineryRepository;
 import com.spring.fms.repository.FmsModelRepository;
 import com.spring.fms.repository.FmsOrderRepository;
 import com.spring.fms.repository.FmsOrderTypeRepository;
@@ -32,7 +33,6 @@ import com.spring.fms.repository.FmsProcessOrderRepository;
 import com.spring.fms.repository.FmsProcessPartRepository;
 import com.spring.fms.repository.FmsStepOrderRepository;
 import com.spring.fms.repository.FmsStepPartRepository;
-import com.spring.fms.repository.FmsTasksAutomationRepository;
 import com.spring.fms.repository.FmsUserRepository;
 
 @Component
@@ -70,34 +70,14 @@ public class DummyData {
 	
 	@Autowired
 	FmsModelRepository modelRepository_;
-
+	
 	@Autowired
-	FmsTasksAutomationRepository taskAutomationRepository_;
+	FmsMachineryRepository machineryRepository_;
+
 	
 	//@PostConstruct
 	public void loadDummy() {
-		
-		
-		TasksAutomation taskAutomation1 = new TasksAutomation();
-		taskAutomation1.setFinished(false);
-		taskAutomation1.setGcodeLoaded(true);
-		taskAutomation1.setTaskName("Carrega Torno");
-		taskAutomation1.setUserName("andre");
-		taskAutomation1.setLocalName("dois");
-		taskAutomationRepository_.save(taskAutomation1);
-		
-		
-		TasksAutomation taskAutomation2 = new TasksAutomation();
-		taskAutomation2.setFinished(false);
-		taskAutomation2.setGcodeLoaded(true);
-		taskAutomation2.setTaskName("Carrega Centro");
-		taskAutomation2.setUserName("teste");
-		taskAutomation2.setLocalName("um");
-		taskAutomationRepository_.save(taskAutomation2);
-		
-		
-		
-		
+				
 		
 		//MODELS
 		Model model1 = new Model();
@@ -125,15 +105,36 @@ public class DummyData {
 		Machine mach2 = new Machine();
 		mach2.setName("centro");
 
+		Machine mach3 = new Machine();
+		mach3.setName("robo");
+
+		
 		List<Machine> machineList = new ArrayList<>();
 		machineList.add(mach);
 		machineList.add(mach2);
+		machineList.add(mach3);
 
 		for (Machine theMachines : machineList) {
 			Machine saved = machineRepository_.save(theMachines);
 			System.out.println("Machine:");
 			System.out.println(saved.getId());
 		}
+		
+		Machinery machinery = new Machinery(mach.getId(),mach, true);
+		Machinery machinery2 = new Machinery(mach2.getId(),mach2, true);
+		Machinery machinery3 = new Machinery(mach3.getId(),mach3, true);
+		
+		List<Machinery> machineryList = new ArrayList<>();
+		machineryList.add(machinery);
+		machineryList.add(machinery2);
+		machineryList.add(machinery3);
+		
+		for (Machinery theMachineries : machineryList) {
+			Machinery saved = machineryRepository_.save(theMachineries);
+			System.out.println("Machineries:");
+			System.out.println(saved.getId());
+		}
+		
 
 		// ORDERS TYPE
 		OrderType orderTp = new OrderType();

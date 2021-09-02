@@ -1,33 +1,3 @@
-/****************************  (Backend_jsons)  **********************************/
-
-const DEFAULT_MACHINE_TURN = {
-    id: 1,
-};
-
-const DEFAULT_MACHINE_MILL = {
-    id: 2,
-};
-
-const DEFAULT_ORDER_TURN = {
-    id: 3,
-};
-
-const DEFAULT_ORDER_CUSTOM_TURN = {
-    id: 4,
-};
-
-const DEFAULT_ORDER_MILL = {
-    id: 5,
-};
-
-const DEFAULT_ORDER_CUSTOM_MILL = {
-    id: 6,
-};
-
-const DEFAULT_ORDER_FLEX = {
-    id: 7,
-};
-
 /****************************  (classes)  **********************************/
 
 class User {
@@ -177,11 +147,11 @@ var turnMachine = new Machine(3, "torno");
 var millingMachine = new Machine(4, "centro");
 
 //order's type
-var orderTurnType = new OrderType(5, "order-turn");
-var customTurnType = new OrderType(6, "custom-turn");
-var orderMillType = new OrderType(7, "order-mill");
-var customMillType = new OrderType(8, "custom-mill");
-var orderFlexType = new OrderType(9, "flex");
+var orderTurnType = new OrderType(6, "order-turn");
+var customTurnType = new OrderType(7, "custom-turn");
+var orderMillType = new OrderType(8, "order-mill");
+var customMillType = new OrderType(9, "custom-mill");
+var orderFlexType = new OrderType(10, "flex");
 
 //model's type
 var modelTypeWhite = new ModelType(1, "branco");

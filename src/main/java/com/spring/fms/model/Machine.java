@@ -10,6 +10,15 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "TB_MACHINE")
 public class Machine {
+	
+	public Machine() {
+		
+	}
+	
+	public Machine(Long id, String name) {
+		this.id = id;
+		this.name = name;	
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
