@@ -69,5 +69,9 @@ public class StepOrder {
 		this.concluded = concluded;
 	}
 	
+	public void resetStep() {
+		setConcluded(false);
+	}
+	
 	
 }

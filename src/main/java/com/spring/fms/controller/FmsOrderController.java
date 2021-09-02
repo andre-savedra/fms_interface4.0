@@ -102,6 +102,20 @@ public class FmsOrderController {
 
 	/************************** MANAGER PRODUCTION ************************/
 
+	private void clearMachinery(Machinery myMachinery) {
+		myMachinery.setJobName("");
+		myMachinery.setJobAccepted(false);
+		myMachinery.setJobEnded(false);
+		myMachinery.setMachining(false);
+		myMachinery.setMachineReady(false);
+		myMachinery.setPermissionToStart(false);
+		myMachinery.setOrderId(0L);
+		myMachinery.setStepId(0);
+		myMachinery.setHasJob(false);
+		myMachinery.setFlex(false);
+		myMachinery.setInfo("");
+	}
+
 	private boolean jobSetter(Machinery theMachinery, Order theOrder, int theStepId) {
 		boolean status = false;
 
@@ -109,18 +123,20 @@ public class FmsOrderController {
 				|| (theMachinery.getMachine().getName().equals(mMill.getMachine().getName()))) {
 
 			if (theOrder.getProcess().getSteps().get(theStepId).getGcode() != null) {
+
+				// clear important values
+				clearMachinery(theMachinery);
+
 				theMachinery.setHasJob(true);
 				theMachinery.setJobName(theOrder.getProcess().getSteps().get(theStepId).getName());
 				theMachinery.setOrderId(theOrder.getId());
 				theMachinery.setStepId(theStepId);
-				
-				if(theOrder.getType().getType().equals("flex")) {
+
+				if (theOrder.getType().getType().equals("flex")) {
 					theMachinery.setFlex(true);
-				}
-				else {
+				} else {
 					theMachinery.setFlex(false);
 				}
-							
 
 				if (gcodeWriter.createFile(theMachinery.getFilename(), theMachinery.getPath(),
 						theOrder.getProcess().getSteps().get(theStepId).getGcode())) {
@@ -221,6 +237,7 @@ public class FmsOrderController {
 											if ((steps.get(step).isConcluded() == false)
 													&& (steps.get(step).getMachine().getName()
 															.equalsIgnoreCase(myMachinery.getMachine().getName()))) {
+												// steJob
 												jobSetter(myMachinery, orderInProd, step);
 												jobSet = true;
 											}
@@ -251,7 +268,9 @@ public class FmsOrderController {
 											if ((steps.get(step).isConcluded() == false)
 													&& (steps.get(step).getMachine().getName()
 															.equalsIgnoreCase(myMachinery.getMachine().getName()))) {
+												// add this order to list of orders in production:
 												ordersInProduction.add(order);
+												// set Job
 												jobSetter(myMachinery, order, step);
 												jobSet = true;
 											}
@@ -268,52 +287,121 @@ public class FmsOrderController {
 							} // end if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) &&
 								// (myMachinery.isMachineReady()) )
 
+							/********* MANAGE PRODUCTION *********/
+
+							// if machinery enabled, already have job and accepted one
+							if ((myMachinery.isEnabled()) && (myMachinery.isHasJob()) && (myMachinery.isJobAccepted())
+									&& (myMachinery.isJobEnded())) {
+								
+								int orderEndedIndex = 0;
+								
+								for (Order orderEnded : ordersInProduction) {									
+									
+									// were found the order finished:
+									if (orderEnded.getId() == myMachinery.getOrderId()) {
+
+										// refreshed orders and database
+										orderEnded.getProcess().getSteps().get(myMachinery.getStepId())
+												.setConcluded(true);
+
+										// so this is the last step of that process:
+										if (orderEnded.getProcess().getSteps()
+												.size() == (myMachinery.getStepId() + 1)) {
+											// count one more part
+											orderEnded.increaseUnits();
+
+											// now we have to check if the amount of parts to produce is ok
+											if (orderEnded.getUnits() == orderEnded.getUnitsProduced()) {
+												
+												//FINISH THIS ORDER, AMOUNT PRODUCED!
+												orderEnded.getProcess().setConcluded(true);
+												orderEnded.setProduced(true);
+												orderEnded.setManufacturing(false);
+												orderEnded.setOutputDate(LocalDateTime.now());
+												
+												//save order
+												orderService.saveOrder(orderEnded);
+												//remove from list of production
+												ordersInProduction.remove(orderEndedIndex);
+												
+												//restart machinery
+												myMachinery.resetMachinery();
+												//save machinery
+												machineryService.saveMachinery(myMachinery);												
+												
+												
+												//send message to client
+												User u = orderEnded.getUser();
+												String msg = u.getName() + ", sua peca com nome " + orderEnded.getOrdername()
+														+ " acabou de ficar pronta! =) ";
+
+												Message message = new Message(u.getName(), u.getPhone().toString(), msg);
+												arrayMessages.add(message);											
+												
+											}
+											// so we have to reset and continue with this order
+											else {
+												
+												//FINISH JUST ONE SEGMENT OF THIS ORDER, so, restart!!!									
+												orderEnded.getProcess().resetProcess();
+												
+												orderEnded.getProcess().setConcluded(false);
+												orderEnded.setProduced(false);
+												orderEnded.setManufacturing(false);
+																								
+												//save order
+												orderService.saveOrder(orderEnded);
+												
+												//restart machinery
+												myMachinery.resetMachinery();
+												//save machinery
+												machineryService.saveMachinery(myMachinery);												
+											}
+										}//end of last step
+										
+										
+										
+
+										orderService.saveOrder(orderEnded);
+										break;
+									}
+									orderEndedIndex++;
+								}
+
+							}
+
 						}
 					}
 
-					/********* MANAGE PRODUCTION *********/
-					
-					//if initialized, have machineries and orders to produce
-					if((started) && (machineriesList.size() > 0) && (ordersInProduction.size() > 0))
-					{
-						//analyse all orders in production
-						for(Order ordersManufacturing : ordersInProduction)						
-						{
+					// if initialized, have machineries and orders to produce
+					if ((started) && (machineriesList.size() > 0) && (ordersInProduction.size() > 0)) {
+						// check all orders in production
+						for (Order ordersManufacturing : ordersInProduction) {
 							List<StepOrder> steps = ordersManufacturing.getProcess().getSteps();
 							int numberOfSteps = steps.size();
 							int counterStepsConcluded = 0;
-							
-							//check all steps of this order
-							for(StepOrder st : steps)
-							{
-								if(st.isConcluded())
-								{
+
+							// check all steps of this order
+							for (StepOrder st : steps) {
+								if (st.isConcluded()) {
 									counterStepsConcluded++;
-								}
-								else
-								{
+								} else {
+									counterStepsConcluded = 0;
 									break;
-								}								
+								}
 							}
-							
-							//so all steps were concluded
-							if(counterStepsConcluded == numberOfSteps)
-							{
-								//so the process is concluded
+
+							// so all steps were concluded
+							if (counterStepsConcluded == numberOfSteps) {
+								// so the process is concluded
 								ordersManufacturing.getProcess().setConcluded(true);
+
 							}
-							
-							
+
 						}
-						
-						
-						
+
 					}
-					
-					
-					
-					
-					
+
 					try {
 						threadMakeProduction.sleep(1500);
 					} catch (InterruptedException e) {
@@ -375,7 +463,6 @@ public class FmsOrderController {
 		// INITIALIZATION: FIRST CONFIGURATION
 		if ((started == false) && (InterfaceConfig.interfaceType == InterfaceConfig.LOCAL_TYPE)) {
 			System.out.println("iniciado");
-
 			// Initialize the email sender
 			emailSender = new EmailSender();
 

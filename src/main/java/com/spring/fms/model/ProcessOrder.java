@@ -47,6 +47,14 @@ public class ProcessOrder {
 	}
 	
 	
+	public void resetProcess(){
+		setConcluded(true);
+		
+		for(StepOrder step : getSteps())
+		{
+			step.resetStep();
+		}
+	}
 	
 }
 

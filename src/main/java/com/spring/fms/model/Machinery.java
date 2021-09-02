@@ -34,7 +34,7 @@ public class Machinery {
 	
 	private String path;
 	
-	private Long info;
+	private String info;
 	
 	public Machinery() {
 		
@@ -57,7 +57,7 @@ public class Machinery {
 		this.filename = "";
 		this.path = "";
 		
-		this.info = 0L;		
+		this.info = "";		
 	}
 
 
@@ -147,12 +147,12 @@ public class Machinery {
 		this.stepId = stepId;
 	}
 
-	public Long getInfo() {
+	
+	public String getInfo() {
 		return info;
 	}
 
-
-	public void setInfo(Long info) {
+	public void setInfo(String info) {
 		this.info = info;
 	}
 
@@ -202,6 +202,20 @@ public class Machinery {
 
 	public void setFlex(boolean flex) {
 		this.flex = flex;
+	}
+	
+	public void resetMachinery() {
+		setJobName("");
+		setFlex(false);
+		setHasJob(false);
+		setJobAccepted(false);
+		setJobEnded(false);
+		setMachining(false);
+		setMachineReady(false);
+		setPermissionToStart(false);
+		setOrderId(0L);
+		setStepId(0);
+		setInfo("");
 	}
 	
 		

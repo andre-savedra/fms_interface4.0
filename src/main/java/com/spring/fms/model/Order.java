@@ -221,8 +221,11 @@ public class Order {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}		
+	}
 	
+	public void increaseUnits() {
+		setUnitsProduced((getUnitsProduced() + 1));
+	}
 	
 	
 	
