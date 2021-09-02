@@ -8,7 +8,11 @@ public class GcodeWriter {
 
 	private String filename, path, content;
 	private FileWriter gcodeFile;
-
+	
+	public GcodeWriter() {
+		
+	}
+	
 	public GcodeWriter(String filename, String path, String content) {
 		this.filename = filename;
 		this.path = path;
@@ -20,6 +24,24 @@ public class GcodeWriter {
 		this.path = path;
 	}
 
+	public boolean createFile(String filename, String path, String content) {
+		String fullPath = path + "\\" + filename;
+		System.out.println(fullPath);
+		try {
+			gcodeFile = new FileWriter(new File(fullPath));
+			gcodeFile.write(content);
+			gcodeFile.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
 	public boolean createFile(String content) {
 
 		String fullPath = path + "\\" + filename;

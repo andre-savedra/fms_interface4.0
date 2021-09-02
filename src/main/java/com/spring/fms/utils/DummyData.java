@@ -121,7 +121,13 @@ public class DummyData {
 		}
 		
 		Machinery machinery = new Machinery(mach.getId(),mach, true);
+		machinery.setFilename("O7000");
+		machinery.setPath("D:\\gcode\\");
+		
 		Machinery machinery2 = new Machinery(mach2.getId(),mach2, true);
+		machinery2.setFilename("O8000");
+		machinery2.setPath("D:\\gcode\\");
+		
 		Machinery machinery3 = new Machinery(mach3.getId(),mach3, true);
 		
 		List<Machinery> machineryList = new ArrayList<>();

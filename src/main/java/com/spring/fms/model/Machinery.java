@@ -27,6 +27,11 @@ public class Machinery {
 	private boolean machineReady;
 	private boolean permissionToStart;
 	private Long orderId;	
+	private int stepId;
+	
+	private String filename;
+	
+	private String path;
 	
 	private Long info;
 	
@@ -47,6 +52,9 @@ public class Machinery {
 		this.machineReady = false;
 		this.permissionToStart = false;		
 		this.orderId = 0L;
+		this.stepId = 0;
+		this.filename = "";
+		this.path = "";
 		
 		this.info = 0L;		
 	}
@@ -128,6 +136,15 @@ public class Machinery {
 		this.orderId = orderId;
 	}
 
+	
+
+	public int getStepId() {
+		return stepId;
+	}
+
+	public void setStepId(int stepId) {
+		this.stepId = stepId;
+	}
 
 	public Long getInfo() {
 		return info;
@@ -160,6 +177,22 @@ public class Machinery {
 
 	public void setMachineReady(boolean machineReady) {
 		this.machineReady = machineReady;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 		

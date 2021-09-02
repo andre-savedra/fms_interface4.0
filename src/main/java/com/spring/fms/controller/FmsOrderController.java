@@ -32,6 +32,7 @@ import com.spring.fms.model.ProcessOrder;
 import com.spring.fms.model.StepOrder;
 import com.spring.fms.model.SupervisoryDataExchange;
 import com.spring.fms.model.User;
+import com.spring.fms.service.FmsMachineryService;
 import com.spring.fms.service.FmsOrderService;
 import com.spring.fms.service.FmsProcessOrderService;
 import com.spring.fms.service.FmsStepOrderService;
@@ -75,7 +76,7 @@ public class FmsOrderController {
 	private static boolean bufferProductionTurn = false;
 	private static boolean bufferProductionMill = false;
 
-	private GcodeWriter gcodeWriterTurn, gcodeWriterMill;
+	private GcodeWriter gcodeWriter, gcodeWriterTurn, gcodeWriterMill;
 
 	private final String pathTurn = "D:\\gcode\\";
 	private final String pathMill = "D:\\gcode\\";
@@ -113,13 +114,44 @@ public class FmsOrderController {
 
 	@Autowired
 	SupervisoryDataExchangeService supervisoryService;
+	
+	@Autowired
+	FmsMachineryService machineryService;
 
 	/************************** MANAGER PRODUCTION ************************/
 
-	private byte gcodeSetter(Order orderToGetGcode) {
+	private byte jobSetter(Machinery theMachinery, Order theOrder, int theStepId) {
 		byte status = 0;
 
-		// for
+		if(theOrder.getProcess().getSteps().get(theStepId).getGcode() != null)
+		{
+			theMachinery.setHasJob(true);
+			theMachinery.setJobName(theOrder.getProcess().getSteps().get(theStepId).getName());
+			theMachinery.setOrderId(theOrder.getId());
+			theMachinery.setStepId(theStepId);
+			
+			if (gcodeWriter.createFile(
+					theMachinery.getFilename(), theMachinery.getPath(),
+					theOrder.getProcess().getSteps().get(theStepId).getGcode())
+				) 
+			{
+
+				theMachinery.setPermissionToStart(true);
+				machineryService.saveMachinery(theMachinery);
+				System.out.println("ARQUIVO CRIADO COM SUCESSO DO TORNO!");
+			} 
+			else {
+				theMachinery.setPermissionToStart(false);
+				machineryService.saveMachinery(theMachinery);
+				System.out.println("FALHA CRIACAO TORNO");
+			}
+
+			System.out.println("------------------------------");
+			System.out.println("ORDEM ATUAL CARREGADA E: ");
+			System.out.println(theOrder.getId() + ", " + theOrder.getOrdername());
+			System.out.println("------------------------------");
+			
+		}
 
 		return status;
 	}
@@ -274,6 +306,49 @@ public class FmsOrderController {
 							if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) && 
 							   (myMachinery.isMachineReady()) ) 
 							{
+								boolean jobSet = false;
+								
+								//if has some order in production
+								if(ordersInProduction.size() > 0)
+								{
+									//for all orders in production, we compare the status
+									for(Order orderInProd : ordersInProduction)
+									{
+										List<StepOrder> steps = orderInProd.getProcess().getSteps();
+										
+										//if job were set, so we can't continue
+										if(jobSet == true)
+										{
+											break;
+										}
+										
+										//for all steps of this order
+										for(int step=0; step < steps.size(); step++)
+										{
+											//if not concluded, and the machine match:
+											if((steps.get(step).isConcluded() == false) && 
+											   (steps.get(step).getMachine().getName().equalsIgnoreCase
+											   (myMachinery.getMachine().getName())
+											   ) )
+											{
+												jobSetter(myMachinery, orderInProd, step);
+												jobSet = true;
+											}
+											//if not concluded and not matched, so we can
+											//conclude that cannot continue before finish the first step
+											else if(steps.get(step).isConcluded() == false)
+											{
+												break; //break this order, but continue finding another
+											}										
+										}
+									}									
+								}
+								//orders in production must be set or could not find a job for one machinery
+								if ( (ordersInProduction.size() == 0) || (jobSet == false) )
+								{
+									
+								}							
+								
 								
 							}						
 							
@@ -375,6 +450,7 @@ public class FmsOrderController {
 			currentOrderMill.setProduced(true);
 
 			// create the gcode writers
+			gcodeWriter = new GcodeWriter();
 			gcodeWriterTurn = new GcodeWriter(fileNameTurn, pathTurn);
 			gcodeWriterMill = new GcodeWriter(fileNameMill, pathMill);
 
