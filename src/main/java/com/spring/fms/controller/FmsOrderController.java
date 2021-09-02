@@ -55,39 +55,22 @@ public class FmsOrderController {
 	private static Machinery mMill;
 	private static Machinery mRobot;
 
-	private static OrderType orderTurn;
-
 	private static List<Order> totalOrders;
-	private static boolean totalOrdersRefreshing;
+	private static boolean usingTotalOrders;
 
 	private static List<Order> ordersInProduction;
-	private static List<Order> ordersTurn;
-	private static List<Order> ordersMill;
-	private static Order currentOrderTurn;
-	private static Order currentOrderMill;
 
-	private static OpcUaVarsTurn uaVarTurn;
-	private static OpcUaVarsMilling uaVarMill;
-	private static OpcUaVarsRobot uaVarRobot;
-
-	private static SupervisoryDataExchange supervisoryDataExchange;
+	// private static OpcUaVarsTurn uaVarTurn;
+	// private static OpcUaVarsMilling uaVarMill;
+	// private static OpcUaVarsRobot uaVarRobot;
 
 	private static boolean started = false;
-	private static boolean bufferProductionTurn = false;
-	private static boolean bufferProductionMill = false;
 
-	private GcodeWriter gcodeWriter, gcodeWriterTurn, gcodeWriterMill;
-
-	private final String pathTurn = "D:\\gcode\\";
-	private final String pathMill = "D:\\gcode\\";
-	private final String fileNameTurn = "O7000";
-	private final String fileNameMill = "O8000";
+	private GcodeWriter gcodeWriter;
 
 	private List<Message> arrayMessages;
 
 	EmailSender emailSender;
-
-	private static Integer count = 0;
 
 	private final int SUPERVISORY_TURN = 1;
 	private final int SUPERVISORY_MILL = 2;
@@ -114,59 +97,47 @@ public class FmsOrderController {
 
 	@Autowired
 	SupervisoryDataExchangeService supervisoryService;
-	
+
 	@Autowired
 	FmsMachineryService machineryService;
 
 	/************************** MANAGER PRODUCTION ************************/
 
-	private byte jobSetter(Machinery theMachinery, Order theOrder, int theStepId) {
-		byte status = 0;
+	private boolean jobSetter(Machinery theMachinery, Order theOrder, int theStepId) {
+		boolean status = false;
 
-		if(theOrder.getProcess().getSteps().get(theStepId).getGcode() != null)
-		{
-			theMachinery.setHasJob(true);
-			theMachinery.setJobName(theOrder.getProcess().getSteps().get(theStepId).getName());
-			theMachinery.setOrderId(theOrder.getId());
-			theMachinery.setStepId(theStepId);
-			
-			if (gcodeWriter.createFile(
-					theMachinery.getFilename(), theMachinery.getPath(),
-					theOrder.getProcess().getSteps().get(theStepId).getGcode())
-				) 
-			{
+		if ((theMachinery.getMachine().getName().equals(mTurn.getMachine().getName()))
+				|| (theMachinery.getMachine().getName().equals(mMill.getMachine().getName()))) {
 
-				theMachinery.setPermissionToStart(true);
-				machineryService.saveMachinery(theMachinery);
-				System.out.println("ARQUIVO CRIADO COM SUCESSO DO TORNO!");
-			} 
-			else {
-				theMachinery.setPermissionToStart(false);
-				machineryService.saveMachinery(theMachinery);
-				System.out.println("FALHA CRIACAO TORNO");
+			if (theOrder.getProcess().getSteps().get(theStepId).getGcode() != null) {
+				theMachinery.setHasJob(true);
+				theMachinery.setJobName(theOrder.getProcess().getSteps().get(theStepId).getName());
+				theMachinery.setOrderId(theOrder.getId());
+				theMachinery.setStepId(theStepId);
+
+				if (gcodeWriter.createFile(theMachinery.getFilename(), theMachinery.getPath(),
+						theOrder.getProcess().getSteps().get(theStepId).getGcode())) {
+
+					theMachinery.setPermissionToStart(true);
+					machineryService.saveMachinery(theMachinery);
+					System.out.println("ARQUIVO CRIADO COM SUCESSO DO TORNO!");
+					status = true;
+				} else {
+					theMachinery.setPermissionToStart(false);
+					machineryService.saveMachinery(theMachinery);
+					System.out.println("FALHA CRIACAO TORNO");
+				}
+
+				System.out.println("------------------------------");
+				System.out.println("ORDEM ATUAL CARREGADA E: ");
+				System.out.println(theOrder.getId() + ", " + theOrder.getOrdername());
+				System.out.println("------------------------------");
+
 			}
 
-			System.out.println("------------------------------");
-			System.out.println("ORDEM ATUAL CARREGADA E: ");
-			System.out.println(theOrder.getId() + ", " + theOrder.getOrdername());
-			System.out.println("------------------------------");
-			
 		}
 
 		return status;
-	}
-
-	private Order findNextOrder(List<Order> orders) {
-		Order nextOrder = new Order();
-
-		for (int i = 0; i < orders.size(); i++) {
-			if (orders.get(i).isProduced() == false) {
-				nextOrder = orders.get(i);
-				break;
-			}
-		}
-
-		return nextOrder;
 	}
 
 	// function to manage production, with threads inside
@@ -186,9 +157,9 @@ public class FmsOrderController {
 					System.out.println("thread GET PRODUCTION is running!!!!!!!!!!!!!!!!!");
 
 					// receive all orders
-					totalOrdersRefreshing = true;
-					totalOrders = getOrdersNotProduced();
-					totalOrdersRefreshing = false;
+					if (usingTotalOrders == false) {
+						totalOrders = getOrdersNotProduced();
+					}
 
 					try {
 						threadGetProduction.sleep(10000);
@@ -213,182 +184,85 @@ public class FmsOrderController {
 					System.out.println("thread MAKE PRODUCTION is running!!!!!!!!!!!!!!!!!");
 
 					// refresh status of variables between supervisory and MES
-					uaVarTurn = uaTurnService.findTurnLastVar();
-					uaVarMill = uaMillingService.findMillingLastVar();
-					uaVarRobot = uaRobotService.findRobotLastVar();
-					supervisoryDataExchange = supervisoryService.findDataById(1L);
+					// uaVarTurn = uaTurnService.findTurnLastVar();
+					// uaVarMill = uaMillingService.findMillingLastVar();
+					// uaVarRobot = uaRobotService.findRobotLastVar();
 
-					if ((started) && (ordersTurn.size() > 0) && (!currentOrderTurn.isProduced())) {
-						// System.out.println(currentOrderTurn.getOrdername());
-
-						// Turn is machining - start rising edge
-						if (!uaVarTurn.isTurnMachining()) {
-							bufferProductionTurn = true;
-
-							if (supervisoryDataExchange.isGcodeTurnLoaded()) {
-								supervisoryDataExchange.setGcodeTurnLoaded(false);
-								supervisoryDataExchange.setOrderTurnToManufacture(1L);
-								supervisoryService.saveData(supervisoryDataExchange);
-							}
-
-							System.out.println("TORNO usinando");
-						}
-
-						// Turn ended machining operation - end of rising edge
-						if (uaVarTurn.isTurnMachining() && bufferProductionTurn) {
-							System.out.println("TORNO TERMINOUUUUUUUUU");
-							bufferProductionTurn = false;
-							currentOrderTurn.setProduced(true);
-							currentOrderTurn.setUnitsProduced(1);
-							currentOrderTurn.setOutputDate(LocalDateTime.now());
-
-							User u = currentOrderTurn.getUser();
-							String msg = u.getName() + ", sua peca com nome " + currentOrderTurn.getOrdername()
-									+ " acabou de ficar pronta! =) ";
-
-							Message message = new Message(u.getName(), u.getPhone().toString(), msg);
-							arrayMessages.add(message);
-
-							/*
-							 * if (currentOrderTurn.getGcode() != null) {
-							 * orderService.saveOrder(currentOrderTurn); } -new
-							 */
-						}
-					}
-
-					// if already initialized and part finished
-					if ((started) && (ordersTurn.size() > 0) && (currentOrderTurn.isProduced())) {
-
-						// not implemented, standby:
-						// ordersTurn = getOrdersByMachineMethod(mTurn);
-						currentOrderTurn = findNextOrder(ordersTurn);
-
-						if (currentOrderTurn.getProcess().getSteps().get(0).getGcode() != null) {
-
-							if (gcodeWriterTurn
-									.createFile(currentOrderTurn.getProcess().getSteps().get(0).getGcode())) {
-
-								supervisoryDataExchange.setGcodeTurnLoaded(true);
-								supervisoryDataExchange.setOrderTurnToManufacture(currentOrderTurn.getId());
-								supervisoryService.saveData(supervisoryDataExchange);
-
-								System.out.println("ARQUIVO CRIADO COM SUCESSO DO TORNO!");
-							} else {
-								supervisoryDataExchange.setGcodeTurnLoaded(false);
-								supervisoryDataExchange.setOrderTurnToManufacture(1L);
-								supervisoryService.saveData(supervisoryDataExchange);
-
-								System.out.println("FALHA CRIACAO TORNO");
-							}
-
-							System.out.println("------------------------------");
-							System.out.println("ORDEM ATUAL CARREGADA E:");
-							System.out.println(currentOrderTurn.getOrdername());
-							System.out.println("------------------------------");
-						}
-
-						// there is no order to produce, so we can retain variable to false
-						/*
-						 * else if (supervisoryDataExchange.isGcodeTurnLoaded()){
-						 * supervisoryDataExchange.setGcodeTurnLoaded(false);
-						 * supervisoryDataExchange.setOrderTurnToManufacture(1L);
-						 * supervisoryService.saveData(supervisoryDataExchange); } -new
-						 */
-					}
-					
-					//initialized, has machineries and orders
-					if((started) && (machineriesList.size() > 0) && (totalOrders.size() > 0))
-					{
-						//logical to each machinery
-						for(Machinery myMachinery : machineriesList) 
-						{
-							//if machine enabled, has not a job set and is ready
-							if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) && 
-							   (myMachinery.isMachineReady()) ) 
-							{
+					// initialized, has machineries and orders
+					if ((started) && (machineriesList.size() > 0) && (totalOrders.size() > 0)) {
+						// logical to each machinery
+						for (Machinery myMachinery : machineriesList) {
+							// if machine enabled, has not a job set and is ready
+							if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false)
+									&& (myMachinery.isMachineReady())) {
 								boolean jobSet = false;
-								
-								//if has some order in production
-								if(ordersInProduction.size() > 0)
-								{
-									//for all orders in production, we compare the status
-									for(Order orderInProd : ordersInProduction)
-									{
+
+								// if has some order in production
+								if (ordersInProduction.size() > 0) {
+									// for all orders in production, we compare the status
+									for (Order orderInProd : ordersInProduction) {
 										List<StepOrder> steps = orderInProd.getProcess().getSteps();
-										
-										//if job were set, so we can't continue
-										if(jobSet == true)
-										{
+
+										// if job were set, so we can't continue
+										if (jobSet == true) {
 											break;
 										}
-										
-										//for all steps of this order
-										for(int step=0; step < steps.size(); step++)
-										{
-											//if not concluded, and the machine match:
-											if((steps.get(step).isConcluded() == false) && 
-											   (steps.get(step).getMachine().getName().equalsIgnoreCase
-											   (myMachinery.getMachine().getName())
-											   ) )
-											{
+
+										// for all steps of this order
+										for (int step = 0; step < steps.size(); step++) {
+											// if not concluded, and the machine match:
+											if ((steps.get(step).isConcluded() == false)
+													&& (steps.get(step).getMachine().getName()
+															.equalsIgnoreCase(myMachinery.getMachine().getName()))) {
 												jobSetter(myMachinery, orderInProd, step);
 												jobSet = true;
 											}
-											//if not concluded and not matched, so we can
-											//conclude that cannot continue before finish the first step
-											else if(steps.get(step).isConcluded() == false)
-											{
-												break; //break this order, but continue finding another
-											}										
+											// if not concluded and not matched, so we can
+											// conclude that cannot continue before finish the first step
+											else if (steps.get(step).isConcluded() == false) {
+												break; // break this order, but continue finding another
+											}
 										}
-									}									
-								}//end if(ordersInProduction.size() > 0)
-								
-								//orders in production must be set or could not find a job for one machinery
-								if ( (ordersInProduction.size() == 0) || (jobSet == false) )
-								{							
-									//for all orders not produced, we compare the status
-									for(Order order : totalOrders)
-									{
+									}
+								} // end if(ordersInProduction.size() > 0)
+
+								// orders in production must be set or could not find a job for one machinery
+								if ((ordersInProduction.size() == 0) || (jobSet == false)) {
+									usingTotalOrders = true;
+									// for all orders not produced, we compare the status
+									for (Order order : totalOrders) {
 										List<StepOrder> steps = order.getProcess().getSteps();
-										
-										//if job were set, so we can't continue
-										if(jobSet == true)
-										{
+
+										// if job were set, so we can't continue
+										if (jobSet == true) {
 											break;
 										}
-										
-										//for all steps of this order
-										for(int step=0; step < steps.size(); step++)
-										{
-											//if not concluded, and the machine match:
-											if((steps.get(step).isConcluded() == false) && 
-											   (steps.get(step).getMachine().getName().equalsIgnoreCase
-											   (myMachinery.getMachine().getName())
-											   ) )
-											{
+
+										// for all steps of this order
+										for (int step = 0; step < steps.size(); step++) {
+											// if not concluded, and the machine match:
+											if ((steps.get(step).isConcluded() == false)
+													&& (steps.get(step).getMachine().getName()
+															.equalsIgnoreCase(myMachinery.getMachine().getName()))) {
 												ordersInProduction.add(order);
 												jobSetter(myMachinery, order, step);
 												jobSet = true;
 											}
-											//if not concluded and not matched, so we can
-											//conclude that cannot continue before finish the first step
-											else if(steps.get(step).isConcluded() == false)
-											{
-												break; //break this order, but continue finding another
-											}										
+											// if not concluded and not matched, so we can
+											// conclude that cannot continue before finish the first step
+											else if (steps.get(step).isConcluded() == false) {
+												break; // break this order, but continue finding another
+											}
 										}
-									}								
-								} //end if ( (ordersInProduction.size() == 0) || (jobSet == false) )
-					
-							}//end if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) && (myMachinery.isMachineReady()) ) 			
-							
+									}
+									usingTotalOrders = false;
+								} // end if ( (ordersInProduction.size() == 0) || (jobSet == false) )
+
+							} // end if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) &&
+								// (myMachinery.isMachineReady()) )
+
 						}
-						
-						
 					}
-					
-					
 
 					try {
 						threadMakeProduction.sleep(1500);
@@ -464,37 +338,22 @@ public class FmsOrderController {
 			machineriesList = new ArrayList<>();
 			machineriesList.add(mTurn);
 			machineriesList.add(mMill);
-			machineriesList.add(mRobot);
+			// machineriesList.add(mRobot);
 
 			// create array of orders
 			totalOrders = new ArrayList<>();
-			ordersInProduction = new ArrayList<>();			
-
-			ordersTurn = new ArrayList<>();
-			ordersMill = new ArrayList<>();			
-
-			// create current order and set to produced to force find new one
-			currentOrderTurn = new Order();
-			currentOrderTurn.setProduced(true);
-
-			currentOrderMill = new Order();
-			currentOrderMill.setProduced(true);
+			ordersInProduction = new ArrayList<>();
 
 			// create the gcode writers
 			gcodeWriter = new GcodeWriter();
-			gcodeWriterTurn = new GcodeWriter(fileNameTurn, pathTurn);
-			gcodeWriterMill = new GcodeWriter(fileNameMill, pathMill);
-
-			// create instance of supervisory
-			// supervisoryDataExchange = supervisoryService.findDataById(1L);
 
 			// call manager Production before continue
 			// managerProduction();
 
 			// get last status of variables
-			//uaVarTurn = uaTurnService.findTurnLastVar();
-			//uaVarMill = uaMillingService.findMillingLastVar();
-			//uaVarRobot = uaRobotService.findRobotLastVar();
+			// uaVarTurn = uaTurnService.findTurnLastVar();
+			// uaVarMill = uaMillingService.findMillingLastVar();
+			// uaVarRobot = uaRobotService.findRobotLastVar();
 
 			// create array of messages to send
 			arrayMessages = new ArrayList<>();
