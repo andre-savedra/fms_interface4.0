@@ -73,12 +73,11 @@ public class DummyData {
 	
 	@Autowired
 	FmsMachineryRepository machineryRepository_;
-
-	
+		
 	//@PostConstruct
 	public void loadDummy() {
 				
-		
+						
 		//MODELS
 		Model model1 = new Model();
 		model1.setModelName("branco");

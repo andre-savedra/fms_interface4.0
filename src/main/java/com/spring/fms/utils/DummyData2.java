@@ -7,10 +7,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.fms.model.Magazine;
 import com.spring.fms.model.OpcUaVarsMilling;
 import com.spring.fms.model.OpcUaVarsRobot;
 import com.spring.fms.model.OpcUaVarsTurn;
 import com.spring.fms.model.SupervisoryDataExchange;
+import com.spring.fms.repository.FmsMagazineRepository;
 import com.spring.fms.repository.OpcUaVarsMillingRepository;
 import com.spring.fms.repository.OpcUaVarsRobotRepository;
 import com.spring.fms.repository.OpcUaVarsTurnRepository;
@@ -31,6 +33,8 @@ public class DummyData2 {
 	@Autowired
 	OpcUaVarsRobotRepository uaVarRobotRepository;
 	
+	@Autowired
+	FmsMagazineRepository magazineRepository_;	
 
 	//@PostConstruct
 	public void loadDummy2() {
@@ -66,6 +70,37 @@ public class DummyData2 {
 		uaVarTurnRepository.save(uaTurn);
 
 				
+		Magazine mg1 = new Magazine();
+		mg1.setLocated(false);
+		mg1.setName("Magazine1");
+		magazineRepository_.save(mg1);
+		
+		Magazine mg2 = new Magazine();
+		mg2.setLocated(false);
+		mg2.setName("Magazine2");
+		magazineRepository_.save(mg2);
+		
+		Magazine mg3 = new Magazine();
+		mg3.setLocated(false);
+		mg3.setName("Magazine3");
+		magazineRepository_.save(mg3);
+		
+		Magazine mg4 = new Magazine();
+		mg4.setLocated(false);
+		mg4.setName("Magazine4");
+		magazineRepository_.save(mg4);
+		
+		Magazine mg5 = new Magazine();
+		mg5.setLocated(false);
+		mg5.setName("Magazine5");
+		magazineRepository_.save(mg5);
+		
+		Magazine mg6 = new Magazine();
+		mg6.setLocated(false);
+		mg6.setName("Magazine6");
+		magazineRepository_.save(mg6);
+		
+		
 		System.out.println("DUMMY DATA2 OK!");
 
 

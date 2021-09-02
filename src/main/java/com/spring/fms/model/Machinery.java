@@ -20,6 +20,7 @@ public class Machinery {
 	private boolean enabled;
 	
 	private String jobName;
+	private boolean flex;
 	private boolean hasJob;
 	private boolean jobAccepted;
 	private boolean jobEnded;
@@ -193,6 +194,14 @@ public class Machinery {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public boolean isFlex() {
+		return flex;
+	}
+
+	public void setFlex(boolean flex) {
+		this.flex = flex;
 	}
 	
 		

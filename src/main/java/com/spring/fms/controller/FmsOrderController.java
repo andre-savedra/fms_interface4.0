@@ -42,7 +42,6 @@ import com.spring.fms.service.OpcUaVarsTurnService;
 import com.spring.fms.service.SupervisoryDataExchangeService;
 import com.spring.fms.utils.EmailSender;
 
-//andre
 @Controller
 public class FmsOrderController {
 
@@ -114,6 +113,14 @@ public class FmsOrderController {
 				theMachinery.setJobName(theOrder.getProcess().getSteps().get(theStepId).getName());
 				theMachinery.setOrderId(theOrder.getId());
 				theMachinery.setStepId(theStepId);
+				
+				if(theOrder.getType().getType().equals("flex")) {
+					theMachinery.setFlex(true);
+				}
+				else {
+					theMachinery.setFlex(false);
+				}
+							
 
 				if (gcodeWriter.createFile(theMachinery.getFilename(), theMachinery.getPath(),
 						theOrder.getProcess().getSteps().get(theStepId).getGcode())) {
@@ -264,6 +271,49 @@ public class FmsOrderController {
 						}
 					}
 
+					/********* MANAGE PRODUCTION *********/
+					
+					//if initialized, have machineries and orders to produce
+					if((started) && (machineriesList.size() > 0) && (ordersInProduction.size() > 0))
+					{
+						//analyse all orders in production
+						for(Order ordersManufacturing : ordersInProduction)						
+						{
+							List<StepOrder> steps = ordersManufacturing.getProcess().getSteps();
+							int numberOfSteps = steps.size();
+							int counterStepsConcluded = 0;
+							
+							//check all steps of this order
+							for(StepOrder st : steps)
+							{
+								if(st.isConcluded())
+								{
+									counterStepsConcluded++;
+								}
+								else
+								{
+									break;
+								}								
+							}
+							
+							//so all steps were concluded
+							if(counterStepsConcluded == numberOfSteps)
+							{
+								//so the process is concluded
+								ordersManufacturing.getProcess().setConcluded(true);
+							}
+							
+							
+						}
+						
+						
+						
+					}
+					
+					
+					
+					
+					
 					try {
 						threadMakeProduction.sleep(1500);
 					} catch (InterruptedException e) {
