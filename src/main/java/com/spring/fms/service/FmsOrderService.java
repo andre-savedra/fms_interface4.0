@@ -7,8 +7,9 @@ import com.spring.fms.model.OrderType;
 
 public interface FmsOrderService {
 	List<Order> findOrderAllToProduce();
+	List<Order> findOrderAllManufacturing();
 	List<Order> findAllByType(OrderType type);
-	List<Order> findOrderAll();
+	List<Order> findOrderAll();	
 	Order findOrderById(long id);
 	Order saveOrder(Order order);
 	Long count();

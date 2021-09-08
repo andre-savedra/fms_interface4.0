@@ -215,7 +215,7 @@ public class Machinery {
 		setPermissionToStart(false);
 		setOrderId(0L);
 		setStepId(0);
-		setInfo("");
+		//setInfo("");
 	}
 	
 		

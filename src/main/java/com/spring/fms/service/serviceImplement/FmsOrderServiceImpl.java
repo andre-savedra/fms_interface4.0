@@ -52,6 +52,11 @@ public class FmsOrderServiceImpl implements FmsOrderService {
 		return orderRepository.findOrdersToProduce();
 	}
 
+	@Override
+	public List<Order> findOrderAllManufacturing() {		
+		return orderRepository.findOrdersManufacturing();
+	}
+
 	
 
 }

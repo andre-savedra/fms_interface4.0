@@ -94,6 +94,63 @@ public class FmsOrderController {
 	@Autowired
 	FmsMachineryService machineryService;
 
+	
+	private boolean saveTheOrder(Order orderToSave) {
+
+		try {						
+			
+			if (saveStepOrder(orderToSave.getProcess().getSteps()) == false) {
+				return false;
+			}
+
+			if (saveProcessOrder(orderToSave.getProcess()) == false) {
+				return false;
+			}			
+			
+			orderService.saveOrder(orderToSave);
+			
+			return true;
+		} catch (Exception e) {
+			System.out.println("ERRO AO SALVAR A ORDEM");
+			return false;
+		}
+	}
+	
+	private boolean saveProcessOrder(ProcessOrder process) {
+
+		try {
+			processOrderService.saveProcessOrder(process);
+			return true;
+		} catch (Exception e) {
+			System.out.println("ERRO AO SALVAR O PROCESSO");
+			return false;
+		}
+	}
+
+	private boolean saveStepOrder(List<StepOrder> steps) {
+
+		try {
+
+			for (int i = 0; i < steps.size(); i++) {
+
+				/*System.out.print("--------------\n\n");
+				System.out.println(steps.get(i).getName());
+				System.out.println("Machine id:" + steps.get(i).getMachine().getId());
+				System.out.println(steps.get(i).isConcluded());
+				System.out.println(steps.get(i).getGcode());
+
+				System.out.print("--------------\n\n");*/
+
+				stepOrderService.saveStepOrder(steps.get(i));
+			}
+			return true;
+
+		} catch (Exception e) {
+			System.out.println("ERRO AO SALVAR OS STEPS!");
+			return false;
+		}
+	}
+	
 	/************************** MANAGER PRODUCTION ************************/
 
 	private void clearMachinery(Machinery myMachinery) {
@@ -107,7 +164,7 @@ public class FmsOrderController {
 		myMachinery.setStepId(0);
 		myMachinery.setHasJob(false);
 		myMachinery.setFlex(false);
-		myMachinery.setInfo("");
+		//myMachinery.setInfo("");		
 	}
 
 	private boolean jobSetter(Machinery theMachinery, Order theOrder, int theStepId) {
@@ -159,7 +216,6 @@ public class FmsOrderController {
 
 	// function to manage production, with threads inside
 	private void managerProduction() {
-
 		
 		// thread to manage production factory
 		threadMakeProduction = new Threads(new Runnable() {
@@ -175,7 +231,7 @@ public class FmsOrderController {
 					//System.out.println("thread MAKE PRODUCTION is running!!!!!!!!!!!!!!!!!");
 
 					//refresh total Orders
-					totalOrders = getOrdersNotProduced();
+					totalOrders = getOrdersNotProduced();				
 					
 					/*for (Order t : totalOrders)
 					{
@@ -198,6 +254,7 @@ public class FmsOrderController {
 						// logical to each machinery
 						for (Machinery myMachinery : machineriesList) {						
 							
+							//if machinery is enabled
 							if(myMachinery.isEnabled())
 							{							
 								// if machine enabled, has not a job set and is ready
@@ -259,7 +316,7 @@ public class FmsOrderController {
 														
 														//set that order now, can't be called again
 														order.setManufacturing(true);
-														orderService.saveOrder(order);
+														saveTheOrder(order);
 														
 														// add this order to list of orders in production:
 														ordersInProduction.add(order);
@@ -319,7 +376,7 @@ public class FmsOrderController {
 													orderEnded.setOutputDate(LocalDateTime.now());
 													
 													//save order
-													orderService.saveOrder(orderEnded);
+													saveTheOrder(orderEnded);
 													//remove from list of production
 													ordersInProduction.remove(orderEndedIndex);
 													
@@ -357,7 +414,12 @@ public class FmsOrderController {
 											//commands above is the same:
 											
 											//refresh order in database
-											orderService.saveOrder(orderEnded);
+											saveTheOrder(orderEnded);
+											
+											for(int j=0;j<orderEnded.getProcess().getSteps().size(); j++) {
+												System.out.println("orderEnded step" + j + ": " + orderEnded.getProcess().getSteps().get(j).isConcluded());
+											}
+											
 											
 											//restart machinery
 											myMachinery.resetMachinery();
@@ -483,6 +545,9 @@ public class FmsOrderController {
 			// create array of orders
 			totalOrders = new ArrayList<>();
 			ordersInProduction = new ArrayList<>();
+			
+			//get orders not finished
+			ordersInProduction = orderService.findOrderAllManufacturing();
 
 			// create the gcode writers
 			gcodeWriter = new GcodeWriter();
@@ -504,41 +569,8 @@ public class FmsOrderController {
 
 		return orderService.findOrderAll();
 	}
-
-	private boolean saveProcessOrder(ProcessOrder process) {
-
-		try {
-			processOrderService.saveProcessOrder(process);
-			return true;
-		} catch (Exception e) {
-			System.out.println("ERRO AO SALVAR O PROCESSO");
-			return false;
-		}
-	}
-
-	private boolean saveStepOrder(List<StepOrder> steps) {
-
-		try {
-
-			for (int i = 0; i < steps.size(); i++) {
-
-				System.out.print("--------------\n\n");
-				System.out.println(steps.get(i).getName());
-				System.out.println("Machine id:" + steps.get(i).getMachine().getId());
-				System.out.println(steps.get(i).isConcluded());
-				System.out.println(steps.get(i).getGcode());
-
-				System.out.print("--------------\n\n");
-
-				stepOrderService.saveStepOrder(steps.get(i));
-			}
-			return true;
-
-		} catch (Exception e) {
-			System.out.println("ERRO AO SALVAR OS STEPS!");
-			return false;
-		}
-	}
+	
+	
 
 	private List<Order> getOrdersByMachineMethod(OrderType type) {
 		List<Order> list = orderService.findAllByType(type);
@@ -579,15 +611,11 @@ public class FmsOrderController {
 		 * System.out.println(process.getSteps().get(0).getGcode());
 		 */
 
-		if (saveStepOrder(mySteps) == false) {
+				
+		if (saveTheOrder(order) == false) {
 			return "erro";
 		}
-
-		if (saveProcessOrder(process) == false) {
-			return "erro";
-		}
-
-		orderService.saveOrder(order);
+			
 		System.out.println("SOLICITACAO OKKK");
 
 		return "feito";
