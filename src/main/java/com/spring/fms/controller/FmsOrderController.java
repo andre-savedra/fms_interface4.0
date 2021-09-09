@@ -157,7 +157,7 @@ public class FmsOrderController {
 		myMachinery.setJobName("");
 		myMachinery.setJobAccepted(false);
 		myMachinery.setJobEnded(false);
-		myMachinery.setMachining(false);
+		myMachinery.setNotMachining(false);
 		//myMachinery.setMachineReady(false);
 		myMachinery.setPermissionToStart(false);
 		myMachinery.setOrderId(0L);
@@ -182,6 +182,7 @@ public class FmsOrderController {
 				theMachinery.setJobName(theOrder.getProcess().getSteps().get(theStepId).getName());
 				theMachinery.setOrderId(theOrder.getId());
 				theMachinery.setStepId(theStepId);
+				theMachinery.setInfo(theOrder.getType().getType());
 
 				if (theOrder.getType().getType().equals("flex")) {
 					theMachinery.setFlex(true);
@@ -258,8 +259,8 @@ public class FmsOrderController {
 							if(myMachinery.isEnabled())
 							{							
 								// if machine enabled, has not a job set and is ready
-								if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false)
-										&& (myMachinery.isMachineReady())) {
+								if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) &&
+									(myMachinery.isMachineReady()) && (myMachinery.isNotMachining()) ) {
 									boolean jobSet = false;
 
 									// if has some order in production

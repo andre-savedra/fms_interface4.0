@@ -24,7 +24,7 @@ public class Machinery {
 	private boolean hasJob;
 	private boolean jobAccepted;
 	private boolean jobEnded;
-	private boolean machining;
+	private boolean notMachining;
 	private boolean machineReady;
 	private boolean permissionToStart;
 	private Long orderId;	
@@ -49,7 +49,7 @@ public class Machinery {
 		this.hasJob = false;
 		this.jobAccepted = false;
 		this.jobEnded = false;
-		this.machining = false;
+		this.notMachining = false;
 		this.machineReady = false;
 		this.permissionToStart = false;		
 		this.orderId = 0L;
@@ -164,12 +164,12 @@ public class Machinery {
 		this.jobEnded = jobEnded;
 	}
 
-	public boolean isMachining() {
-		return machining;
+	public boolean isNotMachining() {
+		return notMachining;
 	}
 
-	public void setMachining(boolean machining) {
-		this.machining = machining;
+	public void setNotMachining(boolean notMachining) {
+		this.notMachining = notMachining;
 	}
 
 	public boolean isMachineReady() {
@@ -210,7 +210,7 @@ public class Machinery {
 		setHasJob(false);
 		setJobAccepted(false);
 		setJobEnded(false);
-		setMachining(false);
+		setNotMachining(false);
 		setMachineReady(false);
 		setPermissionToStart(false);
 		setOrderId(0L);
