@@ -17,6 +17,8 @@ public class Magazine {
 	private String name;
 	
 	private boolean located;
+	
+	private Long orderId;
 
 	public Long getId() {
 		return id;
@@ -40,6 +42,14 @@ public class Magazine {
 
 	public void setLocated(boolean located) {
 		this.located = located;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 	
 	

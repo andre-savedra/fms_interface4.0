@@ -100,6 +100,21 @@ public class DummyData2 {
 		mg6.setName("Magazine6");
 		magazineRepository_.save(mg6);
 		
+		Magazine mg7 = new Magazine();
+		mg7.setLocated(false);
+		mg7.setName("CastanhaTorno");
+		magazineRepository_.save(mg7);
+		
+		Magazine mg8 = new Magazine();
+		mg8.setLocated(false);
+		mg8.setName("MorsaCentro");
+		magazineRepository_.save(mg8);
+		
+		Magazine mg9 = new Magazine();
+		mg9.setLocated(false);
+		mg9.setName("GarraRobo");
+		magazineRepository_.save(mg9);
+			
 		
 		System.out.println("DUMMY DATA2 OK!");
 
