@@ -554,7 +554,7 @@ public class FmsOrderController {
 			gcodeWriter = new GcodeWriter();
 
 			// call manager Production before continue
-			managerProduction();
+			//managerProduction();
 
 			// get last status of variables
 			// uaVarTurn = uaTurnService.findTurnLastVar();
