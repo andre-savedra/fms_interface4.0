@@ -16,7 +16,7 @@ public class Magazine {
 	
 	private String name;
 	
-	private boolean located;
+	private boolean located = false;
 	
 	private Long orderId;
 
