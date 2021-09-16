@@ -37,7 +37,7 @@ import com.spring.fms.service.OpcUaVarsTurnService;
 import com.spring.fms.service.SupervisoryDataExchangeService;
 import com.spring.fms.utils.EmailSender;
 
-@Controller
+@Controller//andre ok terminou
 public class FmsOrderController {
 
 	private static Threads threadMakeProduction;
