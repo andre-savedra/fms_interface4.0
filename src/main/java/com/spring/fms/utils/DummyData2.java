@@ -73,46 +73,55 @@ public class DummyData2 {
 		Magazine mg1 = new Magazine();
 		mg1.setLocated(false);
 		mg1.setName("Magazine1");
+		mg1.setOrderId(0L);
 		magazineRepository_.save(mg1);
 		
 		Magazine mg2 = new Magazine();
 		mg2.setLocated(false);
 		mg2.setName("Magazine2");
+		mg2.setOrderId(0L);
 		magazineRepository_.save(mg2);
 		
 		Magazine mg3 = new Magazine();
 		mg3.setLocated(false);
 		mg3.setName("Magazine3");
+		mg3.setOrderId(0L);
 		magazineRepository_.save(mg3);
 		
 		Magazine mg4 = new Magazine();
 		mg4.setLocated(false);
 		mg4.setName("Magazine4");
+		mg4.setOrderId(0L);
 		magazineRepository_.save(mg4);
 		
 		Magazine mg5 = new Magazine();
 		mg5.setLocated(false);
 		mg5.setName("Magazine5");
+		mg5.setOrderId(0L);
 		magazineRepository_.save(mg5);
 		
 		Magazine mg6 = new Magazine();
 		mg6.setLocated(false);
 		mg6.setName("Magazine6");
+		mg6.setOrderId(0L);
 		magazineRepository_.save(mg6);
 		
 		Magazine mg7 = new Magazine();
 		mg7.setLocated(false);
 		mg7.setName("GarraRobo");
+		mg7.setOrderId(0L);
 		magazineRepository_.save(mg7);
 		
 		Magazine mg8 = new Magazine();
 		mg8.setLocated(false);
 		mg8.setName("CastanhaTorno");
+		mg8.setOrderId(0L);
 		magazineRepository_.save(mg8);
 		
 		Magazine mg9 = new Magazine();
 		mg9.setLocated(false);
 		mg9.setName("MorsaCentro");
+		mg9.setOrderId(0L);
 		magazineRepository_.save(mg9);
 			
 		

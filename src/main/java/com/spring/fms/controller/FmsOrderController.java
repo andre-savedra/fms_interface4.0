@@ -342,13 +342,23 @@ public class FmsOrderController {
 								{
 									System.out.println("machine:" + myMachinery.getMachine().getName());
 									System.out.println("job:" + myMachinery.getJobName());
+									
+									
+									//if machinery accepted job
+									if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == true) &&
+											(myMachinery.isJobAccepted()) && (myMachinery.isNotMachining()) )
+									{
+										myMachinery.setPermissionToStart(false);
+										machineryService.saveMachinery(myMachinery);										
+									}
+									
+									
 								}
 								
 								/********* MANAGE END OF PRODUCTION *********/
 
 								// if machinery enabled, already have job and accepted one
-								if ((myMachinery.isEnabled()) && (myMachinery.isHasJob()) && (myMachinery.isJobAccepted())
-										&& (myMachinery.isJobEnded())) {
+								if ((myMachinery.isEnabled()) && (myMachinery.isHasJob()) && (myMachinery.isJobEnded())) {
 									
 									int orderEndedIndex = 0;
 									
@@ -554,7 +564,7 @@ public class FmsOrderController {
 			gcodeWriter = new GcodeWriter();
 
 			// call manager Production before continue
-			//managerProduction();
+			managerProduction();
 
 			// get last status of variables
 			// uaVarTurn = uaTurnService.findTurnLastVar();
