@@ -28,6 +28,7 @@ public class Machinery {
 	private boolean machineReady;
 	private boolean permissionToStart;
 	private Long orderId;	
+	private int orderSubIndex;
 	private int stepId;
 	
 	private String filename;
@@ -35,6 +36,8 @@ public class Machinery {
 	private String path;
 	
 	private String info;
+	
+	
 	
 	public Machinery() {
 		
@@ -53,6 +56,7 @@ public class Machinery {
 		this.machineReady = false;
 		this.permissionToStart = false;		
 		this.orderId = 0L;
+		this.orderSubIndex = 0;
 		this.stepId = 0;
 		this.filename = "";
 		this.path = "";
@@ -204,6 +208,14 @@ public class Machinery {
 		this.flex = flex;
 	}
 	
+	public int getOrderSubIndex() {
+		return orderSubIndex;
+	}
+
+	public void setOrderSubIndex(int orderSubIndex) {
+		this.orderSubIndex = orderSubIndex;
+	}
+	
 	public void resetMachinery() {
 		setJobName("");
 		setFlex(false);
@@ -215,8 +227,11 @@ public class Machinery {
 		setPermissionToStart(false);
 		setOrderId(0L);
 		setStepId(0);
+		setOrderSubIndex(0);
 		//setInfo("");
 	}
+
+
 	
 		
 	

@@ -2023,48 +2023,55 @@ public class DummyData {
 		order.setType(orderTp5);
 		order.setUser(myuser);
 		order.setUnits(2);
-		order.setUnitsProduced(0);
+		order.setUnitsProduced(2);
 		order.setInputDate(LocalDateTime.now());
 		order.setDimensions("30mm");
 		order.setManufacturing(false);
 		order.setProcess(processOrder1);
 		order.setModel(model1);
+		order.setProduced(true);
+
 
 		Order order1 = new Order();
 		order1.setOrdername("peca2");
 		order1.setType(orderTp);
 		order1.setUser(myuser2);
 		order1.setUnits(3);
-		order1.setUnitsProduced(0);
+		order1.setUnitsProduced(3);
 		order1.setInputDate(LocalDateTime.now());
 		order1.setDimensions("35mm");
 		order1.setManufacturing(false);
 		order1.setProcess(processOrder2);
 		order1.setModel(model1);
+		order1.setProduced(true);
+
 
 		Order order2 = new Order();
 		order2.setOrdername("peca3");
 		order2.setType(orderTp3);
 		order2.setUser(myuser);
 		order2.setUnits(5);
-		order2.setUnitsProduced(0);
+		order2.setUnitsProduced(5);
 		order2.setInputDate(LocalDateTime.now());
 		order2.setDimensions("40mm");
 		order2.setManufacturing(false);
 		order2.setProcess(processOrder3);
 		order2.setModel(model2);
+		order2.setProduced(true);
+
 		
 		Order order3 = new Order();
 		order3.setOrdername("peca4");
 		order3.setType(orderTp5);
 		order3.setUser(myuser);
 		order3.setUnits(5);
-		order3.setUnitsProduced(0);
+		order3.setUnitsProduced(5);
 		order3.setInputDate(LocalDateTime.now());
 		order3.setDimensions("45mm");
 		order3.setManufacturing(false);
 		order3.setProcess(processOrder4);
 		order3.setModel(model2);
+		order3.setProduced(true);
 		
 		List<Order> ordersList = new ArrayList<>();
 		ordersList.add(order);

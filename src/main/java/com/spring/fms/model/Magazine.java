@@ -19,6 +19,8 @@ public class Magazine {
 	private boolean located = false;
 	
 	private Long orderId;
+	
+	private int orderSubindex;
 
 	public Long getId() {
 		return id;
@@ -50,6 +52,14 @@ public class Magazine {
 
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
+	}
+
+	public int getOrderSubindex() {
+		return orderSubindex;
+	}
+
+	public void setOrderSubindex(int orderSubindex) {
+		this.orderSubindex = orderSubindex;
 	}
 	
 	

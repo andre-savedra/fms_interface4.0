@@ -161,6 +161,7 @@ public class FmsOrderController {
 		//myMachinery.setMachineReady(false);
 		myMachinery.setPermissionToStart(false);
 		myMachinery.setOrderId(0L);
+		myMachinery.setOrderSubIndex(0);
 		myMachinery.setStepId(0);
 		myMachinery.setHasJob(false);
 		myMachinery.setFlex(false);
@@ -183,9 +184,19 @@ public class FmsOrderController {
 				theMachinery.setOrderId(theOrder.getId());
 				theMachinery.setStepId(theStepId);
 				theMachinery.setInfo(theOrder.getType().getType());
-
+							
+				if(theOrder.getUnits() > 1)
+				{					
+					theMachinery.setOrderSubIndex(theOrder.getUnitsProduced() + 1);		
+				}
+				else
+				{
+					theMachinery.setOrderSubIndex(0);
+				}			
+				
 				if (theOrder.getType().getType().equals("flex")) {
 					theMachinery.setFlex(true);
+					System.out.println("É FLEXXXXXXX");
 				} else {
 					theMachinery.setFlex(false);
 				}
@@ -480,7 +491,7 @@ public class FmsOrderController {
 					}*/
 
 					try {
-						threadMakeProduction.sleep(3000);
+						threadMakeProduction.sleep(2500);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -503,7 +514,7 @@ public class FmsOrderController {
 						if (arrayMessages.size() > 0) {
 							System.out.println("Enviando mensagem para " + arrayMessages.get(0).getName());
 							// send
-							emailSender.sendMail(arrayMessages.get(0).getChannel(), arrayMessages.get(0).getMessage());
+							//emailSender.sendMail(arrayMessages.get(0).getChannel(), arrayMessages.get(0).getMessage());
 							// remove from list
 							arrayMessages.remove(0);
 						}
