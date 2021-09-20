@@ -39,6 +39,10 @@ import com.spring.fms.utils.EmailSender;
 
 @Controller//andre ok terminou
 public class FmsOrderController {
+	
+	private static String[] actualMessages = {"", ""};
+	private static String[] oldMessages = {"old", "old"};	
+	
 
 	private static Threads threadMakeProduction;
 	private static Threads threadSender;
@@ -262,16 +266,21 @@ public class FmsOrderController {
 					
 					// initialized, has machineries and orders
 					if ((started) && (machineriesList.size() > 0) && (totalOrders.size() > 0)) {						
-												
+						
+						int messageIndexTeste = -1;
+						
 						// logical to each machinery
-						for (Machinery myMachinery : machineriesList) {						
+						for (Machinery myMachinery : machineriesList) {
+							
+							messageIndexTeste++;
 							
 							//if machinery is enabled
 							if(myMachinery.isEnabled())
 							{							
 								// if machine enabled, has not a job set and is ready
 								if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) &&
-									(myMachinery.isMachineReady()) && (myMachinery.isNotMachining()) ) {
+									(myMachinery.isMachineReady()) && (myMachinery.isNotMachining() && 
+									(myMachinery.isJobEnded() == false) ) ) {
 									boolean jobSet = false;
 
 									// if has some order in production
@@ -332,6 +341,8 @@ public class FmsOrderController {
 														
 														// add this order to list of orders in production:
 														ordersInProduction.add(order);
+														System.out.println("ADICIONADO NAS ORDENS EM PROD.: " + order.getId());
+														
 														// set Job
 														jobSetter(myMachinery, order, step);
 														jobSet = true;
@@ -350,11 +361,18 @@ public class FmsOrderController {
 								} // end if((myMachinery.isEnabled()) && (myMachinery.isHasJob() == false) &&
 									// (myMachinery.isMachineReady()) )
 								else
-								{
-									System.out.println("machine:" + myMachinery.getMachine().getName());
-									System.out.println("job:" + myMachinery.getJobName());
+								{						
 									
+									/*actualMessages[messageIndexTeste] = "machine: " + myMachinery.getMachine().getName() +
+									        "\n ordem: " + myMachinery.getOrderId().toString() + "\n";
+															
+									if(!actualMessages[messageIndexTeste].equals(oldMessages[messageIndexTeste]))
+									{										
+										System.out.println(actualMessages[messageIndexTeste]);
+										oldMessages[messageIndexTeste] = actualMessages[messageIndexTeste];
+									}*/
 									
+																		
 									//if machinery accepted job
 									if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == true) &&
 											(myMachinery.isJobAccepted()) && (myMachinery.isNotMachining()) )
@@ -370,13 +388,16 @@ public class FmsOrderController {
 
 								// if machinery enabled, already have job and accepted one
 								if ((myMachinery.isEnabled()) && (myMachinery.isHasJob()) && (myMachinery.isJobEnded())) {
+									System.out.println("DETECTOU FIM DE PRODUCAO");
 									
 									int orderEndedIndex = 0;
 									
-									for (Order orderEnded : ordersInProduction) {									
-										
+									for (Order orderEnded : ordersInProduction) {
+																				
 										// were found the order finished:
-										if (orderEnded.getId() == myMachinery.getOrderId()) {
+										if (orderEnded.getId().equals(myMachinery.getOrderId())) {
+											
+											System.out.println("FIM DA ORDEM DETECTADO");
 
 											// refreshed orders and database
 											orderEnded.getProcess().getSteps().get(myMachinery.getStepId())
@@ -389,7 +410,7 @@ public class FmsOrderController {
 												orderEnded.increaseUnits();
 
 												// now we have to check if the amount of parts to produce is ok
-												if (orderEnded.getUnits() == orderEnded.getUnitsProduced()) {
+												if (orderEnded.getUnits() >= orderEnded.getUnitsProduced()) {
 													
 													//FINISH THIS ORDER, AMOUNT PRODUCED!
 													orderEnded.getProcess().setConcluded(true);
@@ -401,9 +422,11 @@ public class FmsOrderController {
 													saveTheOrder(orderEnded);
 													//remove from list of production
 													ordersInProduction.remove(orderEndedIndex);
+													System.out.println("REMOVIDA ORDEM " + orderEnded.getId() + ", DAS ORDENS EM PROD.");
 													
 													//restart machinery
 													myMachinery.resetMachinery();
+													myMachinery.setJobEnded(false);
 													//save machinery
 													machineryService.saveMachinery(myMachinery);												
 													
@@ -450,6 +473,15 @@ public class FmsOrderController {
 											
 											break; //can break because we found out the order ended 
 										}
+										else
+										{
+											System.out.println("ESSA NAO E A ORDEM FINALIZADA, POIS ORDEM ESCANEADA E:" + 
+													           orderEnded.getId().toString() + ", E A FINALIZADA E: " + 
+													           myMachinery.getOrderId().toString() );											
+											
+										}
+										
+										
 										orderEndedIndex++;
 									} //for order ended
 
@@ -459,6 +491,18 @@ public class FmsOrderController {
 
 						}//end for of all machineries
 					}//started, machinery exists, etc...
+					
+				
+					System.out.println("\n Ordens em prod:");
+					for (Order orderP : ordersInProduction) 
+					{
+						System.out.println("ID: " + orderP.getId() + ", nome: " + orderP.getOrdername());
+						
+					}
+					System.out.println("\n FIM Ordens em prod:");
+
+					
+					
 					
 					/*
 					// if initialized, have machineries and orders to produce
@@ -491,7 +535,7 @@ public class FmsOrderController {
 					}*/
 
 					try {
-						threadMakeProduction.sleep(2500);
+						threadMakeProduction.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
