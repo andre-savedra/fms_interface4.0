@@ -37,13 +37,9 @@ import com.spring.fms.service.OpcUaVarsTurnService;
 import com.spring.fms.service.SupervisoryDataExchangeService;
 import com.spring.fms.utils.EmailSender;
 
-@Controller//andre ok terminou
+@Controller//andre 21092021
 public class FmsOrderController {
 	
-	private static String[] actualMessages = {"", ""};
-	private static String[] oldMessages = {"old", "old"};	
-	
-
 	private static Threads threadMakeProduction;
 	private static Threads threadSender;
 
@@ -244,7 +240,6 @@ public class FmsOrderController {
 					if (threadMakeProduction.isAllDone()) {
 						return;
 					}
-					//System.out.println("thread MAKE PRODUCTION is running!!!!!!!!!!!!!!!!!");
 
 					//refresh total Orders
 					totalOrders = getOrdersNotProduced();				
@@ -266,14 +261,10 @@ public class FmsOrderController {
 					
 					// initialized, has machineries and orders
 					if ((started) && (machineriesList.size() > 0) && (totalOrders.size() > 0)) {						
-						
-						int messageIndexTeste = -1;
-						
+											
 						// logical to each machinery
 						for (Machinery myMachinery : machineriesList) {
-							
-							messageIndexTeste++;
-							
+													
 							//if machinery is enabled
 							if(myMachinery.isEnabled())
 							{							
@@ -362,17 +353,7 @@ public class FmsOrderController {
 									// (myMachinery.isMachineReady()) )
 								else
 								{						
-									
-									/*actualMessages[messageIndexTeste] = "machine: " + myMachinery.getMachine().getName() +
-									        "\n ordem: " + myMachinery.getOrderId().toString() + "\n";
-															
-									if(!actualMessages[messageIndexTeste].equals(oldMessages[messageIndexTeste]))
-									{										
-										System.out.println(actualMessages[messageIndexTeste]);
-										oldMessages[messageIndexTeste] = actualMessages[messageIndexTeste];
-									}*/
-									
-																		
+																	
 									//if machinery accepted job
 									if ((myMachinery.isEnabled()) && (myMachinery.isHasJob() == true) &&
 											(myMachinery.isJobAccepted()) && (myMachinery.isNotMachining()) )
@@ -496,8 +477,7 @@ public class FmsOrderController {
 					System.out.println("\n Ordens em prod:");
 					for (Order orderP : ordersInProduction) 
 					{
-						System.out.println("ID: " + orderP.getId() + ", nome: " + orderP.getOrdername());
-						
+						System.out.println("ID: " + orderP.getId() + ", nome: " + orderP.getOrdername());						
 					}
 					System.out.println("\n FIM Ordens em prod:");
 

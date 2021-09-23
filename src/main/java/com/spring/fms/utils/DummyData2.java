@@ -7,11 +7,13 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.spring.fms.model.Delivery;
 import com.spring.fms.model.Magazine;
 import com.spring.fms.model.OpcUaVarsMilling;
 import com.spring.fms.model.OpcUaVarsRobot;
 import com.spring.fms.model.OpcUaVarsTurn;
 import com.spring.fms.model.SupervisoryDataExchange;
+import com.spring.fms.repository.FmsDeliveryRepository;
 import com.spring.fms.repository.FmsMagazineRepository;
 import com.spring.fms.repository.OpcUaVarsMillingRepository;
 import com.spring.fms.repository.OpcUaVarsRobotRepository;
@@ -35,9 +37,17 @@ public class DummyData2 {
 	
 	@Autowired
 	FmsMagazineRepository magazineRepository_;	
+	
+	@Autowired
+	FmsDeliveryRepository deliveryRepository;
 
 	//@PostConstruct
 	public void loadDummy2() {
+		
+		Delivery d = new Delivery(1L, 0L, false);
+		deliveryRepository.save(d);
+		
+		
 		SupervisoryDataExchange sd = new SupervisoryDataExchange();
 		sd.setId(1L);
 		sd.setGcodeMillLoaded(false);
