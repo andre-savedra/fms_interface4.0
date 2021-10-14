@@ -85,6 +85,8 @@ public class DummyData2 {
 		mg1.setName("Magazine1");
 		mg1.setOrderId(0L);
 		mg1.setOrderSubindex(0);
+		mg1.setFlex(false);
+		mg1.setLastMachineStep(0L);
 		magazineRepository_.save(mg1);
 		
 		Magazine mg2 = new Magazine();
@@ -92,6 +94,8 @@ public class DummyData2 {
 		mg2.setName("Magazine2");
 		mg2.setOrderId(0L);
 		mg2.setOrderSubindex(0);
+		mg2.setFlex(false);
+		mg2.setLastMachineStep(0L);
 		magazineRepository_.save(mg2);
 		
 		Magazine mg3 = new Magazine();
@@ -99,6 +103,8 @@ public class DummyData2 {
 		mg3.setName("Magazine3");
 		mg3.setOrderId(0L);
 		mg3.setOrderSubindex(0);
+		mg3.setFlex(false);
+		mg3.setLastMachineStep(0L);
 		magazineRepository_.save(mg3);
 		
 		Magazine mg4 = new Magazine();
@@ -106,6 +112,8 @@ public class DummyData2 {
 		mg4.setName("Magazine4");
 		mg4.setOrderId(0L);
 		mg4.setOrderSubindex(0);
+		mg4.setFlex(false);
+		mg4.setLastMachineStep(0L);
 		magazineRepository_.save(mg4);
 		
 		Magazine mg5 = new Magazine();
@@ -113,6 +121,8 @@ public class DummyData2 {
 		mg5.setName("Magazine5");
 		mg5.setOrderId(0L);
 		mg5.setOrderSubindex(0);
+		mg5.setFlex(false);
+		mg5.setLastMachineStep(0L);
 		magazineRepository_.save(mg5);
 		
 		Magazine mg6 = new Magazine();
@@ -120,6 +130,8 @@ public class DummyData2 {
 		mg6.setName("Magazine6");
 		mg6.setOrderId(0L);
 		mg6.setOrderSubindex(0);
+		mg6.setFlex(false);
+		mg6.setLastMachineStep(0L);
 		magazineRepository_.save(mg6);
 		
 		Magazine mg7 = new Magazine();
@@ -127,6 +139,8 @@ public class DummyData2 {
 		mg7.setName("GarraRobo");
 		mg7.setOrderId(0L);
 		mg7.setOrderSubindex(0);
+		mg7.setFlex(false);
+		mg7.setLastMachineStep(0L);
 		magazineRepository_.save(mg7);
 		
 		Magazine mg8 = new Magazine();
@@ -134,6 +148,8 @@ public class DummyData2 {
 		mg8.setName("CastanhaTorno");
 		mg8.setOrderId(0L);
 		mg8.setOrderSubindex(0);
+		mg8.setFlex(false);
+		mg8.setLastMachineStep(0L);
 		magazineRepository_.save(mg8);
 		
 		Magazine mg9 = new Magazine();
@@ -141,6 +157,8 @@ public class DummyData2 {
 		mg9.setName("MorsaCentro");
 		mg9.setOrderId(0L);
 		mg9.setOrderSubindex(0);
+		mg9.setFlex(false);
+		mg9.setLastMachineStep(0L);
 		magazineRepository_.save(mg9);
 			
 		

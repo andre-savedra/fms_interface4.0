@@ -18,10 +18,13 @@ public class Delivery {
 	@NotNull
 	private boolean delivered;
 	
+	@NotNull
+	private boolean notExist;
 	
 	public Delivery() {		
 		this.orderToDelivery = 0L;
 		this.delivered = false;
+		this.notExist = false;
 	}
 	
 	public Delivery(Long id, Long order, boolean delivered)
@@ -29,6 +32,7 @@ public class Delivery {
 		this.id = id;
 		this.orderToDelivery = order;
 		this.delivered = delivered;
+		this.notExist = false;
 	}
 
 	public Long getId() {
@@ -53,6 +57,14 @@ public class Delivery {
 
 	public void setDelivered(boolean delivered) {
 		this.delivered = delivered;
+	}
+
+	public boolean isNotExist() {
+		return notExist;
+	}
+
+	public void setNotExist(boolean notExist) {
+		this.notExist = notExist;
 	}
 	
 	

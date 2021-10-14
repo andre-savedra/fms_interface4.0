@@ -21,6 +21,10 @@ public class Magazine {
 	private Long orderId;
 	
 	private int orderSubindex;
+	
+	private boolean isFlex = false;
+	
+	private Long lastMachineStep = 0L;
 
 	public Long getId() {
 		return id;
@@ -60,6 +64,22 @@ public class Magazine {
 
 	public void setOrderSubindex(int orderSubindex) {
 		this.orderSubindex = orderSubindex;
+	}
+
+	public boolean isFlex() {
+		return isFlex;
+	}
+
+	public void setFlex(boolean isFlex) {
+		this.isFlex = isFlex;
+	}
+
+	public Long getLastMachineStep() {
+		return lastMachineStep;
+	}
+
+	public void setLastMachineStep(Long lastMachineStep) {
+		this.lastMachineStep = lastMachineStep;
 	}
 	
 	

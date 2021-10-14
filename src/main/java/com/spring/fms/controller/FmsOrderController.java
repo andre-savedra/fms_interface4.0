@@ -164,7 +164,7 @@ public class FmsOrderController {
 		myMachinery.setOrderSubIndex(0);
 		myMachinery.setStepId(0);
 		myMachinery.setHasJob(false);
-		myMachinery.setFlex(false);
+		myMachinery.setFlex(false);		
 		//myMachinery.setInfo("");		
 	}
 
@@ -193,6 +193,7 @@ public class FmsOrderController {
 				{
 					theMachinery.setOrderSubIndex(0);
 				}			
+				
 				
 				if (theOrder.getType().getType().equals("flex")) {
 					theMachinery.setFlex(true);
