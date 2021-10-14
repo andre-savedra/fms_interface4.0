@@ -1,5 +1,4 @@
 /********************(    MAIN  )***********************/
-
 .millPartMain,
 .turnPartMain,
 .flexPartMain {
@@ -12,7 +11,6 @@
 }
 
 /********************(  HEADER   )***********************/
-
 .millPartHeader,
 .turnPartHeader,
 .flexPartHeader {
@@ -26,7 +24,6 @@
   background-color: #212429;
   color: white;
 }
-
 .millPartHeader h5,
 .turnPartHeader h5,
 .flexPartHeader h5 {
@@ -34,7 +31,6 @@
 }
 
 /********************(   CONTENT   )***********************/
-
 .millPartContent,
 .turnPartContent,
 .flexPartContent {
@@ -46,7 +42,6 @@
 }
 
 /********************(  CAROUSEL   )***********************/
-
 .carouselMill,
 .carouselTurn,
 .carouselFlex {
@@ -54,17 +49,27 @@
   height: 100%;
   border-right: 1px solid #212429;
 }
-
-.carouselMill > #carouselMill_,
-.carouselTurn > #carouselTurn_,
-.carouselFlex > #carouselFlex_ {
+.carouselMill #carouselMill_,
+.carouselMill #carouselTurn_,
+.carouselMill #carouselFlex_,
+.carouselTurn #carouselMill_,
+.carouselTurn #carouselTurn_,
+.carouselTurn #carouselFlex_,
+.carouselFlex #carouselMill_,
+.carouselFlex #carouselTurn_,
+.carouselFlex #carouselFlex_ {
   width: 100%;
   height: 100%;
 }
-
-#carouselMill_ > .carousel-inner,
-#carouselTurn_ > .carousel-inner,
-#carouselFlex_ > .carousel-inner {
+.carouselMill #carouselMill_ .carousel-inner,
+.carouselMill #carouselTurn_ .carousel-inner,
+.carouselMill #carouselFlex_ .carousel-inner,
+.carouselTurn #carouselMill_ .carousel-inner,
+.carouselTurn #carouselTurn_ .carousel-inner,
+.carouselTurn #carouselFlex_ .carousel-inner,
+.carouselFlex #carouselMill_ .carousel-inner,
+.carouselFlex #carouselTurn_ .carousel-inner,
+.carouselFlex #carouselFlex_ .carousel-inner {
   width: 100%;
   height: 100%;
 }
@@ -87,19 +92,14 @@
   justify-content: center;
   align-items: center;
 }
-
-#carouselTurnContent > .carousel-item > img,
-#carouselMillContent > .carousel-item > img,
-#carouselFlexContent > .carousel-item > img {
+#carouselTurnContent > .carousel-item img,
+#carouselMillContent > .carousel-item img,
+#carouselFlexContent > .carousel-item img {
   width: 100%;
   height: 100%;
 }
 
-
-
 /********************(   3D MODELS   )***********************/
-
-
 .carousel-item > model-viewer {
   width: 70%;
   height: 70%;
@@ -121,7 +121,11 @@
   overflow-wrap: break-word;
   padding: 0em 0.8em;
   position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
   transform: translate3d(-80%, -80%, 0);
   --min-hotspot-opacity: 0;
@@ -137,14 +141,17 @@
   overflow-wrap: break-word;
   padding: 0.5em 1em;
   position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
   transform: translate3d(-50%, -50%, 0);
   --min-hotspot-opacity: 0;
 }
 
 /********************(   FORM   )***********************/
-
 .formMillPart,
 .formTurnPart,
 .formFlexPart {
@@ -156,9 +163,14 @@
   align-items: center;
   overflow-y: auto;
 }
-
 .formMillPart #formMillPart_,
+.formMillPart #formTurnPart_,
+.formMillPart #formFlexPart_,
+.formTurnPart #formMillPart_,
 .formTurnPart #formTurnPart_,
+.formTurnPart #formFlexPart_,
+.formFlexPart #formMillPart_,
+.formFlexPart #formTurnPart_,
 .formFlexPart #formFlexPart_ {
   height: 100%;
   min-height: 300px;
@@ -168,9 +180,14 @@
   justify-content: center;
   align-items: center;
 }
-
 .formMillPart #formMillPart_ div,
+.formMillPart #formTurnPart_ div,
+.formMillPart #formFlexPart_ div,
+.formTurnPart #formMillPart_ div,
 .formTurnPart #formTurnPart_ div,
+.formTurnPart #formFlexPart_ div,
+.formFlexPart #formMillPart_ div,
+.formFlexPart #formTurnPart_ div,
 .formFlexPart #formFlexPart_ div {
   width: 100%;
   display: flex;
@@ -178,13 +195,48 @@
   justify-content: center;
   align-items: center;
 }
-
-#formMillPart_ input,
-#formTurnPart_ input,
-#formFlexPart_ input,
-#formMillPart_ select,
-#formTurnPart_ select,
-#formFlexPart_ select {
+.formMillPart #formMillPart_ div i,
+.formMillPart #formTurnPart_ div i,
+.formMillPart #formFlexPart_ div i,
+.formTurnPart #formMillPart_ div i,
+.formTurnPart #formTurnPart_ div i,
+.formTurnPart #formFlexPart_ div i,
+.formFlexPart #formMillPart_ div i,
+.formFlexPart #formTurnPart_ div i,
+.formFlexPart #formFlexPart_ div i {
+  margin-left: 5px;
+  font-size: 18px;
+}
+.formMillPart #formMillPart_ div i:hover,
+.formMillPart #formTurnPart_ div i:hover,
+.formMillPart #formFlexPart_ div i:hover,
+.formTurnPart #formMillPart_ div i:hover,
+.formTurnPart #formTurnPart_ div i:hover,
+.formTurnPart #formFlexPart_ div i:hover,
+.formFlexPart #formMillPart_ div i:hover,
+.formFlexPart #formTurnPart_ div i:hover,
+.formFlexPart #formFlexPart_ div i:hover {
+  font-size: 19px;
+  color: grey;
+}
+.formMillPart #formMillPart_ input,
+.formMillPart #formMillPart_ select,
+.formMillPart #formTurnPart_ input,
+.formMillPart #formTurnPart_ select,
+.formMillPart #formFlexPart_ input,
+.formMillPart #formFlexPart_ select,
+.formTurnPart #formMillPart_ input,
+.formTurnPart #formMillPart_ select,
+.formTurnPart #formTurnPart_ input,
+.formTurnPart #formTurnPart_ select,
+.formTurnPart #formFlexPart_ input,
+.formTurnPart #formFlexPart_ select,
+.formFlexPart #formMillPart_ input,
+.formFlexPart #formMillPart_ select,
+.formFlexPart #formTurnPart_ input,
+.formFlexPart #formTurnPart_ select,
+.formFlexPart #formFlexPart_ input,
+.formFlexPart #formFlexPart_ select {
   max-width: 200px;
   width: 60%;
   height: 35px;
@@ -196,30 +248,26 @@
   padding-right: 15px;
   /* color: #878a90; */
 }
-
-#formMillPart_ label,
-#formTurnPart_ label,
-#formFlexPart_ label {
+.formMillPart #formMillPart_ label,
+.formMillPart #formTurnPart_ label,
+.formMillPart #formFlexPart_ label,
+.formTurnPart #formMillPart_ label,
+.formTurnPart #formTurnPart_ label,
+.formTurnPart #formFlexPart_ label,
+.formFlexPart #formMillPart_ label,
+.formFlexPart #formTurnPart_ label,
+.formFlexPart #formFlexPart_ label {
   margin: 0;
 }
-
-#formMillPart_ > div > i,
-#formTurnPart_ > div > i,
-#formFlexPart_ > div > i {
-  margin-left: 5px;
-  font-size: 18px;
-}
-
-#formMillPart_ > div > i:hover,
-#formTurnPart_ > div > i:hover,
-#formFlexPart_ > div > i:hover {
-  font-size: 19px;
-  color: grey;
-}
-
-#formMillPart_ button,
-#formTurnPart_ button,
-#formFlexPart_ button {
+.formMillPart #formMillPart_ button,
+.formMillPart #formTurnPart_ button,
+.formMillPart #formFlexPart_ button,
+.formTurnPart #formMillPart_ button,
+.formTurnPart #formTurnPart_ button,
+.formTurnPart #formFlexPart_ button,
+.formFlexPart #formMillPart_ button,
+.formFlexPart #formTurnPart_ button,
+.formFlexPart #formFlexPart_ button {
   height: 30px;
   width: 40%;
   min-width: 80px;
@@ -231,21 +279,30 @@
   background-color: #212429;
   color: white;
 }
-
-#formMillPart_ button .fa-share-square,
-#formTurnPart_ button .fa-share-square,
-#formFlexPart_ button .fa-share-square {
+.formMillPart #formMillPart_ button .fa-share-square,
+.formMillPart #formTurnPart_ button .fa-share-square,
+.formMillPart #formFlexPart_ button .fa-share-square,
+.formTurnPart #formMillPart_ button .fa-share-square,
+.formTurnPart #formTurnPart_ button .fa-share-square,
+.formTurnPart #formFlexPart_ button .fa-share-square,
+.formFlexPart #formMillPart_ button .fa-share-square,
+.formFlexPart #formTurnPart_ button .fa-share-square,
+.formFlexPart #formFlexPart_ button .fa-share-square {
   margin-right: 7px;
 }
-
-#formMillPart_ button:hover,
-#formTurnPart_ button:hover,
-#formFlexPart_ button:hover {
+.formMillPart #formMillPart_ button:hover,
+.formMillPart #formTurnPart_ button:hover,
+.formMillPart #formFlexPart_ button:hover,
+.formTurnPart #formMillPart_ button:hover,
+.formTurnPart #formTurnPart_ button:hover,
+.formTurnPart #formFlexPart_ button:hover,
+.formFlexPart #formMillPart_ button:hover,
+.formFlexPart #formTurnPart_ button:hover,
+.formFlexPart #formFlexPart_ button:hover {
   background-color: grey;
 }
 
 /********************(    BAR    )***********************/
-
 .formMillPart::-webkit-scrollbar-track,
 .formTurnPart::-webkit-scrollbar-track,
 .formFlexPart::-webkit-scrollbar-track {
@@ -267,68 +324,59 @@
   border-radius: 10px;
   background-color: #555a61;
   /*#d62929;*/
-  background-image: -webkit-linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent,
-    transparent
-  );
+  background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent);
 }
 
 /********************(    RESPONSIVE   )***********************/
-
 @media screen and (max-width: 850px) {
   .millPartMain,
-  .turnPartMain,
-  .flexPartMain {
+.turnPartMain,
+.flexPartMain {
     width: 90%;
     height: auto;
     min-height: 600px;
     margin: 20px 0px;
   }
+
   .millPartHeader,
-  .turnPartHeader,
-  .flexPartHeader {
+.turnPartHeader,
+.flexPartHeader {
     height: 50px;
     text-align: center;
   }
+
   .millPartContent,
-  .turnPartContent,
-  .flexPartContent {
+.turnPartContent,
+.flexPartContent {
     height: calc(100% - 50px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
+
   .carouselMill,
-  .carouselTurn,
-  .carouselFlex {
+.carouselTurn,
+.carouselFlex {
     width: 100%;
     height: 55%;
     border-bottom: 2px solid #212429;
   }
+
   .formMillPart,
-  .formTurnPart,
-  .formFlexPart {
+.formTurnPart,
+.formFlexPart {
     height: 45%;
     width: 100%;
   }
 }
-
 @media screen and (max-width: 500px) {
+  .carousel-item > model-viewer {
+    min-width: 150px;
+    min-height: 150px;
+  }
 
-    .carousel-item > model-viewer {
-        
-        min-width: 150px;
-        min-height: 150px;
-      }
-
-      .spotDimension {      
-        font-size: 10px;
-      }
-      
-    
-}
-
+  .spotDimension {
+    font-size: 10px;
+  }
+}/*# sourceMappingURL=ajax-turn-mill.css.map */

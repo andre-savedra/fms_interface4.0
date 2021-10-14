@@ -11,7 +11,6 @@
   flex-direction: column;
   align-items: center;
 }
-
 .dash_turn img,
 .dash_mill img {
   width: 100%;
@@ -19,10 +18,37 @@
   min-height: 220px;
   padding: 5px;
 }
-
 .dash_turn h5,
 .dash_mill h5 {
   margin: 0px;
+}
+.dash_turn textarea,
+.dash_mill textarea {
+  width: 90%;
+  height: 50%;
+  min-height: 220px;
+  max-height: 40%;
+  padding: 5px;
+  outline: none;
+  border-radius: 2px;
+}
+.dash_turn #send_turn,
+.dash_turn #send_mill,
+.dash_mill #send_turn,
+.dash_mill #send_mill {
+  width: 180px;
+  height: 32px;
+  border: none;
+  border-radius: 5px;
+  background-color: #212429;
+  color: white;
+  margin-top: 6px;
+}
+.dash_turn #send_turn:hover,
+.dash_turn #send_mill:hover,
+.dash_mill #send_turn:hover,
+.dash_mill #send_mill:hover {
+  background-color: grey;
 }
 
 .turn_ident,
@@ -35,12 +61,10 @@
   align-items: center;
   margin: 5px 0px;
 }
-
 .turn_ident label,
 .mill_ident label {
   margin: 0 5px;
 }
-
 .turn_ident input,
 .mill_ident input {
   outline: none;
@@ -61,33 +85,6 @@
   text-align: right;
 }
 
-.dash_turn textarea,
-.dash_mill textarea {
-  width: 90%;
-  height: 50%;
-  min-height: 220px;
-  max-height: 40%; 
-  padding: 5px;
-  outline: none;
-  border-radius: 2px;
-}
-
-.dash_turn > #send_turn,
-.dash_mill > #send_mill {
-  width: 180px;
-  height: 32px;
-  border: none;
-  border-radius: 5px;
-  background-color: #212429;
-  color: white;
-  margin-top: 6px;
-}
-
-.dash_turn > #send_turn:hover,
-.dash_mill > #send_mill:hover {
-  background-color: grey;
-}
-
 button > .fa-share-square {
   font-size: 20px;
-}
+}/*# sourceMappingURL=ajax-custom.css.map */

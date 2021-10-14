@@ -1,136 +1,130 @@
 /********************(    MAIN   )***********************/
-
 .login {
-    width: 100%;
-    min-height: 780px;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #212429;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  min-height: 780px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #212429;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .register_content {
-    background-color: white;
-    width: 40%;
-    max-width: 400px;
-    min-width: 300px;
-    padding: 20px;
-    height: 780px;
-    border-radius: 5px;
+  background-color: white;
+  width: 40%;
+  max-width: 400px;
+  min-width: 300px;
+  padding: 20px;
+  height: 780px;
+  border-radius: 5px;
 }
 
 .register_title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 35px;
-    padding-left: 10px;
-    margin-bottom: 10px;
-    /* background-color: grey; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 35px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  /* background-color: grey; */
 }
 
 .title_content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .register_title h2 {
-    margin: 0px 10px;
+  margin: 0px 10px;
 }
 
 #btn_back {
-    margin: 0;
-    border: none;
-    background-color: white;
+  margin: 0;
+  border: none;
+  background-color: white;
 }
 
 #btn_back fa-arrow-circle-left {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .register_form {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid black;
-    padding: 15px;
-    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 15px;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .form_content {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .register_input {
-    width: 100%;
-    height: 35px;
-    border-radius: 4px;
-    border: 1px solid rgba(94, 110, 110, 0.424);
+  width: 100%;
+  height: 35px;
+  border-radius: 4px;
+  border: 1px solid rgba(94, 110, 110, 0.424);
 }
 
 .register_input:focus {
-    outline: 0;
-    background: linear-gradient( 135deg, rgba(16, 221, 211, 0.1), rgba(2, 165, 230, 0.3));
+  outline: 0;
+  background: linear-gradient(135deg, rgba(16, 221, 211, 0.1), rgba(2, 165, 230, 0.3));
 }
 
 #register_button {
-    width: 100%;
-    height: 35px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    background: linear-gradient( 135deg, rgba(16, 221, 211, 0.849), rgba(2, 165, 230, 0.87));
-    transform: scale(1);
-    transition: 0.9s;
+  width: 100%;
+  height: 35px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background: linear-gradient(135deg, rgba(16, 221, 211, 0.849), rgba(2, 165, 230, 0.87));
+  transform: scale(1);
+  transition: 0.9s;
 }
 
 #register_button:hover {
-    transform: scale(1.05);
-    transition: 0.4s;
+  transform: scale(1.05);
+  transition: 0.4s;
 }
 
-
 /********************(    BAR    )***********************/
-
 .login::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
-    border-radius: 10px;
-    background-color: #cccccc;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  background-color: #cccccc;
 }
 
 .login::-webkit-scrollbar {
-    width: 12px;
-    background-color: #f5f5f5;
+  width: 12px;
+  background-color: #f5f5f5;
 }
 
 .login::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #555a61;
-    /*#d62929;*/
-    background-image: -webkit-linear-gradient( 90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent);
+  border-radius: 10px;
+  background-color: #555a61;
+  /*#d62929;*/
+  background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent);
 }
-
 
 /********************(    RESPONSIVE    )***********************/
-
 @media screen and (max-width: 1000px) {
-    .register_content {
-        width: 50%;
-    }
+  .register_content {
+    width: 50%;
+  }
 }
-
 @media screen and (max-width: 800px) {
-    .register_content {
-        width: 80%;
-    }
-}
+  .register_content {
+    width: 80%;
+  }
+}/*# sourceMappingURL=signIn.css.map */

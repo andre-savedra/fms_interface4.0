@@ -6,7 +6,8 @@
   min-height: 560px;
   border: 2px solid #212429;
   border-radius: 5px;
-  background-color: white; /*rgba(255, 255, 255, 0.5);*/
+  background-color: white;
+  /*rgba(255, 255, 255, 0.5);*/
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +23,6 @@
   background-color: #212429;
   color: white;
 }
-
 .dashboard_header h5 {
   margin: 0;
 }
@@ -56,7 +56,6 @@
 }
 
 /********************(    BAR    )***********************/
-
 .dashboard_center::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
@@ -70,29 +69,22 @@
 
 .dashboard_center::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #555a61; /*#d62929;*/
-  background-image: -webkit-linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent,
-    transparent
-  );
+  background-color: #555a61;
+  /*#d62929;*/
+  background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent);
 }
 
 /********************(    RESPONSIVE   )***********************/
-
 @media screen and (max-width: 860px) {
   .fatherDashboard_turn,
-  .fatherDashboard_mill {
+.fatherDashboard_mill {
     width: 75%;
     margin: 20px 0px;
   }
 }
-
 @media screen and (max-width: 470px) {
   .fatherDashboard_turn,
-  .fatherDashboard_mill {
+.fatherDashboard_mill {
     min-width: 290px;
   }
-}
+}/*# sourceMappingURL=ajax-dashboard.css.map */

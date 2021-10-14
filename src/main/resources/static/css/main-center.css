@@ -1,5 +1,4 @@
 /********************(    MAIN   )***********************/
-
 .dash_main {
   width: calc(100% - 150px);
   height: 100%;
@@ -9,7 +8,6 @@
 }
 
 /********************(    MAIN HEADER   )***********************/
-
 .dash_main header {
   width: 100%;
   height: 70px;
@@ -36,6 +34,10 @@
   align-items: center;
   justify-content: center;
 }
+#dash_logout p {
+  margin: 0;
+  padding: 0;
+}
 
 #btn_logout {
   outline: none;
@@ -51,13 +53,7 @@
   transition: 0.3s;
 }
 
-#dash_logout p {
-  margin: 0;
-  padding: 0;
-}
-
 /********************(    MAIN CONTENT   )***********************/
-
 .dash_content {
   width: 100%;
   height: calc(100% - 70px);
@@ -71,7 +67,6 @@
 }
 
 /********************(    BAR    )***********************/
-
 .dash_content::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
   border-radius: 10px;
@@ -85,25 +80,19 @@
 
 .dash_content::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #555a61; /*#d62929;*/
-  background-image: -webkit-linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent,
-    transparent
-  );
+  background-color: #555a61;
+  /*#d62929;*/
+  background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent);
 }
 
 /********************(    RESPONSIVE   )***********************/
-
 @media screen and (max-width: 760px) {
   .dash_mill,
-  .dash_turn {
+.dash_turn {
     margin-top: 20px;
   }
 
   .dash_main {
     width: calc(100% - 70px);
   }
-}
+}/*# sourceMappingURL=main-center.css.map */
