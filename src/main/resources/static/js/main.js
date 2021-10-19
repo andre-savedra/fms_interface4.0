@@ -201,6 +201,16 @@ var initialLoadHtmlVar = 0;
 var initialLoadOrders = 0;
 
 
+function setSpinnerButton(element){
+    const actual = element.innerHTML;
+    element.innerHTML = actual + '<span id="spinBtn" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-left: 4px; margin-bottom: 4px;"></span>';
+}
+
+function cleanSpinner(element){
+    element.removeChild(document.getElementById("spinBtn"));
+}
+
+
 /****************************  (Cookies)  **********************************/
 
 function get_Cookie(name) {
@@ -232,6 +242,7 @@ function getActualUser() {
 //function loaded when pressed the send button in flex page
 function submitCustom(element) {
     event.preventDefault();
+    setSpinnerButton(element);
     let typeM = "";
     let codeSelector = "";
     let myType = "";
@@ -281,6 +292,7 @@ function submitCustom(element) {
 //internal function loaded when pressed send button in part pages
 //ps: the onclick event is in javascript not in html page (ajax)
 function submitPart(element) {
+    setSpinnerButton(element);
     let inputs_part = ""; //fields filled in form part
     let values_validated = [];
     let process_validated = [];

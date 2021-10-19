@@ -47,6 +47,7 @@
 .carouselFlex {
   width: 60%;
   height: 100%;
+  min-height: 220px;
   border-right: 1px solid #212429;
 }
 .carouselMill #carouselMill_,
@@ -372,8 +373,8 @@
 }
 @media screen and (max-width: 500px) {
   .carousel-item > model-viewer {
-    min-width: 150px;
-    min-height: 150px;
+    min-width: 180px;
+    min-height: 190px;
   }
 
   .spotDimension {

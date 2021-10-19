@@ -77,18 +77,22 @@
             </header>
             <div class="dash_content">
 
-
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
 
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Erro!</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Erro! <i class="far fa-frown" style="font-size: 20px; margin-left: 5px"></i> </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>Erro! Usuário não pode ser cadastrado pois já existe um cadastro com este CPF! Faça seu login! </p>
+                                <p>Erro! Usuário não pode ser cadastrado pois já existe um cadastro com este CPF! Faça seu login!  </p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-dark" onclick="modal_redirect()">Ok</button>

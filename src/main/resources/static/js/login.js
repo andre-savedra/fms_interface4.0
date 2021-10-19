@@ -118,7 +118,7 @@ function eraseCookie(name) {
 /*--------- HTTP REQUEST --------*/
 function send_RequestLogin(body) {
     let request = new XMLHttpRequest();
-    let url = defaultUrl + "validate_user";   
+    let url = defaultUrl + "validate_user";
     let enable = true;
 
     request.onreadystatechange = function() {
@@ -129,11 +129,13 @@ function send_RequestLogin(body) {
                         let cpf = document.querySelector("#cpf_login");
                         eraseCookie('fmsusercookie');
                         setCookie('fmsusercookie', cpf.value, 1);
-                        window.location.href = "/success";
+                        window.location.href = "/successlogin";
                     } else if (request.responseText === "notFound") {
                         alert("Usuário não encontrado!");
+                        cleanSpinner(button);
                     } else if (request.responseText === "blocked") {
                         alert("Senha incorreta!");
+                        cleanSpinner(button);
                     }
 
                 } else {
@@ -149,47 +151,11 @@ function send_RequestLogin(body) {
     request.send(JSON.stringify(body));
 }
 
+function setSpinnerButton(element){
+    const actual = element.innerHTML;
+    element.innerHTML = actual + '<span id="spinBtn" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+}
 
-
-
-/*--------- HTTP REQUEST --------*/
-// function send_RequestLogin(body) {
-//     let request = new XMLHttpRequest();
-//     let url = defaultUrl + "load_all_parts";   
-//     let enable = true;
-    
-//     request.onreadystatechange = function() {
-//         if (enable == true) {
-//             if (request.readyState === 4) {
-//                 if (request.status === 200) {
-//                     var testeAndre = JSON.parse(request.responseText);
-//                     console.log("Andre:");
-//                     console.log(testeAndre[0]);
-
-//                     var teste2Andre = Object.assign({}, testeAndre[0]);
-
-//                     teste2Andre['andreconcluded'] = true;                    
-//                     console.log("teste2Andre");
-//                     console.log(teste2Andre);
-
-//                     console.log("Andre:");
-//                     console.log(testeAndre[0]);
-
-//                     console.log("toda a estrutura:");
-//                     console.log(testeAndre);
-
-
-//                 } else {
-//                     window.location.href = "/fail";
-//                 }
-
-//             }
-//         }
-//     };
-
-//     request.open("POST", url, true);
-//     request.setRequestHeader("Content-Type", "application/json");
-//     request.send(JSON.stringify(body));
-// }
-
-// send_RequestLogin(null);
+function cleanSpinner(element){
+    element.removeChild(document.getElementById("spinBtn"));
+}

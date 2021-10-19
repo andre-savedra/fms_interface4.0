@@ -119,3 +119,12 @@ function send_signIn(body) {
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify(body));
 }
+
+function setSpinnerButton(element){
+    const actual = element.innerHTML;
+    element.innerHTML = actual + '<span id="spinBtn" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+}
+
+function cleanSpinner(element){
+    element.removeChild(document.getElementById("spinBtn"));
+}
