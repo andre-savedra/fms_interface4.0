@@ -1,3 +1,12 @@
+function setSpinnerButton(element) {
+    const actual = element.innerHTML;
+    element.innerHTML = actual + '<span id="spinBtn" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-left: 4px; margin-bottom: 4px;"></span>';
+}
+
+function cleanSpinner(element) {
+    element.removeChild(document.getElementById("spinBtn"));
+}
+
 function index_return() {
     window.location.href = "/index";
 }
@@ -47,6 +56,9 @@ function checkCPF(strCPF) {
 
 function signInValidation() {
     event.preventDefault();
+
+    setSpinnerButton(document.querySelector("#register_button"));
+
     let cpf = document.querySelector("#cpf");
     let name = document.querySelector("#name");
     let birth = document.querySelector("#birthday");
@@ -120,11 +132,9 @@ function send_signIn(body) {
     request.send(JSON.stringify(body));
 }
 
-function setSpinnerButton(element){
-    const actual = element.innerHTML;
-    element.innerHTML = actual + '<span id="spinBtn" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
-}
 
-function cleanSpinner(element){
-    element.removeChild(document.getElementById("spinBtn"));
+
+
+function sendPhoneCode(element) {
+    setSpinnerButton(element);
 }

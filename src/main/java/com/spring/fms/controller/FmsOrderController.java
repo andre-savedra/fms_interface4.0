@@ -420,7 +420,7 @@ public class FmsOrderController {
 															+ " acabou de ficar pronta! =) ";
 
 													Message message = new Message(u.getName(), u.getPhone().toString(), msg);
-													arrayMessages.add(message);											
+													arrayMessages.add(message);			
 													
 												}
 												// last step was done, but amount of parts not reached,
@@ -540,7 +540,7 @@ public class FmsOrderController {
 						if (arrayMessages.size() > 0) {
 							System.out.println("Enviando mensagem para " + arrayMessages.get(0).getName());
 							// send
-							//emailSender.sendMail(arrayMessages.get(0).getChannel(), arrayMessages.get(0).getMessage());
+							emailSender.sendMail(arrayMessages.get(0).getChannel(), arrayMessages.get(0).getMessage());
 							// remove from list
 							arrayMessages.remove(0);
 						}

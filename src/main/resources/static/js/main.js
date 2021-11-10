@@ -201,12 +201,12 @@ var initialLoadHtmlVar = 0;
 var initialLoadOrders = 0;
 
 
-function setSpinnerButton(element){
+function setSpinnerButton(element) {
     const actual = element.innerHTML;
     element.innerHTML = actual + '<span id="spinBtn" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-left: 4px; margin-bottom: 4px;"></span>';
 }
 
-function cleanSpinner(element){
+function cleanSpinner(element) {
     element.removeChild(document.getElementById("spinBtn"));
 }
 
@@ -877,6 +877,48 @@ function makePostReturn(url, body, functionResponse) {
     request.send(JSON.stringify(body));
 }
 
+
+var timerWaitUntilLoadParts = "";
+var elementToWaitLoad = "";
+
+function onTimerWaitUntilLoadParts(element) {
+    elementToWaitLoad = element;
+    timerWaitUntilLoadParts = setInterval(checkUntilLoadParts, 500);
+}
+
+function checkUntilLoadParts() {
+
+    // console.log("ELEMENT:");
+    // console.log(elementToWaitLoad);
+
+    if (initialLoadHtmlVar === 4) {
+        console.log("ELEMENTOS JÁ FORAM CARREGADOS...");
+        // stopTimerWaitUntilLoadParts();
+        fetchContent(elementToWaitLoad);
+    }
+}
+
+
+function stopTimerWaitUntilLoadParts() {
+    console.log("PARANDO WAIT UNTIL LOAD!!!");
+
+    let spinner = 1;
+    spinner = document.querySelector("#spinBtn");
+
+    if (spinner !== 1) {
+        console.log("TEM SPINNER");
+        console.log(spinner);
+        let father = spinner.parentElement;
+        console.log(father);
+        cleanSpinner(father);
+    } else {
+        console.log("NAO TEM SPINNER");
+        console.log(spinner);
+    }
+
+    clearInterval(timerWaitUntilLoadParts);
+}
+
 /****************************  (Ajax)  **********************************/
 /*--------- AJAX DASH CONTENT --------*/
 //let btn_flex = document.querySelector(".inner_submenu");
@@ -887,6 +929,7 @@ function fetchContent(element) {
     oldTurnPartsNoFields = 0;
     oldMillPartsNoFields = 0;
     oldFlexPartsNoFields = 0;
+    let executeFetch = true;
 
     viewActive = element.getAttribute("a-view");
     let path = "/html/ajax/" + viewActive + ".html";
@@ -911,16 +954,28 @@ function fetchContent(element) {
         viewActive === "ajax-mill" ||
         viewActive === "ajax-flex"
     ) {
-        onTimerGetPartTurnMill();
-        //get html code to each machine (0-turn, 1-mill)
-        if (viewActive === "ajax-turn") {
-            content.innerHTML = htmlViewsTurnMillFlex[0];
-        } else if (viewActive === "ajax-mill") {
-            content.innerHTML = htmlViewsTurnMillFlex[1];
-        } else {
-            content.innerHTML = htmlViewsTurnMillFlex[2];
+        if (initialLoadHtmlVar === 4) {
+            executeFetch = false;
+            onTimerGetPartTurnMill();
+            //get html code to each machine (0-turn, 1-mill, 2-flex)
+            if (viewActive === "ajax-turn") {
+                content.innerHTML = htmlViewsTurnMillFlex[0];
+            } else if (viewActive === "ajax-mill") {
+                content.innerHTML = htmlViewsTurnMillFlex[1];
+            } else {
+                content.innerHTML = htmlViewsTurnMillFlex[2];
+            }
+            stopTimerWaitUntilLoadParts();
+
+        } else //html is not ready
+        {
+            onTimerWaitUntilLoadParts(element);
         }
-    } else {
+
+    }
+
+    if (executeFetch === true) {
+
         stopTimerGetPartTurnMill();
 
         fetch(path)
@@ -933,6 +988,7 @@ function fetchContent(element) {
                 console.log(html);
             });
     }
+
 }
 //pre-load html of parts
 function fetchLoadHtmlParts(functionResponse) {
@@ -1259,7 +1315,7 @@ function onTimerChartsDashboards() {
 }
 
 function stopTimerChartsDashboards() {
-    clearInterval(refreshChartsDashboards);
+    clearInterval(timerChartsDashboards);
 }
 
 /*--------- REFRESH PARTS CHOOSEN --------*/
@@ -1299,8 +1355,14 @@ function onTimerGetPartTurnMill() {
 }
 
 function stopTimerGetPartTurnMill() {
-    clearInterval(refreshGetPartTurnMill);
+    clearInterval(timerGetPartTurnMill);
 }
+
+/*--------- WAIT UNTIL LOAD PARTS (JUST WHEN AJAX IS REQUESTED) --------*/
+
+
+
+
 
 /*--------- REFRESH ORDERS LIST --------*/
 var timerGetOrdersList;
@@ -1325,7 +1387,7 @@ function onTimerGetOrdersList() {
 
 function stopTimerGetOrdersList() {
     initialLoadOrders = 0;
-    clearInterval(refreshGetOrdersList);
+    clearInterval(timerGetOrdersList);
 }
 
 /*--------- REFRESH TOOLTIPS --------*/
@@ -1477,5 +1539,5 @@ if (interfaceType == CLOUD_TYPE) {
 }
 
 function renew() {
-    window.location.href = "/renew";
+    // window.location.href = "/renew";
 }
