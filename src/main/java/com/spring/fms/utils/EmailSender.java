@@ -16,10 +16,10 @@ public class EmailSender {
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setRequestProperty("Accept", "application/json");			
-			con.setDoOutput(true);
-			String jsonInputString = "[{\"sessionName\":" 
-					+ " \"alexcomercial\","
-					+ "\"number\": \"" + number + " \",\"text\":\"" + content + "\"}]";
+			con.setDoOutput(true);			
+			String jsonInputString = "{\n\"sessionName\":" 
+					+ " \"andrezap\",\n"
+					+ "\"number\": \"" + "55" + number + "\",\n\"text\":\"" + content + "\"\n}";
 			System.out.println("jsonInputString");
 			System.out.println(jsonInputString);
 			

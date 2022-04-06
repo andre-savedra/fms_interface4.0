@@ -416,8 +416,8 @@ public class FmsOrderController {
 													
 													//send message to client
 													User u = orderEnded.getUser();
-													String msg = u.getName() + ", sua peca com nome " + orderEnded.getOrdername()
-															+ " acabou de ficar pronta! =) ";
+													String msg = u.getName() + ", sua peça com nome: \'" + orderEnded.getOrdername()
+															+ "\' e número de ordem: " + orderEnded.getId().toString() + ", acabou de ficar pronta! =) ";
 
 													Message message = new Message(u.getName(), u.getPhone().toString(), msg);
 													arrayMessages.add(message);			
@@ -742,5 +742,8 @@ public class FmsOrderController {
 
 		return machineryService.findMachineryAll();
 	}
+	
+	
+	
 
 }
