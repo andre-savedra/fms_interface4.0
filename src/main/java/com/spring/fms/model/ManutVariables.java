@@ -42,6 +42,8 @@ public class ManutVariables {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	private LocalDateTime lastUpdate;
+	
+	private boolean requested;
 
 	public Long getId() {
 		return id;
@@ -129,6 +131,14 @@ public class ManutVariables {
 
 	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	public boolean isRequested() {
+		return requested;
+	}
+
+	public void setRequested(boolean requested) {
+		this.requested = requested;
 	}
 
 

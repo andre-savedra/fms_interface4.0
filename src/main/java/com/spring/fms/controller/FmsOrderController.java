@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,6 +21,7 @@ import com.spring.fms.config.InterfaceConfig;
 import com.spring.fms.managerProduction.GcodeWriter;
 import com.spring.fms.managerProduction.Threads;
 import com.spring.fms.model.Machinery;
+import com.spring.fms.model.ManutVariables;
 import com.spring.fms.model.Message;
 import com.spring.fms.model.Order;
 import com.spring.fms.model.OrderType;
@@ -32,17 +32,24 @@ import com.spring.fms.service.FmsMachineryService;
 import com.spring.fms.service.FmsOrderService;
 import com.spring.fms.service.FmsProcessOrderService;
 import com.spring.fms.service.FmsStepOrderService;
+import com.spring.fms.service.ManutVariablesService;
 import com.spring.fms.service.OpcUaVarsMillingService;
 import com.spring.fms.service.OpcUaVarsRobotService;
 import com.spring.fms.service.OpcUaVarsTurnService;
 import com.spring.fms.service.SupervisoryDataExchangeService;
 import com.spring.fms.utils.EmailSender;
+import com.spring.fms.utils.MaintenanceRequester;
 
 @Controller//andre 064022
 public class FmsOrderController { //fms
 	
 	private static Threads threadMakeProduction;
 	private static Threads threadSender;
+	private static Threads threadMaintenance;
+	
+	private static List<ManutVariables> manutVariablesList;
+	
+	MaintenanceRequester maintenanceRequester;
 
 	private static List<Machinery> machineriesList;
 	private static Machinery mTurn;
@@ -94,6 +101,9 @@ public class FmsOrderController { //fms
 
 	@Autowired
 	FmsMachineryService machineryService;
+	
+	@Autowired
+	ManutVariablesService manutVariablesService;
 
 	
 	private boolean saveTheOrder(Order orderToSave) {
@@ -555,9 +565,45 @@ public class FmsOrderController { //fms
 				} // while(true)
 			} // public void run()
 		}); // threadProduction
+		
+		
+		threadMaintenance = new Threads(new Runnable() {
+
+			@Override
+			public void run() {
+
+				while (true) {
+
+					if (threadMaintenance.isAllDone()) {
+						return;
+					}
+
+					if (started) {
+						
+						manutVariablesList = manutVariablesService.findManutAll();
+						
+						for(ManutVariables manutVariable : manutVariablesList) {
+							
+							maintenanceRequester.check(
+								"YYP7w_Td5Pm481an66JeZ2eDmKELxYYTDchGxteGus70gL_rkwfDlGOAP5GqDByIc67z2_tJCiMb8n0zvnryW1g7b0C4K1ieDXQCEaDgxfIzkI6ql2kJtZQx_txRY1WevWC--N1X6xxG7BzKKon0kfq53dQAg6QgGSl5dMI0WZkUJ393E-knwRv_XR7OBe5y1g7T7L-wXa2MIAbXxVN7DoJH4xWSJXbv31e11qgs4brSRcWbePoRU6E6l71FSOnrVPfFdYjl6-p8WrFEKD2oeR0oeXYqVgr3JtHvx3sH-MVqbSoO7htg_woRLFD-iN315RW-gZMJcb2xtQ6ULSBx15AKMkezTLNrC2HbBMoxS_U",
+								manutVariable);							
+						}
+						
+					}
+
+					try {
+						threadMaintenance.sleep(10000);
+					} catch (InterruptedException e) {
+						System.out.println("EXCEPTION MAINTENANCE!");
+						e.printStackTrace();
+					}
+				} // while(true)
+			} // public void run()
+		}); // threadMaintenance
 
 		threadMakeProduction.start();
 		threadSender.start();
+		threadMaintenance.start();
 	}
 
 	/************************** METHOD REQUESTS ************************/
@@ -576,8 +622,9 @@ public class FmsOrderController { //fms
 		// INITIALIZATION: FIRST CONFIGURATION
 		if ((started == false) && (InterfaceConfig.interfaceType == InterfaceConfig.LOCAL_TYPE)) {
 			System.out.println("iniciado");
-			// Initialize the email sender
+			// Initialize the email sender and maintenance requester
 			emailSender = new EmailSender();
+			maintenanceRequester = new MaintenanceRequester();
 
 			// create machineries
 			mTurn = machineryService.findMachineryById(3L);
