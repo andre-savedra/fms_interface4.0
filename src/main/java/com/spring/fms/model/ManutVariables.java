@@ -24,13 +24,21 @@ public class ManutVariables {
 	@OneToOne
 	private Machine machine;		
 	
-	private Long CounterPart;	
+	private Long CounterPart;
+	
+	private Long CounterPartMax;
 		
 	private Long CounterPort;
 	
+	private Long CounterPortMax;
+	
 	private Long CounterClamping;
 	
+	private Long CounterClampingMax;
+	
 	private Float HoursMachining;
+	
+	private Float HoursMachiningMax;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	private LocalDateTime lastUpdate;
@@ -59,12 +67,28 @@ public class ManutVariables {
 		CounterPart = counterPart;
 	}
 
+	public Long getCounterPartMax() {
+		return CounterPartMax;
+	}
+
+	public void setCounterPartMax(Long counterPartMax) {
+		CounterPartMax = counterPartMax;
+	}
+
 	public Long getCounterPort() {
 		return CounterPort;
 	}
 
 	public void setCounterPort(Long counterPort) {
 		CounterPort = counterPort;
+	}
+
+	public Long getCounterPortMax() {
+		return CounterPortMax;
+	}
+
+	public void setCounterPortMax(Long counterPortMax) {
+		CounterPortMax = counterPortMax;
 	}
 
 	public Long getCounterClamping() {
@@ -74,14 +98,29 @@ public class ManutVariables {
 	public void setCounterClamping(Long counterClamping) {
 		CounterClamping = counterClamping;
 	}
-	
 
-	public Float getHoursMilling() {
+	public Long getCounterClampingMax() {
+		return CounterClampingMax;
+	}
+
+	public void setCounterClampingMax(Long counterClampingMax) {
+		CounterClampingMax = counterClampingMax;
+	}
+
+	public Float getHoursMachining() {
 		return HoursMachining;
 	}
 
-	public void setHoursMilling(Float hoursMilling) {
-		HoursMachining = hoursMilling;
+	public void setHoursMachining(Float hoursMachining) {
+		HoursMachining = hoursMachining;
+	}
+
+	public Float getHoursMachiningMax() {
+		return HoursMachiningMax;
+	}
+
+	public void setHoursMachiningMax(Float hoursMachiningMax) {
+		HoursMachiningMax = hoursMachiningMax;
 	}
 
 	public LocalDateTime getLastUpdate() {
@@ -91,7 +130,8 @@ public class ManutVariables {
 	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-	
+
+
 	
 	
 	

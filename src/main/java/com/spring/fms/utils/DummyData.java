@@ -2097,8 +2097,13 @@ public class DummyData {
 		manutTurn.setCounterClamping(0L);
 		manutTurn.setCounterPart(0L);
 		manutTurn.setCounterPort(0L);
-		manutTurn.setHoursMilling(0F);
-		manutTurn.setLastUpdate(LocalDateTime.now());		
+		manutTurn.setHoursMachining(0F);
+		manutTurn.setLastUpdate(LocalDateTime.now());	
+		manutTurn.setCounterPortMax(0L);
+		manutTurn.setCounterClampingMax(0L);
+		manutTurn.setCounterPartMax(0L);
+		manutTurn.setHoursMachiningMax(0F);
+
 		manutVariablesRepository.save(manutTurn);
 		
 		/*MANUT VARIABLES MILL*/
@@ -2107,8 +2112,13 @@ public class DummyData {
 		manutMill.setCounterClamping(0L);
 		manutMill.setCounterPart(0L);
 		manutMill.setCounterPort(0L);
-		manutMill.setHoursMilling(0F);
-		manutMill.setLastUpdate(LocalDateTime.now());		
+		manutMill.setHoursMachining(0F);
+		manutMill.setLastUpdate(LocalDateTime.now());
+		manutMill.setCounterPortMax(0L);
+		manutMill.setCounterClampingMax(0L);
+		manutMill.setCounterPartMax(0L);
+		manutMill.setHoursMachiningMax(0F);
+
 		manutVariablesRepository.save(manutMill);
 		
 		/*MANUT VARIABLES ROBOT*/
@@ -2117,8 +2127,12 @@ public class DummyData {
 		manutRobot.setCounterClamping(0L);
 		manutRobot.setCounterPart(0L);
 		manutRobot.setCounterPort(0L);
-		manutRobot.setHoursMilling(0F);
-		manutRobot.setLastUpdate(LocalDateTime.now());		
+		manutRobot.setHoursMachining(0F);
+		manutRobot.setLastUpdate(LocalDateTime.now());
+		manutRobot.setCounterPortMax(0L);
+		manutRobot.setCounterClampingMax(0L);
+		manutRobot.setCounterPartMax(0L);
+		manutRobot.setHoursMachiningMax(0F);
 		manutVariablesRepository.save(manutRobot);
 		
 
