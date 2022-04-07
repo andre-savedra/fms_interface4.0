@@ -84,6 +84,9 @@ public class FmsPartLoadController {
 		
 		return partService.findAllByType(type_id);		
 	}
+	
+	
+
 
 
 }

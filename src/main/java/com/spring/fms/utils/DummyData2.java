@@ -2,8 +2,6 @@ package com.spring.fms.utils;
 
 import java.time.LocalDateTime;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +38,8 @@ public class DummyData2 {
 	
 	@Autowired
 	FmsDeliveryRepository deliveryRepository;
-
+	
+	
 	//@PostConstruct
 	public void loadDummy2() {
 		
@@ -159,11 +158,10 @@ public class DummyData2 {
 		mg9.setOrderSubindex(0);
 		mg9.setFlex(false);
 		mg9.setLastMachineStep(0L);
-		magazineRepository_.save(mg9);
-			
+		magazineRepository_.save(mg9);			
+		
 		
 		System.out.println("DUMMY DATA2 OK!");
-
 
 	}
 }

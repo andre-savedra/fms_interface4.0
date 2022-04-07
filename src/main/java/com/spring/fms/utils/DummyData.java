@@ -5,14 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.spring.fms.model.Customization;
 import com.spring.fms.model.Machine;
 import com.spring.fms.model.Machinery;
+import com.spring.fms.model.ManutVariables;
 import com.spring.fms.model.Model;
 import com.spring.fms.model.Order;
 import com.spring.fms.model.OrderType;
@@ -34,6 +33,7 @@ import com.spring.fms.repository.FmsProcessPartRepository;
 import com.spring.fms.repository.FmsStepOrderRepository;
 import com.spring.fms.repository.FmsStepPartRepository;
 import com.spring.fms.repository.FmsUserRepository;
+import com.spring.fms.repository.ManutVariablesRepository;
 
 @Component
 public class DummyData {
@@ -73,6 +73,10 @@ public class DummyData {
 	
 	@Autowired
 	FmsMachineryRepository machineryRepository_;
+		
+	@Autowired
+	ManutVariablesRepository manutVariablesRepository;
+
 		
 	//@PostConstruct
 	public void loadDummy() {
@@ -2084,6 +2088,39 @@ public class DummyData {
 			System.out.println("Ordens:");
 			System.out.println(saved.getId());
 		}
+		
+			
+		
+		/*MANUT VARIABLES TURN*/
+		ManutVariables manutTurn = new ManutVariables();
+		manutTurn.setMachine(mach);
+		manutTurn.setCounterClamping(0L);
+		manutTurn.setCounterPart(0L);
+		manutTurn.setCounterPort(0L);
+		manutTurn.setHoursMilling(0F);
+		manutTurn.setLastUpdate(LocalDateTime.now());		
+		manutVariablesRepository.save(manutTurn);
+		
+		/*MANUT VARIABLES MILL*/
+		ManutVariables manutMill = new ManutVariables();
+		manutMill.setMachine(mach2);
+		manutMill.setCounterClamping(0L);
+		manutMill.setCounterPart(0L);
+		manutMill.setCounterPort(0L);
+		manutMill.setHoursMilling(0F);
+		manutMill.setLastUpdate(LocalDateTime.now());		
+		manutVariablesRepository.save(manutMill);
+		
+		/*MANUT VARIABLES ROBOT*/
+		ManutVariables manutRobot = new ManutVariables();
+		manutRobot.setMachine(mach3);
+		manutRobot.setCounterClamping(0L);
+		manutRobot.setCounterPart(0L);
+		manutRobot.setCounterPort(0L);
+		manutRobot.setHoursMilling(0F);
+		manutRobot.setLastUpdate(LocalDateTime.now());		
+		manutVariablesRepository.save(manutRobot);
+		
 
 		System.out.println("DUMMY DATA1 OK!");
 
