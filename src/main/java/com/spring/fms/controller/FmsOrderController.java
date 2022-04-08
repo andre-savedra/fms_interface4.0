@@ -584,9 +584,15 @@ public class FmsOrderController { //fms
 						
 						for(ManutVariables manutVariable : manutVariablesList) {
 							
-							maintenanceRequester.check(
-								"YYP7w_Td5Pm481an66JeZ2eDmKELxYYTDchGxteGus70gL_rkwfDlGOAP5GqDByIc67z2_tJCiMb8n0zvnryW1g7b0C4K1ieDXQCEaDgxfIzkI6ql2kJtZQx_txRY1WevWC--N1X6xxG7BzKKon0kfq53dQAg6QgGSl5dMI0WZkUJ393E-knwRv_XR7OBe5y1g7T7L-wXa2MIAbXxVN7DoJH4xWSJXbv31e11qgs4brSRcWbePoRU6E6l71FSOnrVPfFdYjl6-p8WrFEKD2oeR0oeXYqVgr3JtHvx3sH-MVqbSoO7htg_woRLFD-iN315RW-gZMJcb2xtQ6ULSBx15AKMkezTLNrC2HbBMoxS_U",
-								manutVariable);							
+							boolean status = false;
+							
+							if(!manutVariable.isRequested())							
+								status = maintenanceRequester.check(
+									"Bearer YYP7w_Td5Pm481an66JeZ2eDmKELxYYTDchGxteGus70gL_rkwfDlGOAP5GqDByIc67z2_tJCiMb8n0zvnryW1g7b0C4K1ieDXQCEaDgxfIzkI6ql2kJtZQx_txRY1WevWC--N1X6xxG7BzKKon0kfq53dQAg6QgGSl5dMI0WZkUJ393E-knwRv_XR7OBe5y1g7T7L-wXa2MIAbXxVN7DoJH4xWSJXbv31e11qgs4brSRcWbePoRU6E6l71FSOnrVPfFdYjl6-p8WrFEKD2oeR0oeXYqVgr3JtHvx3sH-MVqbSoO7htg_woRLFD-iN315RW-gZMJcb2xtQ6ULSBx15AKMkezTLNrC2HbBMoxS_U",
+									manutVariable);
+							
+							if(status)
+								manutVariablesService.saveManut(manutVariable);
 						}
 						
 					}
