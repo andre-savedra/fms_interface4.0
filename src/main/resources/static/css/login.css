@@ -17,7 +17,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: solid 2px #cfc5c5;
+  border-bottom: solid 2px rgb(207, 197, 197);
   min-width: 345px;
 }
 .header_login button {
@@ -35,7 +35,7 @@
 .header_login button .fa-th {
   margin-left: 20px;
   color: white;
-  font-size: clamp(25px, 35px, 50px);
+  font-size: 35px;
 }
 
 #logo_senai {
@@ -68,14 +68,14 @@
   min-width: 300px;
   height: 350px;
   margin: 15px 0px 25px 0px;
-  border: solid 2px #cfc5c5;
+  border: solid 2px rgb(207, 197, 197);
   padding: 15px;
   /* display: flex;
   flex-direction: column;
   position: relative;
   top: 60px; */
   /* display: none; */
-  background: linear-gradient(190deg, #212429, #8b8989);
+  background: linear-gradient(190deg, #212429, rgb(139, 137, 137));
 }
 
 .login_title {
@@ -121,7 +121,7 @@ form #submit_login:hover {
   background-color: #212429;
 }
 .center_content img {
-  height: clamp(300px, 400px, 500px);
+  height: 400px;
 }
 
 /********************(    RESPONSIVE    )***********************//*# sourceMappingURL=login.css.map */

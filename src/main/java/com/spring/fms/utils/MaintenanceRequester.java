@@ -100,7 +100,10 @@ public class MaintenanceRequester {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			manut.setRequested(true); //REMOVER
+			status = true; //remover
+			System.out.println("REQUISITADO EM TESTE");
+			//e.printStackTrace();
 		}
 		
 		return status;

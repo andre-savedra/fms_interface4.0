@@ -20,7 +20,7 @@
 }
 .side_logo #btn_teste > .fa-th {
   color: white;
-  font-size: clamp(25px, 35px, 50px);
+  font-size: 35px;
 }
 .side_logo #btn_teste > .fa-th:hover {
   color: gray;
@@ -57,7 +57,7 @@ sidebar > .dash_menu ul {
   text-decoration: none;
   color: white;
   border: none;
-  background-color: #21242900;
+  background-color: rgba(33, 36, 41, 0);
 }
 .dash_submenu .inner_submenu .submenu_icon {
   margin: 0px 10px;

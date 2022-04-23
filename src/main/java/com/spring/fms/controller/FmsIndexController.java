@@ -1,26 +1,29 @@
 package com.spring.fms.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.spring.fms.utils.EmailSender;
-
+@CrossOrigin
 @Controller
 public class FmsIndexController {
 
+	@CrossOrigin
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String getIndex() {
 		
 		return "index";
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String getMain() {
 		
 		return "main";
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/signIn", method = RequestMethod.GET)
 	public String getSignIn() {		
 		return "signIn";

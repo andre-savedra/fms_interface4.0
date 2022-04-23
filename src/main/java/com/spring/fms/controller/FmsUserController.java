@@ -9,23 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.fms.model.User;
 import com.spring.fms.service.FmsUserService;
 
+@CrossOrigin
 @Controller
 public class FmsUserController {
 
 	@Autowired
 	FmsUserService userService;
 
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/save_user", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String saveUser(@RequestBody @Valid User user, BindingResult result, RedirectAttributes attributes) {
@@ -63,21 +65,21 @@ public class FmsUserController {
 			return userFound;
 		}
 	}
-
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/get_user", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public User getUser(@RequestBody User user) {
 
 		return searchUser(user);		
 	}
-
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/get_users", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<User> getAllUsers() {
 
 		return userService.findUserAll();
 	}
-
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/validate_user", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String validateUser(@RequestBody User user) {
@@ -99,20 +101,20 @@ public class FmsUserController {
 		}
 		
 	}
-
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/validate_credential_user", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String validateCredentialUser(@RequestBody User user) {
 
 		return "feito";
 	}
-
+	@CrossOrigin
 	@RequestMapping(value = "/successRegister", method = RequestMethod.GET)
 	public String getSuccessRegister() {
 		System.out.println("success");
 		return "successedRegister";
 	}
-
+	@CrossOrigin
 	@RequestMapping(value = "/failRegister", method = RequestMethod.GET)
 	public String getFailRegister() {
 		System.out.println("fail");
@@ -121,6 +123,7 @@ public class FmsUserController {
 	
 	
 	/** ------ SUCCESS LOGIN ------- **/
+	@CrossOrigin
 	@RequestMapping(value = "/successlogin", method = RequestMethod.GET)
 	public String getSuccessLogin() {
 		

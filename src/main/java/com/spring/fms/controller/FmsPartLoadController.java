@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import com.spring.fms.model.Part;
 import com.spring.fms.service.FmsOrderTypeService;
 import com.spring.fms.service.FmsPartService;
 
+@CrossOrigin
 @Controller
 public class FmsPartLoadController {
 
@@ -26,6 +28,7 @@ public class FmsPartLoadController {
 	FmsOrderTypeService orderTypeService;
 
 	/************* REQUEST ALL ORDER TYPE   ***********/
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/load_all_order_type", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<OrderType> getAllDataOrderType() {
@@ -36,6 +39,7 @@ public class FmsPartLoadController {
 	
 	
 	/************* REQUEST ALL PARTS   ***********/
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/load_all_parts", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Part> getAllData() {
@@ -44,6 +48,7 @@ public class FmsPartLoadController {
 	}
 	
 	/************* REQUEST TOTAL COUNT   ***********/
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/count_parts", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long getAllPartCount() {
@@ -52,7 +57,7 @@ public class FmsPartLoadController {
 	}
 	
 	/************* REQUEST COUNT BY ORDER TYPE (MACHINE)   ***********/
-	
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/count_parts_order_type", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long getPartCountMachine(@RequestBody OrderType type_id, BindingResult result,
@@ -68,7 +73,7 @@ public class FmsPartLoadController {
 	
 	
 	/************* REQUEST PARTS BY ORDER TYPE (MACHINE)   ***********/
-	 
+	@CrossOrigin
 	@ResponseBody
 	@PostMapping(value = "/load_part_order_type", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Part> getAllPartMachine(@RequestBody OrderType type_id, BindingResult result,
