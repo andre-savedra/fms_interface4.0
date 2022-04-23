@@ -770,19 +770,20 @@ public class FmsOrderController {
 			if (status >= 300) {
 				reader = new BufferedReader(new InputStreamReader(con.getErrorStream()));
 				while ((line = reader.readLine()) != null) {
-					responseContent.append(line);
+					responseContent.append(line);					
 				}
 				reader.close();
 			} else {
 				reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				while ((line = reader.readLine()) != null) {
 					responseContent.append(line);
+					
 				}
 				reader.close();
 			}
 			System.out.println("response code: " + status);
-			System.out.println(responseContent.toString());
-
+			System.out.println(responseContent.toString());			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
