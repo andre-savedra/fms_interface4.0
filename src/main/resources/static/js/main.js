@@ -1344,7 +1344,7 @@ function refreshChartsDashboards () {
 }
 
 function onTimerChartsDashboards () {
-  timerChartsDashboards = setInterval(refreshChartsDashboards, 4000)
+  timerChartsDashboards = setInterval(refreshChartsDashboards, 10000)
 }
 
 function stopTimerChartsDashboards () {
