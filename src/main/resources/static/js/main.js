@@ -1251,7 +1251,7 @@ function createFieldsForm (totalFields, element, typemachine, typeno) {
 
 /****************************  (XDK)  **********************************/
 async function loadDataXDK () {
-  fetch('http://localhost:8080/xdk', {
+  fetch(defaultUrl + 'xdk', {
     method: 'GET',
     headers: {
       Accept: 'application/json'
