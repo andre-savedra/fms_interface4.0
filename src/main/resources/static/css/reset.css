@@ -1,7 +1,8 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-family: "Nunito";
   /*safari, chrome e edge*/
   -webkit-appearance: none;
@@ -17,4 +18,5 @@ body {
 
 body {
   /* min-height: 100vh; */
-}/*# sourceMappingURL=reset.css.map */
+}
+/*# sourceMappingURL=reset.css.map */

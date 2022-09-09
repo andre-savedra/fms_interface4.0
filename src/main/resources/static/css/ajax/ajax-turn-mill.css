@@ -17,13 +17,20 @@
   width: 100%;
   height: 10%;
   max-height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-bottom: 1px solid #212429;
   background-color: #212429;
   color: white;
 }
+
 .millPartHeader h5,
 .turnPartHeader h5,
 .flexPartHeader h5 {
@@ -36,9 +43,16 @@
 .flexPartContent {
   width: 100%;
   height: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 /********************(  CAROUSEL   )***********************/
@@ -50,6 +64,7 @@
   min-height: 220px;
   border-right: 1px solid #212429;
 }
+
 .carouselMill #carouselMill_,
 .carouselMill #carouselTurn_,
 .carouselMill #carouselFlex_,
@@ -62,6 +77,7 @@
   width: 100%;
   height: 100%;
 }
+
 .carouselMill #carouselMill_ .carousel-inner,
 .carouselMill #carouselTurn_ .carousel-inner,
 .carouselMill #carouselFlex_ .carousel-inner,
@@ -88,11 +104,21 @@
 #carouselFlexContent > .carousel-item {
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 #carouselTurnContent > .carousel-item img,
 #carouselMillContent > .carousel-item img,
 #carouselFlexContent > .carousel-item img {
@@ -112,7 +138,8 @@
   background: #fff;
   border-radius: 4px;
   border: 2px solid black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   color: rgba(0, 0, 0, 0.8);
   display: block;
   font-family: Futura, Helvetica Neue, sans-serif;
@@ -128,7 +155,8 @@
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  transform: translate3d(-80%, -80%, 0);
+  -webkit-transform: translate3d(-80%, -80%, 0);
+          transform: translate3d(-80%, -80%, 0);
   --min-hotspot-opacity: 0;
 }
 
@@ -148,7 +176,8 @@
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
   --min-hotspot-opacity: 0;
 }
 
@@ -158,12 +187,22 @@
 .formFlexPart {
   height: 100%;
   width: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   overflow-y: auto;
 }
+
 .formMillPart #formMillPart_,
 .formMillPart #formTurnPart_,
 .formMillPart #formFlexPart_,
@@ -176,11 +215,21 @@
   height: 100%;
   min-height: 300px;
   width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .formMillPart #formMillPart_ div,
 .formMillPart #formTurnPart_ div,
 .formMillPart #formFlexPart_ div,
@@ -191,11 +240,21 @@
 .formFlexPart #formTurnPart_ div,
 .formFlexPart #formFlexPart_ div {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .formMillPart #formMillPart_ div i,
 .formMillPart #formTurnPart_ div i,
 .formMillPart #formFlexPart_ div i,
@@ -208,6 +267,7 @@
   margin-left: 5px;
   font-size: 18px;
 }
+
 .formMillPart #formMillPart_ div i:hover,
 .formMillPart #formTurnPart_ div i:hover,
 .formMillPart #formFlexPart_ div i:hover,
@@ -220,6 +280,7 @@
   font-size: 19px;
   color: grey;
 }
+
 .formMillPart #formMillPart_ input,
 .formMillPart #formMillPart_ select,
 .formMillPart #formTurnPart_ input,
@@ -249,6 +310,7 @@
   padding-right: 15px;
   /* color: #878a90; */
 }
+
 .formMillPart #formMillPart_ label,
 .formMillPart #formTurnPart_ label,
 .formMillPart #formFlexPart_ label,
@@ -260,6 +322,7 @@
 .formFlexPart #formFlexPart_ label {
   margin: 0;
 }
+
 .formMillPart #formMillPart_ button,
 .formMillPart #formTurnPart_ button,
 .formMillPart #formFlexPart_ button,
@@ -280,6 +343,7 @@
   background-color: #212429;
   color: white;
 }
+
 .formMillPart #formMillPart_ button .fa-share-square,
 .formMillPart #formTurnPart_ button .fa-share-square,
 .formMillPart #formFlexPart_ button .fa-share-square,
@@ -291,6 +355,7 @@
 .formFlexPart #formFlexPart_ button .fa-share-square {
   margin-right: 7px;
 }
+
 .formMillPart #formMillPart_ button:hover,
 .formMillPart #formTurnPart_ button:hover,
 .formMillPart #formFlexPart_ button:hover,
@@ -331,53 +396,59 @@
 /********************(    RESPONSIVE   )***********************/
 @media screen and (max-width: 850px) {
   .millPartMain,
-.turnPartMain,
-.flexPartMain {
+  .turnPartMain,
+  .flexPartMain {
     width: 90%;
     height: auto;
     min-height: 600px;
     margin: 20px 0px;
   }
-
   .millPartHeader,
-.turnPartHeader,
-.flexPartHeader {
+  .turnPartHeader,
+  .flexPartHeader {
     height: 50px;
     text-align: center;
   }
-
   .millPartContent,
-.turnPartContent,
-.flexPartContent {
+  .turnPartContent,
+  .flexPartContent {
     height: calc(100% - 50px);
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
-
   .carouselMill,
-.carouselTurn,
-.carouselFlex {
+  .carouselTurn,
+  .carouselFlex {
     width: 100%;
     height: 55%;
     border-bottom: 2px solid #212429;
   }
-
   .formMillPart,
-.formTurnPart,
-.formFlexPart {
+  .formTurnPart,
+  .formFlexPart {
     height: 45%;
     width: 100%;
   }
 }
+
 @media screen and (max-width: 500px) {
   .carousel-item > model-viewer {
     min-width: 180px;
     min-height: 190px;
   }
-
   .spotDimension {
     font-size: 10px;
   }
-}/*# sourceMappingURL=ajax-turn-mill.css.map */
+}
+/*# sourceMappingURL=ajax-turn-mill.css.map */

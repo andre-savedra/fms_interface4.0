@@ -1,29 +1,44 @@
 <body>
-    <!-- millPartMain -->
-    <div class="prodListMain">
-        <!-- millPartHeader -->
-        <div class="prodListHeader">
-            <h5>Lista de Produção</h5>
-        </div>
-        <!-- millPartContent -->
-        <div class="prodListContent">
-            <table id="tb_prodList">
-                <thead id="head_tb_prodList">
-                    <tr>
-                        <th class="thId">Id</th>
-                        <th class="thName">Nome da Ordem</th>
-                        <th class="thMach">Máquina</th>
-                        <th class="thUser">Usuário</th>
-                        <th class="thTypeProd">Tipo Produção</th>
-                        <th class="thToProd">À Produzir</th>
-                        <th class="thProd">Produzida</th>
-                        <th class="thOk">Finalizada</th>
-                        <th class="thIn">Entrada</th>
-                        <th class="thOut">Saída</th>
-                    </tr>
-                </thead>
-                <tbody id="body_tb_prodList">
-                    <!-- <tr>
+  <!-- millPartMain -->
+  <div class="prodListMain">
+    <!-- millPartHeader -->
+    <div class="prodListHeader">
+      <div class="title_prodList">
+        <div></div>
+        <h5>Lista de Produção</h5>
+        <button
+          type="button"
+          data-toggle="modal"
+          data-target="#prodListModal"
+          data-bs-toggle="tooltip" 
+          data-bs-placement="left" 
+          title="Peças Centro" 
+          data-trigger="hover"
+        >
+          ⚙
+        </button>
+      </div>
+ 
+    </div>
+    <!-- millPartContent -->
+    <div class="prodListContent">
+      <table id="tb_prodList">
+        <thead id="head_tb_prodList">
+          <tr>
+            <th class="thId">Id</th>
+            <th class="thName">Nome da Ordem</th>
+            <th class="thMach">Máquina</th>
+            <th class="thUser">Usuário</th>
+            <th class="thTypeProd">Tipo Produção</th>
+            <th class="thToProd">À Produzir</th>
+            <th class="thProd">Produzida</th>
+            <th class="thOk">Finalizada</th>
+            <th class="thIn">Entrada</th>
+            <th class="thOut">Saída</th>
+          </tr>
+        </thead>
+        <tbody id="body_tb_prodList">
+          <!-- <tr>
                         <th class="thId">0</th>
                         <th class="thName">Parafuso</th>
                         <th class="thMach">Torno</th>
@@ -33,11 +48,58 @@
                         <th class="thProd">0</th>
                         <th class="thOk">Não</th>
                     </tr> -->
-
-                </tbody>
-            </table>
-        </div>
-
+        </tbody>
+      </table>
     </div>
 
+    <!-- Modal Production List -->
+    <div
+      class="modal fade"
+      id="prodListModal"
+      tabindex="-1"
+      aria-labelledby="prodModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="prodModalLabel">Opções Lista Produção</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="content-modal">
+                <span>Selecione ID do Pedido:</span>
+                <select name="orderIdsModal" >
+                    <option value="0" selected>Selecione</option>
+                    <option value="1">Todos os pedidos</option>
+                    <option value="2">#1</option>
+                    <option value="3">#2</option>
+                    <option value="4">#3</option>
+                    <option value="5">#4</option>
+                </select>
+                <span>Selecione sua Ação:</span>
+                <select name="actionCommand" >
+                    <option value="0" selected>Selecione</option>
+                    <option value="1">Apagar</option>
+                    <option value="2">Editar como produzido</option>
+                    <option value="3">Reiniciar pedido</option>
+                </select>
+
+                <div class="modalButtons">
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-close" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

@@ -7,10 +7,18 @@
   /* background-color: blue; */
   border: 1px solid #212429;
   background-color: rgba(255, 255, 255, 0.5);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .dash_turn img,
 .dash_mill img {
   width: 100%;
@@ -18,10 +26,12 @@
   min-height: 220px;
   padding: 5px;
 }
+
 .dash_turn h5,
 .dash_mill h5 {
   margin: 0px;
 }
+
 .dash_turn textarea,
 .dash_mill textarea {
   width: 90%;
@@ -32,6 +42,7 @@
   outline: none;
   border-radius: 2px;
 }
+
 .dash_turn #send_turn,
 .dash_turn #send_mill,
 .dash_mill #send_turn,
@@ -44,6 +55,7 @@
   color: white;
   margin-top: 6px;
 }
+
 .dash_turn #send_turn:hover,
 .dash_turn #send_mill:hover,
 .dash_mill #send_turn:hover,
@@ -55,16 +67,27 @@
 .mill_ident {
   width: 90%;
   height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 5px 0px;
 }
+
 .turn_ident label,
 .mill_ident label {
   margin: 0 5px;
 }
+
 .turn_ident input,
 .mill_ident input {
   outline: none;
@@ -87,4 +110,5 @@
 
 button > .fa-share-square {
   font-size: 20px;
-}/*# sourceMappingURL=ajax-custom.css.map */
+}
+/*# sourceMappingURL=ajax-custom.css.map */
