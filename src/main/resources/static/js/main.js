@@ -801,8 +801,30 @@ function renderOrdersList (dataOrders) {
 
     if (htmlString != '' && htmlString != null) {
       tableBody.innerHTML = htmlString
+      getOptionsProdList(dataOrders);
     }
   }
+}
+
+//prodList options
+function getOptionsProdList(dataOrders){
+  let selectBody = document.querySelector('#orderIdsModal');
+  let htmlString = 
+    '<option value="-1" selected>Selecione</option>' +
+    '<option value="0">Todos os pedidos</option>';
+  
+  for (let i = 0; i < dataOrders.length; i++) {
+    htmlString +=
+    '<option value="' +    
+    dataOrders[i]['id'] +
+    '">#' +
+    dataOrders[i]['id'] +
+    ' - ' +
+    dataOrders[i]['ordername'] +
+    '</option>'   
+  }
+
+  selectBody.innerHTML = htmlString;
 }
 
 /*--------- COUNT ALL PARTS --------*/
@@ -1284,6 +1306,7 @@ async function loadDataXDK () {
     })
     .catch(err => console.error(err))
 }
+
 
 /****************************  (eventsOnPage)  **********************************/
 /*--------- REFRESH CHARTS --------*/
