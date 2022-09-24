@@ -811,7 +811,7 @@ function getOptionsProdList(dataOrders){
   let selectBody = document.querySelector('#orderIdsModal');
   let htmlString = 
     '<option value="-1" selected>Selecione</option>' +
-    '<option value="0">Todos os pedidos</option>';
+    '<option value="all">Todos os pedidos</option>';
   
   for (let i = 0; i < dataOrders.length; i++) {
     htmlString +=
@@ -825,6 +825,57 @@ function getOptionsProdList(dataOrders){
   }
 
   selectBody.innerHTML = htmlString;
+}
+
+function resetSelectionOptionsProd(){
+  const selectId = document.querySelector('#orderIdsModal');
+  const selectCommand = document.querySelector('#actionCommand');
+  selectId.value = -1;
+  selectCommand.value = -1;  
+}
+
+function editOptionsList(){
+  const selectId = document.querySelector('#orderIdsModal').value;
+  const selectCommand = document.querySelector('#actionCommand').value;
+
+  if(selectId != -1 && selectCommand != -1){
+
+    switch (selectCommand) {
+      case "erase":
+        if(selectId === 'all')
+        {
+          
+        }
+        else{
+          let url = defaultUrl + 'delete_order/' + selectId;
+          makePostReturn(url, null, editProdListResponse);
+        }
+        
+        break;
+    
+      case "produced":
+        
+        break;
+      
+      case "restart":
+        
+        break;      
+    }
+
+  }
+  else
+  {
+    alert("Selecione uma Opção");
+  }  
+}
+
+//response after request execution
+function editProdListResponse (responseStatus, responseText) {
+  if (responseStatus === 200 && responseText === 'feito') {
+    window.location.href = '/success'
+  } else {
+    window.location.href = '/fail'
+  }
 }
 
 /*--------- COUNT ALL PARTS --------*/

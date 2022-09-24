@@ -5,10 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -16,13 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.fms.config.InterfaceConfig;
@@ -728,6 +719,26 @@ public class FmsOrderController {
 
 		try {
 			orderService.deleteAllOrder();
+			return "feito";
+		} catch (Exception ex) {
+			return "erro";
+		}
+	}
+
+	/************* REQUEST DELETE ONE ORDER ***********/
+	@CrossOrigin
+	@ResponseBody
+	@PostMapping(value = "/delete_order/{orderId}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getDeleteOrder(@PathVariable(value="orderId") Integer orderId) {
+		System.out.println("OrderID : " + orderId);
+		try {
+			if(orderId != null && orderId > 0)
+			{
+				Optional<Order> orderToDelete = orderService.findOrderById(orderId);
+				if(orderToDelete.isPresent()){
+					orderService.deleteOrderById(orderToDelete.get());
+				}
+			}
 			return "feito";
 		} catch (Exception ex) {
 			return "erro";

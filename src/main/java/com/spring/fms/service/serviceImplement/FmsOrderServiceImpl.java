@@ -1,6 +1,7 @@
 package com.spring.fms.service.serviceImplement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class FmsOrderServiceImpl implements FmsOrderService {
 	}
 
 	@Override
-	public Order findOrderById(long id) {		
-		return orderRepository.findById(id).get();
+	public Optional<Order> findOrderById(long id) {
+		return orderRepository.findById(id);
 	}
 
 	@Override
@@ -46,6 +47,9 @@ public class FmsOrderServiceImpl implements FmsOrderService {
 	public void deleteAllOrder() {
 		orderRepository.deleteAll();		
 	}
+
+	@Override
+	public void deleteOrderById(Order order) { orderRepository.delete(order); }
 
 	@Override
 	public List<Order> findOrderAllToProduce() {		

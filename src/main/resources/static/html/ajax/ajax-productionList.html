@@ -76,25 +76,20 @@
           <div class="modal-body">
             <div class="content-modal">
                 <span>Selecione ID do Pedido:</span>
-                <select name="orderIdsModal" id="orderIdsModal">
-                    <!--<option value="0" selected>Selecione</option>
-                    <option value="1">Todos os pedidos</option>
-                    <option value="2">#1</option>
-                    <option value="3">#2</option>
-                    <option value="4">#3</option>
-                    <option value="5">#4</option>-->
+                <select id="orderIdsModal">
+                   
                 </select>
                 <span>Selecione sua Ação:</span>
-                <select name="actionCommand" >
-                    <option value="0" selected>Selecione</option>
-                    <option value="1">Apagar</option>
-                    <option value="2">Editar como produzido</option>
-                    <option value="3">Reiniciar pedido</option>
+                <select id="actionCommand" >
+                    <option value="-1" selected>Selecione</option>
+                    <option value="erase">Apagar</option>
+                    <option value="produced">Editar como produzido</option>
+                    <option value="restart">Reiniciar pedido</option>
                 </select>
 
                 <div class="modalButtons">
-                    <button type="button" class="btn btn-primary">Salvar</button>
-                    <button type="button" class="btn btn-close" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="editOptionsList()">Salvar</button>
+                    <button type="button" class="btn btn-close" data-dismiss="modal" onclick="resetSelectionOptionsProd()">Cancelar</button>
                 </div>
             </div>
           </div>          
