@@ -844,7 +844,8 @@ function editOptionsList(){
       case "erase":
         if(selectId === 'all')
         {
-          
+          let url = defaultUrl + 'delete_all_orders/';
+          makePostReturn(url, null, editProdListResponse);
         }
         else{
           let url = defaultUrl + 'delete_order/' + selectId;
@@ -852,14 +853,23 @@ function editOptionsList(){
         }
         
         break;
-    
+            
       case "produced":
-        
-        break;
-      
       case "restart":
-        
-        break;      
+        const status = (selectCommand === "produced")? '1' : '0';
+
+        if(selectId === 'all')
+        {
+          let url = defaultUrl + 'change_all_orders?produced=' + status;
+          makePostReturn(url, null, editProdListResponse);
+        }
+        else{
+          let url = defaultUrl + 'change_order/' + selectId + '?produced=' + status;
+          makePostReturn(url, null, editProdListResponse);
+        }
+
+        break;           
+      
     }
 
   }

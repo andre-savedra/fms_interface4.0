@@ -730,7 +730,6 @@ public class FmsOrderController {
 	@ResponseBody
 	@PostMapping(value = "/delete_order/{orderId}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getDeleteOrder(@PathVariable(value="orderId") Integer orderId) {
-		System.out.println("OrderID : " + orderId);
 		try {
 			if(orderId != null && orderId > 0)
 			{
@@ -739,6 +738,58 @@ public class FmsOrderController {
 					orderService.deleteOrderById(orderToDelete.get());
 				}
 			}
+			return "feito";
+		} catch (Exception ex) {
+			return "erro";
+		}
+	}
+
+	/** ------ CHANGE ORDER PRODUCTION ------- **/
+	@CrossOrigin
+	@ResponseBody
+	@PostMapping(value = "/change_order/{orderId}", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String postChangeOrder(@PathVariable(value="orderId") Integer orderId,
+								  @RequestParam(value="produced") boolean statusProduced) {
+		try {
+			if(orderId != null && orderId > 0)
+			{
+				Optional<Order> orderToChange = orderService.findOrderById(orderId);
+				if(orderToChange.isPresent()){
+					Order order = orderToChange.get();
+					LocalDateTime out = (statusProduced)? LocalDateTime.now() : null;
+					Integer unt = (statusProduced)? order.getUnits() : 0;
+
+					order.setManufacturing(false);
+					order.setProduced(statusProduced);
+					order.setOutputDate(out);
+					order.setUnitsProduced(unt);
+					orderService.saveOrder(order);
+				}
+			}
+			return "feito";
+		} catch (Exception ex) {
+			return "erro";
+		}
+	}
+
+	/** ------ CHANGE ALL ORDERS PRODUCTION ------- **/
+	@CrossOrigin
+	@ResponseBody
+	@PostMapping(value = "/change_all_orders", consumes = "application/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String postChangeAllOrders(@RequestParam(value="produced") boolean statusProduced) {
+		try {
+				List<Order> ordersToChange = getOrdersNotProduced();
+				LocalDateTime out = (statusProduced)? LocalDateTime.now() : null;
+
+				for(Order order : ordersToChange){
+					Integer unt = (statusProduced)? order.getUnits() : 0;
+					order.setManufacturing(false);
+					order.setProduced(statusProduced);
+					order.setOutputDate(out);
+					order.setUnitsProduced(unt);
+					orderService.saveOrder(order);
+				}
+
 			return "feito";
 		} catch (Exception ex) {
 			return "erro";
